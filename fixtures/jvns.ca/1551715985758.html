@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8">
+<title>A/A testing - Julia Evans</title>
+<meta name="author" value="Julia Evans">
+<meta name="HandheldFriendly" value="True">
+<meta name="MobileOptimized" value="320">
+<meta name="description" value="A/A testing">
+<meta name="viewport" value="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://jvns.ca/blog/2015/02/06/a-a-testing/">
+<link href="https://jvns.ca/favicon.ico" rel="icon">
+<link href="https://jvns.ca/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+<link href="https://jvns.ca/atom.xml" rel="alternate" title="Julia Evans" type="application/atom+xml">
+</head>
+<body>
+<div id="wrap">
+<header role="banner">
+<hgroup>
+<h1><a href="https://jvns.ca/">Julia Evans</a></h1>
+</hgroup>
+<ul class="header-links">
+<span><li><a href="https://jvns.ca/about">About</a></li>
+<li><a href="https://jvns.ca/talks">Talks</a></li>
+<li><a href="https://jvns.ca/projects/">Projects</a></li></span>
+<span><li><a href="https://twitter.com/b0rk">Twitter</a></li>
+<li><a href="https://github.com/jvns">Github</a></li></span>
+</ul>
+</header>
+<nav role="navigation" class="header-nav"><ul class="main-navigation">
+<li><a href="https://jvns.ca/categories/favorite/">Favorites</a></li>
+<li><a href="https://wizardzines.com/">Zines</a></li>
+<li class="subscription" data-subscription="rss"><a href="https://jvns.ca/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+</ul>
+</nav>
+<div id="main">
+<div id="content">
+<div>
+<article class="hentry" role="article">
+<header>
+<h1 class="entry-title">A/A testing</h1>
+<div class="post-tags">
+&#x2022;
+<a class="post-tag" href="https://jvns.ca/categories/machinelearning">machinelearning</a> &#x2022;
+</div>
+<p class="meta">
+<time datetime="2015-02-06T16:39:24" pubdate="" data-updated="true"></time>
+</p>
+</header>
+<div class="entry-content">
+<p>Thursday evening I organized a meetup called Data Science: Inconvenient
+Truths where the amazing <a href="https://twitter.com/dydt">Diyang Tang</a>,
+<a href="https://twitter.com/clarecorthell">Clare Corthell</a>, and
+<a href="https://twitter.com/elenatej">Elena Grewal</a> told great stories about
+things that have gone wrong when doing machine learning or data
+analysis.</p>
+<p>Elena gave a talk (<a href="https://www.youtube.com/watch?v=THBtcS7Wwss">video of a previous version</a>)
+about common mistakes you can make when running experiments. I was super
+excited to hear her talk because I&#x2019;m working on an experiment right now
+at work and trying to interpret the results. The whole talk is great &#x2013;
+it has really good examples of experiments Airbnb has worked on &#x2013; and
+you should watch it, but I want to talk about the very small part where
+she mentions A/A
+testing.</p>
+<p>I&#x2019;ve heard of <a href="https://en.wikipedia.org/wiki/A/B_testing">A/B testing</a>!
+But I&#x2019;d never heard of A/A testing before, didn&#x2019;t really understand
+what she meant at the time, and didn&#x2019;t manage to ask. (pro tip: ask
+questions when you have them :)). I slept on it, and I now think a) that
+I get it and b) it&#x2019;s really simple and c) that it&#x2019;s SUPER COOL AND MAYBE
+USEFUL TO ME.</p>
+<p>Let&#x2019;s pretend I have a widget store, and that I&#x2019;m running an experiment
+where I have a Great Idea that I think will sell WAY MORE WIDGETS. I&#x2019;ve
+rolled out my Great Idea to 33% of users, and I have a gorgeous
+dashboard that says that my Great Idea group has 2% higher sales than my
+other group, like this:</p>
+<p><img src="https://jvns.ca/images/a-a-testing-good.png"></p>
+<p>A 2% increase in sales is a pretty big deal! But how do I know that
+these results are actually significant? One great way is to do
+statistics &#x2013; Dan McKinley built this calculator which you can see
+<a href="http://www.experimentcalculator.com/">here</a> that makes some assumptions
+and tells you how long you&#x2019;ll need to run your experiment for to see
+statistical significance.</p>
+<p>But let&#x2019;s say you want to get a rough sense for whether or not your
+results might be significant without doing statistics.</p>
+<p>This is where A/A testing comes in! The idea here is to compare two
+sets of users in the same experimental group and see how high the
+variation is. So instead of having a Great Idea group and a Control
+Group, we&#x2019;ll use <strong>two</strong> control groups. And then we might see something
+like this:</p>
+<p><img src="https://jvns.ca/images/a-a-testing-bad.png"></p>
+<p>Suddenly, the group we&#x2019;re experimenting on doesn&#x2019;t look so good anymore.
+It looks like any difference is likely to be just because of random
+noise. If we&#x2019;d instead seen something like this, we&#x2019;d be much more
+likely to believe that the Great Idea is actually doing well:</p>
+<p><img src="https://jvns.ca/images/a-a-testing-looks-better.png"></p>
+<p>I like this because it seems like it can give you a rough sense for how
+significant your results are without having to decide on a statistical
+model. And it&#x2019;s super intuitive! A question like &#x201C;if we compare two
+groups of this size with the same characteristics, do we naturally see a
+lot of variation?&#x201D; is a great smoke test.</p>
+<p>Once I got off a plane and looked up what A/A testing actually is, I
+found out the graph above has a name! It&#x2019;s called A/A/B testing, and A/A
+testing is when you literally just run an experiment where both groups
+are the same :)</p>
+</div>
+<footer>
+
+<div class="sharing">
+<div id="mc_embed_signup">
+
+</div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://jvns.ca/blog/2015/02/06/a-a-testing/" data-via="b0rk" data-counturl="https://jvns.ca/blog/2015/02/06/a-a-testing/">Tweet</a>
+</div>
+<p class="meta">
+<a class="basic-alignment left" href="https://jvns.ca/blog/2015/01/24/why-a-c-plus-plus-programmer-might-say-i-could-never-write-python/" title="Previous Post: Why a C++ programmer might say &quot;I could never write Python&quot;">Why a C++ programmer might say &quot;I could never write Python&quot;</a>
+<a class="basic-alignment right" href="https://jvns.ca/blog/2015/02/17/how-i-learned-to-program-in-10-years/" title="Next Post: How I learned to program in 10 years">How I learned to program in 10 years</a>
+</p>
+</footer>
+</article>
+</div>
+</div>
+</div>
+<nav role="navigation" class="footer-nav"> <a href="https://jvns.ca/">Archives</a>
+</nav>
+<footer role="contentinfo"><span class="credit">&#xA9; Julia Evans. </span>
+<span>If you like this, you may like <a href="http://www.uliaea.ca/">Ulia Ea</a>. <br>
+<p class="rc-scout__text"><i class="rc-scout__logo"></i>
+You might also like the <a class="rc-scout__link" href="https://www.recurse.com/scout/click?t=546ea46360584b522270b8c3e5d830f8">Recurse Center</a>, my very favorite programming community <a href="https://jvns.ca/categories/hackerschool/">(my posts about it)</a></p>
+</span>
+
+</footer>
+
+</div>
+</body>
+</html>

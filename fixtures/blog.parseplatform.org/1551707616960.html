@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+    
+    
+    
+    <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+    <title>How We Moved Our API From Ruby to Go and Saved Our Sanity</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://blog.parseplatform.org/img/favicon/apple-touch-icon-180x180.png">
+    <meta name="apple-mobile-web-app-title" value="Parse">
+    <link rel="icon" type="image/png" href="https://blog.parseplatform.org/img/favicon/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="https://blog.parseplatform.org/img/favicon/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="https://blog.parseplatform.org/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://blog.parseplatform.org/img/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://blog.parseplatform.org/img/favicon/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" value="#5298fc">
+    <meta name="msapplication-TileImage" value="/img/favicon/apple-touch-icon-144x144.png">
+    <meta name="application-name" value="Parse">
+    <meta name="theme-color" value="#5298fc">
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/default.min.css">
+    <link href="https://blog.parseplatform.org/css/blog.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" rel="stylesheet">
+    
+    
+    
+    
+    
+    
+    
+    
+    <meta name="csrf-param" value="authenticity_token">
+    <meta name="csrf-token" value="KxDoKysxiXDIRV8VXwDYlQStDGzjbGZ24y6ZgQLYAsE=">
+    <meta name="description" value="The best place to stay up-to-date with the latest Parse news and events.
+">
+    <meta name="keywords" value="backend, mobile, development, server, code">
+    <meta value="361736430535656" name="fb:app_id">
+    <meta value="website" name="og:type">
+    <meta value="Parse" name="og:title">
+    <meta value="http://blog.parseplatform.org//assets/images/social.jpg" name="og:image">
+    <meta value="The best place to stay up-to-date with the latest Parse news and events.
+" name="og:description">
+    <meta value="http://blog.parseplatform.org//learn/how-we-moved-our-api-from-ruby-to-go-and-saved-our-sanity/" name="og:url">
+    <meta name="viewport" value="width=device-width, initial-scale=1">
+</head>
+
+<body class="pure p_docs p_docs_index  user_logged_in">
+<div class="site__wrapper">
+    <div class="site__content">
+        <div class="content__wrapper">
+            <header class="site__header site__header--white">
+    <div class="container">
+        <a href="https://blog.parseplatform.org/" class="header-logo">
+            <span class="hidden">Parse</span>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 152 60" style="enable-background:new 0 0 152 60;" xml:space="preserve">
+            <g>
+            	<path class="line one" d="M23.072,39.678c-0.011,3.348-2.395,4.615-4.909,4.615c-2.851,0-4.541-1.701-4.541-4.357
+            		c0-2.964,2.031-4.667,5.35-4.725h13.611c6.428,0.079,10.137-5.391,10.137-9.953c0-4.598-3.485-9.598-9.622-9.842
+            		c-6.083-0.242-9.99,5.281-9.99,11.167v3.863"/>
+            	<path class="line two" d="M23.072,39.678c-0.011,3.348-2.395,4.615-4.909,4.615c-2.851,0-4.541-1.701-4.541-4.357
+            		c0-2.964,2.031-4.667,5.35-4.725h13.611c6.428,0.079,10.137-5.391,10.137-9.953c0-4.598-3.485-9.598-9.622-9.842
+            		c-6.083-0.242-9.99,5.281-9.99,11.167v3.863"/>
+            	<path class="line three" d="M23.072,39.678c-0.011,3.348-2.395,4.615-4.909,4.615c-2.851,0-4.541-1.701-4.541-4.357
+            		c0-2.964,2.031-4.667,5.35-4.725h13.611c6.428,0.079,10.137-5.391,10.137-9.953c0-4.598-3.485-9.598-9.622-9.842
+            		c-6.083-0.242-9.99,5.281-9.99,11.167v3.863"/>
+            	<path class="st1" d="M151.88,31.106c0-4.561-2.575-7.835-7.173-7.872c-5.665-0.037-9.197,4.12-9.197,10.484v0.11
+            		c0,6.033,3.863,9.601,9.601,9.601c1.839,0,4.083-0.405,5.739-1.177v-3.568c-1.839,0.956-3.752,1.398-5.408,1.398
+            		c-3.568,0-6.07-1.803-6.18-5.959h12.36C151.807,33.056,151.88,32.026,151.88,31.106z M148.312,31.07h-8.829
+            		c0.625-3.053,2.354-4.745,4.966-4.745c2.575,0,3.863,1.729,3.863,4.561V31.07z"/>
+            	<path class="st1" d="M125.725,34.712l0.405,0.147c2.869,1.03,3.531,1.655,3.531,2.906c0,1.471-0.993,2.428-3.458,2.428
+            		c-1.986,0-4.12-0.662-6.364-1.692v3.752c1.803,0.699,4.12,1.177,6.364,1.177c4.819,0,7.21-2.428,7.21-5.812
+            		c0-2.943-1.471-4.525-5.408-5.959l-0.405-0.147c-3.127-1.14-3.752-1.655-3.752-2.869c0-1.361,0.956-2.281,3.237-2.281
+            		c1.839,0,3.642,0.589,5.408,1.435v-3.531c-1.582-0.625-3.348-1.03-5.26-1.03c-4.598,0-7.1,2.575-7.1,5.886
+            		C120.134,31.695,121.679,33.24,125.725,34.712"/>
+            	<path class="st1" d="M110.863,29.892c1.288-2.023,3.09-3.016,5.26-3.016c0.773,0,1.508,0.11,2.17,0.331v-3.384
+            		c-0.625-0.258-1.361-0.405-2.134-0.405c-2.281,0-4.01,1.03-5.518,3.09l-0.258-2.869h-3.164v19.386h3.642V29.892z"/>
+            	<path class="st1" d="M96.481,23.197c-2.281,0-4.672,0.699-6.474,1.692v3.605c2.023-1.251,4.378-2.023,6.254-2.023
+            		c2.612,0,3.679,1.14,3.679,3.274v1.619c-5.334,0.147-8.461,1.03-10.116,2.685c-1.177,1.14-1.692,2.685-1.692,4.267
+            		c0,3.274,2.354,5.15,5.702,5.15c2.244,0,4.378-0.92,6.327-2.796l0.221,2.354h3.164V30.003
+            		C103.544,25.405,101.263,23.197,96.481,23.197z M99.938,37.728c-1.471,1.619-3.2,2.722-5.297,2.722
+            		c-1.729,0-2.833-0.883-2.833-2.428c0-2.281,1.876-3.642,8.13-3.826V37.728z"/>
+            	<path class="st1" d="M77.609,17.643h-8.571v25.383h3.826v-8.314h4.745c5.923,0,9.491-3.164,9.491-8.498V26.14
+            		C87.1,20.806,83.532,17.643,77.609,17.643z M83.311,26.214c0,3.421-1.986,5.04-5.444,5.04h-5.003V21.101h5.04
+            		c3.421,0,5.408,1.619,5.408,5.04V26.214z"/>
+            	<path class="st1" d="M27.838,2.192C12.204,2.192-0.12,14.589-0.12,30.15c0,15.597,12.323,27.958,27.958,27.958
+            		c15.634,0,27.958-12.36,27.958-27.958C55.795,14.589,43.472,2.192,27.838,2.192z M32.473,36.955H18.752
+            		c-1.986,0-3.164,1.214-3.164,3.017c0,1.582,1.067,2.722,2.612,2.722c1.766,0,2.796-1.214,2.906-3.016h4.01
+            		c-0.184,4.341-2.906,6.658-6.953,6.658c-3.789,0-6.585-2.575-6.585-6.401c0-3.973,2.98-6.769,7.394-6.769h13.611
+            		c4.598,0,8.093-3.348,8.093-7.909c0-4.598-3.127-7.799-7.578-7.799c-4.414,0-7.946,3.237-7.946,9.123v3.863h-4.046v-3.863
+            		c0-7.872,5.076-12.986,12.066-12.986c6.695,0,11.551,4.782,11.551,11.588C44.723,32.026,39.499,36.955,32.473,36.955z"/>
+            </g>
+            </svg>
+        </a>
+        <a class="header-hamburger" data-menu-trigger="toggle">
+            <span class="header-hamburger__wrap">
+                <span class="header-hamburger__line--top"></span>
+                <span class="header-hamburger__line--middle"></span>
+                <span class="header-hamburger__line--bottom"></span>
+                <span class="header-hamburger__line--arrow-top"></span>
+                <span class="header-hamburger__line--arrow-bottom"></span>
+            </span>
+        </a>
+        <ul class="header-nav">
+            <li><a href="http://docs.parseplatform.org/">Docs</a></li>
+            <li><a class="active" href="https://blog.parseplatform.org/">Blog</a></li>
+        </ul>
+	</div>
+</header>
+
+            <aside class="hero hero--docs-landing">
+    <div class="grid-container">
+        <div class="col--9">
+            <div class="hero--docs-landing__content">
+                
+                
+                <div>
+    <span class="author">Charity Majors -</span>
+    <span class="date">
+        June
+        
+        10th,
+        
+        2015
+    </span>
+</div>
+
+                <h1 class="h1 h1--white">
+                    How We Moved Our API From Ruby to Go and Saved Our Sanity
+                </h1>
+            </div>
+        </div>
+    </div>
+</aside>
+<div class="container padding-top-40 padding-bottom-50" data-nav-waypoint="">
+    <article role="article" class="posts">
+        
+        <div>
+    
+    <a href="https://blog.parseplatform.org/blog/categories/engineering" class="btn btn--dark--outline btn--xsmall category">Engineering</a>
+    
+    <a href="https://blog.parseplatform.org/blog/categories/learn" class="btn btn--dark--outline btn--xsmall category">Learn</a>
+    
+</div>
+
+        <div class="padding-bottom-20 padding-top-20">
+  
+  
+</div>
+        <div class="padding-bottom-40 post"><p>The first lines of Parse code were written nearly four years ago. In 2011 Parse was a crazy little idea to solve the problem of building mobile apps.</p>
+
+<p>Those first few lines were written in Ruby on Rails.</p>
+
+<hr>
+
+<h2 id="ruby-on-rails">Ruby on Rails</h2>
+
+<p>Ruby let us get the first versions of Parse out the door quickly. It let a small team of engineers iterate on it and add functionality very fast. There was a deep bench of library support, gems, deploy tooling, and best practices available, so we didn&#x2019;t have to reinvent very many wheels.</p>
+
+<p>We used Unicorn as our HTTP server, Capistrano to deploy code, RVM to manage the environment, and a zillion open source gems to handle things like YAML parsing, oauth, JSON parsing, MongoDB, and MySQL. We also used Chef which is Ruby-based to manage our infrastructure so everything played together nicely. For a while.</p>
+
+<p>The first signs of trouble bubbled up in the deploy process. As our code base grew, it took longer and longer to deploy, and the &#x201C;graceful&#x201D; unicorn restarts really weren&#x2019;t very graceful. So, we monkeypatched rolling deploy groups in to Capistrano.</p>
+
+<p>&#x201C;Monkeypatch&#x201D; quickly became a key technical term that we learned to associate with our Ruby codebase.</p>
+
+<p>A year and a half in, at the end of 2012, we had 200 API servers running on <a href="http://ec2instances.info/">m1.xlarge</a> instance types with 24 unicorn workers per instance. This was to serve 3000 requests per second for 60,000 mobile apps. It took 20 minutes to do a full deploy or rollback, and we had to do a bunch of complicated load balancer shuffling and pre-warming to prevent the API from being impacted during a deploy.</p>
+
+<p>Then, Parse really started to take off and experience hockey-stick growth.</p>
+
+<hr>
+
+<h2 id="problems">Problems</h2>
+
+<p>When our API traffic and number of apps started growing faster, we started having to rapidly spin up more database machines to handle the new request traffic. That is when the &#x201C;one process per request&#x201D; part of the Rails model started to fall apart.</p>
+
+<p>With a typical Ruby on Rails setup, you have a fixed pool of worker processes, and each worker can handle only one request at a time. So any time you have a type of request that is particularly slow, your worker pool can rapidly fill up with that type of request. This happens too fast for things like auto-scaling groups to react. It&#x2019;s also wasteful because the vast majority of these workers are just waiting on another service. In the beginning, this happened pretty rarely and we could manage the problem by paging a human and doing whatever was necessary to keep the API up. But as we started growing faster and adding more databases and workers, we added more points of failure and more ways for performance to get degraded.</p>
+
+<p>We started looking ahead to when Parse would 10x its size, and realized that the one-process-per-request model just wouldn&#x2019;t scale. We had to move to an async model that was fundamentally different from the Rails way. Yeah, rewrites are hard, and yeah they always take longer than anyone ever anticipates, but we just didn&#x2019;t see how we could make the Rails codebase scale while it was tied to one process per request.</p>
+
+<hr>
+
+<h2 id="what-next">What next?</h2>
+
+<p>We knew we needed asynchronous operations. We considered a bunch of options:</p>
+
+<h3 id="eventmachine">EventMachine</h3>
+
+<p>We already had some of our push notification service using EventMachine, but our experience was not great as it too was scaling. We had constant trouble with accidentally introducing synchronous behavior or parallelism bugs. The vast majority of Ruby gems are not asynchronous, and many are not threadsafe, so it was often hard to find a library that did some common task asynchronously.</p>
+
+<h3 id="jruby">JRuby</h3>
+
+<p>This might seem like the obvious solution - after all, Java has threads and can handle massive concurrency. Plus it&#x2019;s Ruby already, right? <a href="http://www.infoq.com/articles/twitter-java-use">This is the solution Twitter investigated before settling on Scala</a>. But since JRuby is still basically Ruby, it still has the problem of asynchronous library support. We were concerned about needing a second rewrite later, from JRuby to Java. And literally nobody at all on our backend or ops teams wanted to deal with deploying and tuning the JVM. The groans were audible from outer space.</p>
+
+<h3 id="c">C++</h3>
+
+<p>We had a lot of experienced C++ developers on our team. We also already had some C++ in our stack, in our Cloud Code servers that ran embedded V8. However, C++ didn&#x2019;t seem like a great choice. Our C++ code was harder to debug and maintain. It seemed clear that C++ development was generally less productive than more modern alternatives. It was missing a lot of library support for things we knew were important to us, like HTTP request handling. Asynchronous operation was possible but often awkward. And nobody really <em>wanted</em> to write a lot of C++ code.</p>
+
+<h3 id="c-1">C</h3>
+
+<p>C# was a strong contender. It arguably had the best concurrency model with Async and Await. The real problem was that C# development on Linux always felt like a second-class citizen. Libraries that interoperate with common open source tools are often unavailable on C#, and our toolchain would have to change a lot.</p>
+
+<h3 id="go">Go</h3>
+
+<p>Go and C# both have asynchronous operation built into the language at a low level, making it easy for large groups of people to write asynchronous code. The MongoDB Go driver is probably the best MongoDB driver in existence, and complex interaction with MongoDB is core to Parse. Goroutines were much more lightweight than threads. And frankly we were most excited about writing Go code. We thought it would be a lot easier to recruit great engineers to write Go code than any of the other solid async languages.</p>
+
+<p>In the end, the choice boiled down to C# vs Go, and we chose Go.</p>
+
+<hr>
+
+<h2 id="wherein-we-rewrite-the-world">Wherein we rewrite the world</h2>
+
+<p>We started out rewriting our EventMachine push backend from Ruby to Go. We did some preliminary benchmarking with Go concurrency and found that each network connection ate up only 4kb of RAM. After rewriting the EventMachine push backend to Go we went from 250k connections per node to 1.5 million connections per node without even touching things like kernel tuning. Plus it seemed really fun. So, Go it was.</p>
+
+<p>We rewrote some other minor services and starting building new services in Go. The main challenge, though, was to rewrite the core API server that handles requests to <a href="http://api.parse.com/">api.parse.com</a> while seamlessly maintaining backward compatibility. We rewrote this endpoint by endpoint, using a live shadowing system to avoid impacting production, and monitored the differential metrics to make sure the behaviors matched.</p>
+
+<p>During this time, Parse 10x&#x2019;d the number of apps on our backend and more than 10x&#x2019;d our request traffic. We also 10x&#x2019;d the number of storage systems backed by Ruby. We were chasing a rapidly moving target.</p>
+
+<p>The hardest part of the rewrite was dealing with all the undocumented behaviors and magical mystery bits that you get with Rails middleware. Parse exposes a REST API, and Rails HTTP processing is built on a philosophy of &#x201C;be liberal in what you accept&#x201D;. So developers end up inadvertently sending API requests that are undocumented or even non-RFC compliant &#x2026; but Rails middleware cleans them up and handles it fine.</p>
+
+<p>So we had to port a lot of delightful behavior from the Ruby API to the Go API, to make sure we kept handling the weird requests that Rails handled. Stuff like doubly encoded URLs, weird content-length requirements, bodies in HTTP requests that shouldn&#x2019;t have bodies, horrible oauth misuse, horrible mis-encoded Unicode.</p>
+
+<p>Our Go code is now peppered with fun, cranky comments like these:</p>
+
+<pre class="line-numbers"><code class="language-javascript">// Note: an unset cache version is treated by ruby as &quot;&quot;.
+// Because of this, dirtying this isn&apos;t as simple as deleting it - we need to
+// actually set a new value.
+
+// This byte sequence is what ruby expects.
+// yes that&apos;s a paren after the second 180, per ruby.
+
+// Inserting and having an op is kinda weird: We already know
+// state zero. But ruby supports it, so go does too.
+
+// single geo query, don&apos;t do anything. stupid and does not make sense
+// but ruby does it. Changing this will break a lot of client tests.
+// just be nice and fix it here.
+
+// Ruby sets various defaults directly in the structure and expects them to appear in cache.
+// For consistency, we&apos;ll do the same thing.</code></pre>
+
+<h3 id="results">Results</h3>
+
+<p>Was the rewrite worth it? Hell yes it was. <strong>Our reliability improved by an order of magnitude</strong>. More importantly, our API is not getting more and more fragile as we spin up more databases and backing services. Our codebase got cleaned up and we got rid of a ton of magical gems and implicit assumptions. Co-tenancy issues improved for customers across the board. Our ops team stopped getting massively burned out from getting paged and trying to track down and manually remediate Ruby API outages multiple times a week. And needless to say, our customers were happier too.</p>
+
+<p>We now almost never have reliability-impacting events that can be tracked back to the API layer - a massive shift from a year ago. Now when we have timeouts or errors, it&#x2019;s usually constrained to a single app - because one app is issuing a very inefficient query that causes timeouts or full table scans for their app, or it&#x2019;s a database-related co-tenancy problem that we can resolve by automatically rebalancing or filtering bad actors.</p>
+
+<p>An asynchronous model had many other benefits. We were also able to instrument everything the API was doing with counters and metrics, because these were no longer blocking operations that interfered with communicating to other services. We could downsize our provisioned API server pool by about 90%. And we were also able to remove silos of isolated Rails API servers from our stack, drastically simplifying our architecture.</p>
+
+<p>As if that weren&#x2019;t enough, the time it takes to run our full integration test suite dropped from 25 minutes to 2 minutes, and the time to do a full API server deploy with rolling restarts dropped from 30 minutes to 3 minutes. The go API server <a href="https://github.com/facebookgo/grace">restarts gracefully</a> so no load balancer juggling and prewarming is necessary.</p>
+
+<p>We love Go. We&#x2019;ve found it really fast to deploy, really easy to instrument, really lightweight and inexpensive in terms of resources. It&#x2019;s taken a while to get here, but the journey was more than worth it.</p>
+
+<h3 id="creditsblames">Credits/Blames</h3>
+
+<p>Credits/Blames go to Shyam Jayaraman for driving the initial decision to use Go, Ittai Golde for shepherding the bulk of the API server rewrite from start to finish, Naitik Shah for writing and open sourcing a ton of <a href="https://github.com/facebookgo">libraries and infrastructure</a> underpinning our Go code base, and the rest of the amazing Parse backend SWE team who performed the rewrite.</p>
+
+<p>Don&#x2019;t miss Abhishek Kona&#x2019;s <a href="http://gophercon.com/speakers/abhishek-kona/">talk at GopherCon</a> next month!</p>
+</div>
+        <div class="copy-block margin-top-40 signature">
+            <div>
+                <span class="author">Charity Majors</span>
+            </div>
+            <div class="margin-top-20">
+                
+                
+                
+            </div>
+        </div>
+    </article>
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

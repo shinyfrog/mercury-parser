@@ -13,7 +13,7 @@ var iconv = _interopDefault(require('iconv-lite'));
 var _parseInt = _interopDefault(require('@babel/runtime-corejs2/core-js/parse-int'));
 var _slicedToArray = _interopDefault(require('@babel/runtime-corejs2/helpers/slicedToArray'));
 var _Promise = _interopDefault(require('@babel/runtime-corejs2/core-js/promise'));
-var request = _interopDefault(require('postman-request'));
+var request = _interopDefault(require('request'));
 var _Reflect$ownKeys = _interopDefault(require('@babel/runtime-corejs2/core-js/reflect/own-keys'));
 var _toConsumableArray = _interopDefault(require('@babel/runtime-corejs2/helpers/toConsumableArray'));
 var _defineProperty = _interopDefault(require('@babel/runtime-corejs2/helpers/defineProperty'));
@@ -32,7 +32,7 @@ var _Array$from = _interopDefault(require('@babel/runtime-corejs2/core-js/array/
 var ellipsize = _interopDefault(require('ellipsize'));
 var _Array$isArray = _interopDefault(require('@babel/runtime-corejs2/core-js/array/is-array'));
 
-var NORMALIZE_RE = /\s{2,}(?![^<>]*<\/(pre|code|textarea)>)/g;
+var NORMALIZE_RE = /\s{2,}/g;
 function normalizeSpaces(text) {
   return text.replace(NORMALIZE_RE, ' ').trim();
 }
@@ -194,6 +194,56 @@ function getEncoding(str) {
   return encoding;
 }
 
+var _marked =
+/*#__PURE__*/
+_regeneratorRuntime.mark(range);
+
+function range() {
+  var start,
+      end,
+      _args = arguments;
+  return _regeneratorRuntime.wrap(function range$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          start = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
+          end = _args.length > 1 && _args[1] !== undefined ? _args[1] : 1;
+
+        case 2:
+          if (!(start <= end)) {
+            _context.next = 7;
+            break;
+          }
+
+          _context.next = 5;
+          return start += 1;
+
+        case 5:
+          _context.next = 2;
+          break;
+
+        case 7:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked, this);
+}
+
+// extremely simple url validation as a first step
+function validateUrl(_ref) {
+  var hostname = _ref.hostname;
+  // If this isn't a valid url, return an error message
+  return !!hostname;
+}
+
+var Errors = {
+  badUrl: {
+    error: true,
+    messages: 'The url parameter passed does not look like a valid URL. Please check your data and try again.'
+  }
+};
+
 var REQUEST_HEADERS = cheerio.browser ? {} : {
   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
 }; // The number of milliseconds to attempt to fetch a resource before timing out.
@@ -270,22 +320,16 @@ function _fetchResource() {
   _fetchResource = _asyncToGenerator(
   /*#__PURE__*/
   _regeneratorRuntime.mark(function _callee(url, parsedUrl) {
-    var headers,
-        options,
-        _ref2,
-        response,
-        body,
-        _args = arguments;
+    var options, _ref2, response, body;
 
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
             parsedUrl = parsedUrl || URL.parse(encodeURI(url));
             options = _objectSpread({
               url: parsedUrl.href,
-              headers: _objectSpread({}, REQUEST_HEADERS, headers),
+              headers: _objectSpread({}, REQUEST_HEADERS),
               timeout: FETCH_TIMEOUT,
               // Accept cookies
               jar: true,
@@ -300,34 +344,31 @@ function _fetchResource() {
               // Follow GET redirects; this option is for Node only
               followRedirect: true
             });
-            _context.next = 5;
+            _context.next = 4;
             return get(options);
 
-          case 5:
+          case 4:
             _ref2 = _context.sent;
             response = _ref2.response;
             body = _ref2.body;
-            _context.prev = 8;
+            _context.prev = 7;
             validateResponse(response);
             return _context.abrupt("return", {
               body: body,
               response: response
             });
 
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](8);
-            return _context.abrupt("return", {
-              error: true,
-              message: _context.t0.message
-            });
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](7);
+            return _context.abrupt("return", Errors.badUrl);
 
-          case 16:
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[8, 13]]);
+    }, _callee, this, [[7, 12]]);
   }));
   return _fetchResource.apply(this, arguments);
 }
@@ -359,10 +400,10 @@ var SPACER_RE = new RegExp('transparent|spacer|blank', 'i'); // The class we wil
 // but would normally remove
 
 var KEEP_CLASS = 'mercury-parser-keep';
-var KEEP_SELECTORS = ['iframe[src^="https://www.youtube.com"]', 'iframe[src^="https://www.youtube-nocookie.com"]', 'iframe[src^="http://www.youtube.com"]', 'iframe[src^="https://player.vimeo"]', 'iframe[src^="http://player.vimeo"]', 'iframe[src^="https://www.redditmedia.com"]']; // A list of tags to strip from the output if we encounter them.
+var KEEP_SELECTORS = ['iframe[src^="https://www.youtube.com"]', 'iframe[src^="https://www.youtube-nocookie.com"]', 'iframe[src^="http://www.youtube.com"]', 'iframe[src^="https://player.vimeo"]', 'iframe[src^="http://player.vimeo"]']; // A list of tags to strip from the output if we encounter them.
 
 var STRIP_OUTPUT_TAGS = ['title', 'script', 'noscript', 'link', 'style', 'hr', 'embed', 'iframe', 'object']; // cleanAttributes
-var WHITELIST_ATTRS = ['src', 'srcset', 'sizes', 'type', 'href', 'class', 'id', 'alt', 'xlink:href', 'width', 'height'];
+var WHITELIST_ATTRS = ['src', 'srcset', 'href', 'class', 'id', 'alt', 'xlink:href', 'width', 'height'];
 var WHITELIST_ATTRS_RE = new RegExp("^(".concat(WHITELIST_ATTRS.join('|'), ")$"), 'i'); // removeEmpty
 
 var CLEAN_CONDITIONALLY_TAGS = ['ul', 'ol', 'table', 'div', 'button', 'form'].join(','); // cleanHeaders
@@ -1243,9 +1284,9 @@ function rewriteTopLevel$$1(article, $) {
   return $;
 }
 
-function absolutize($, rootUrl, attr) {
+function absolutize($, rootUrl, attr, $content) {
   var baseUrl = $('base').attr('href');
-  $("[".concat(attr, "]")).each(function (_, node) {
+  $("[".concat(attr, "]"), $content).each(function (_, node) {
     var attrs = getAttrs(node);
     var url = attrs[attr];
     var absoluteUrl = URL.resolve(baseUrl || rootUrl, url);
@@ -1280,7 +1321,7 @@ function absolutizeSet($, rootUrl, $content) {
 
 function makeLinksAbsolute$$1($content, $, url) {
   ['href', 'src'].forEach(function (attr) {
-    return absolutize($, url, attr);
+    return absolutize($, url, attr, $content);
   });
   absolutizeSet($, url, $content);
   return $content;
@@ -1526,9 +1567,7 @@ function setAttrs(node, attrs) {
 // DOM manipulation
 
 var IS_LINK = new RegExp('https?://', 'i');
-var IMAGE_RE = '.(png|gif|jpe?g)';
-var IS_IMAGE = new RegExp("".concat(IMAGE_RE), 'i');
-var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\s*[\\d.]+[wx])"), 'i');
+var IS_IMAGE = new RegExp('.(png|gif|jpe?g)', 'i');
 var TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 
 // lazy loaded images into normal images.
@@ -1543,9 +1582,7 @@ function convertLazyLoadedImages($) {
     _Reflect$ownKeys(attrs).forEach(function (attr) {
       var value = attrs[attr];
 
-      if (attr !== 'srcset' && IS_LINK.test(value) && IS_SRCSET.test(value)) {
-        $(img).attr('srcset', value);
-      } else if (attr !== 'src' && attr !== 'srcset' && IS_LINK.test(value) && IS_IMAGE.test(value)) {
+      if (attr !== 'src' && IS_LINK.test(value) && IS_IMAGE.test(value)) {
         $(img).attr('src', value);
       }
     });
@@ -1575,23 +1612,17 @@ var Resource = {
   // :param response: If set, use as the response rather than
   //                  attempting to fetch it ourselves. Expects a
   //                  string.
-  // :param headers: Custom headers to be included in the request
   create: function () {
     var _create = _asyncToGenerator(
     /*#__PURE__*/
     _regeneratorRuntime.mark(function _callee(url, preparedResponse, parsedUrl) {
-      var headers,
-          result,
-          validResponse,
-          _args = arguments;
+      var result, validResponse;
       return _regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              headers = _args.length > 3 && _args[3] !== undefined ? _args[3] : {};
-
               if (!preparedResponse) {
-                _context.next = 6;
+                _context.next = 5;
                 break;
               }
 
@@ -1607,29 +1638,29 @@ var Resource = {
                 body: preparedResponse,
                 response: validResponse
               };
-              _context.next = 9;
+              _context.next = 8;
               break;
 
-            case 6:
-              _context.next = 8;
-              return fetchResource(url, parsedUrl, headers);
+            case 5:
+              _context.next = 7;
+              return fetchResource(url, parsedUrl);
 
-            case 8:
+            case 7:
               result = _context.sent;
 
-            case 9:
+            case 8:
               if (!result.error) {
-                _context.next = 12;
+                _context.next = 11;
                 break;
               }
 
               result.failed = true;
               return _context.abrupt("return", result);
 
-            case 12:
+            case 11:
               return _context.abrupt("return", this.generateDoc(result));
 
-            case 13:
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -1686,49 +1717,6 @@ var Resource = {
     return $;
   }
 };
-
-var _marked =
-/*#__PURE__*/
-_regeneratorRuntime.mark(range);
-
-function range() {
-  var start,
-      end,
-      _args = arguments;
-  return _regeneratorRuntime.wrap(function range$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          start = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
-          end = _args.length > 1 && _args[1] !== undefined ? _args[1] : 1;
-
-        case 2:
-          if (!(start <= end)) {
-            _context.next = 7;
-            break;
-          }
-
-          _context.next = 5;
-          return start += 1;
-
-        case 5:
-          _context.next = 2;
-          break;
-
-        case 7:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, _marked, this);
-}
-
-// extremely simple url validation as a first step
-function validateUrl(_ref) {
-  var hostname = _ref.hostname;
-  // If this isn't a valid url, return an error message
-  return !!hostname;
-}
 
 var merge = function merge(extractor, domains) {
   return domains.reduce(function (acc, domain) {
@@ -3440,7 +3428,7 @@ var WwwNydailynewsComExtractor = {
 var WwwCnbcComExtractor = {
   domain: 'www.cnbc.com',
   title: {
-    selectors: ['h1.title', 'h1.ArticleHeader-headline']
+    selectors: ['h1.title']
   },
   author: {
     selectors: [['meta[name="author"]', 'value']]
@@ -3452,7 +3440,7 @@ var WwwCnbcComExtractor = {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['div#article_body.content', 'div.story', 'div.ArticleBody-articleBody'],
+    selectors: ['div#article_body.content', 'div.story'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
@@ -4758,26 +4746,27 @@ var NewsMynaviJpExtractor = {
   }
 };
 
-var GithubComExtractor = {
-  domain: 'github.com',
+var JustcompiledBlogspotComExtractor = {
+  domain: 'justcompiled.blogspot.com',
   title: {
-    selectors: [['meta[name="og:title"]', 'value']]
+    selectors: ['.post-title.entry-title']
   },
   author: {
-    selectors: [// enter author selectors
-    ]
+    selectors: ['span[itemprop="name"]']
   },
   date_published: {
-    selectors: [['span[itemprop="dateModified"] relative-time', 'datetime']]
+    selectors: [['abbr.published[title]', 'title']]
   },
   dek: {
-    selectors: ['span[itemprop="about"]']
+    selectors: [// enter selectors
+    ]
   },
   lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
+    selectors: [// enter selectors
+    ]
   },
   content: {
-    selectors: [['#readme article']],
+    selectors: ['.post-body'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
@@ -4788,47 +4777,413 @@ var GithubComExtractor = {
   }
 };
 
-var WwwRedditComExtractor = {
-  domain: 'www.reddit.com',
+var WwwAmibrokerComExtractor = {
+  domain: 'www.amibroker.com',
   title: {
-    selectors: ['div[data-test-id="post-content"] h2']
+    selectors: ['.entrytitle']
   },
   author: {
-    selectors: ['div[data-test-id="post-content"] a[href*="user/"]']
+    selectors: [// enter author selectors
+    ]
   },
   date_published: {
-    selectors: ['div[data-test-id="post-content"] a[data-click-id="timestamp"]']
+    selectors: ['.entrydate']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['.entrybody'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var AngularIoExtractor = {
+  domain: 'angular.io',
+  title: {
+    selectors: [// enter title selectors
+    ]
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: [// enter content selectors
+    ],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var ArstechnicaComExtractor = {
+  domain: 'arstechnica.com',
+  title: {
+    selectors: ['.article-header h1']
+  },
+  author: {
+    selectors: ['.article-header .author']
+  },
+  date_published: {
+    selectors: [['.article-header time[datetime]', 'datetime']]
+  },
+  dek: {
+    selectors: ['.article-header h2']
+  },
+  lead_image_url: {
+    selectors: ['figure.image.center.large img']
+  },
+  content: {
+    selectors: ['.article-guts'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {
+      '<ul class="toc">': 'p'
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['aside', 'nav']
+  }
+};
+
+var BlogParseplatformOrgExtractor = {
+  domain: 'blog.parseplatform.org',
+  title: {
+    selectors: ['h1.h1--white']
+  },
+  author: {
+    selectors: ['.copy-block .author']
+  },
+  date_published: {
+    selectors: ['.hero--docs-landing__content .date']
+  },
+  dek: {
+    selectors: []
+  },
+  lead_image_url: {
+    selectors: ['#this_selector_is_not_really_on_the_page #ihope']
+  },
+  content: {
+    selectors: ['article.posts'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var JvnsCaExtractor = {
+  domain: 'jvns.ca',
+  title: {
+    selectors: ['article h1']
+  },
+  author: {
+    selectors: [['meta[name="author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['header time[datetime]', 'datetime']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['article .entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var SiversOrgExtractor = {
+  domain: 'sivers.org',
+  title: {
+    selectors: ['header h1']
+  },
+  author: {
+    selectors: ['footer a:first-child']
+  },
+  date_published: {
+    selectors: ['header small']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['#content article'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.blogparent', 'header', 'footer']
+  }
+};
+
+var SspaiComExtractor = {
+  domain: 'sspai.com',
+  title: {
+    selectors: ['h1.title']
+  },
+  author: {
+    selectors: ['.user-card h4 span']
+  },
+  date_published: {
+    selectors: ['article time']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: ['img']
+  },
+  content: {
+    selectors: ['article'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: [//
+    ]
+  }
+};
+
+var WwwCbrComExtractor = {
+  domain: 'www.cbr.com',
+  title: {
+    selectors: ['h1.article-title']
+  },
+  author: {
+    selectors: ['.article-info-ul li:first-child']
+  },
+  date_published: {
+    selectors: [['.article-info-ul time[datetime]', 'datetime']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
   },
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: [['div[data-test-id="post-content"] p'], // text post
-    ['div[data-test-id="post-content"] a[target="_blank"]:not([data-click-id="timestamp"])', // external link
-    'div[data-test-id="post-content"] div[data-click-id="media"]'], // external link with media preview (YouTube, imgur album, etc...)
-    ['div[data-test-id="post-content"] div[data-click-id="media"]'], // Embedded media (Reddit video)
-    ['div[data-test-id="post-content"] a[target="_blank"]:not([data-click-id="timestamp"])'], // external link
-    'div[data-test-id="post-content"]'],
+    selectors: ['.article-body'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.article-tags', '.next-btn-img', '.next-btn-text.text-trimmed']
+  }
+};
+
+var WwwGovUkExtractor = {
+  domain: 'www.gov.uk',
+  title: {
+    selectors: ['#content h1']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: ['#i-really-hope-this-selector-is-not-on-the-page #really']
+  },
+  content: {
+    selectors: ['#wrapper'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div[role="img"]': function divRoleImg($node) {
-        // External link image preview
-        var $img = $node.find('img');
-        var bgImg = $node.css('background-image');
-
-        if ($img.length === 1 && bgImg) {
-          $img.attr('src', bgImg.match(/\((.*?)\)/)[1].replace(/('|")/g, ''));
-          return $img;
-        }
-
-        return $node;
-      }
+      '<div class=grid-row>': '',
+      '<div class="column-two-thirds">': ''
     },
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.icon']
+    clean: []
+  }
+};
+
+var WwwKbbComExtractor = {
+  domain: 'www.kbb.com',
+  title: {
+    selectors: ['#articlePage h1']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['#articlePage'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwNikonpassionComExtractor = {
+  domain: 'www.nikonpassion.com',
+  title: {
+    selectors: ['h1.entry-title']
+  },
+  author: {
+    selectors: ['.entry-meta .entry-meta-date:first-child']
+  },
+  date_published: {
+    selectors: ['.entry-meta .entry-meta-date:nth-child(2)']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['.entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwProcessStExtractor = {
+  domain: 'www.process.st',
+  title: {
+    selectors: ['.container h1']
+  },
+  author: {
+    selectors: ['.content-post .author .name']
+  },
+  date_published: {
+    selectors: ['.content-post .author .date']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: ['.content img']
+  },
+  content: {
+    selectors: ['.content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var MpWeixinQqComExtractor = {
+  domain: 'mp.weixin.qq.com',
+  title: {
+    selectors: ['#activity-name']
+  },
+  author: {
+    selectors: ['#js_name']
+  },
+  date_published: {
+    selectors: ['#publish_time']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['#js_content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['img.__bg_gif']
   }
 };
 
@@ -4930,8 +5285,20 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
   BlisterreviewComExtractor: BlisterreviewComExtractor,
   NewsMynaviJpExtractor: NewsMynaviJpExtractor,
-  GithubComExtractor: GithubComExtractor,
-  WwwRedditComExtractor: WwwRedditComExtractor
+  JustcompiledBlogspotComExtractor: JustcompiledBlogspotComExtractor,
+  WwwAmibrokerComExtractor: WwwAmibrokerComExtractor,
+  AngularIoExtractor: AngularIoExtractor,
+  ArstechnicaComExtractor: ArstechnicaComExtractor,
+  BlogParseplatformOrgExtractor: BlogParseplatformOrgExtractor,
+  JvnsCaExtractor: JvnsCaExtractor,
+  SiversOrgExtractor: SiversOrgExtractor,
+  SspaiComExtractor: SspaiComExtractor,
+  WwwCbrComExtractor: WwwCbrComExtractor,
+  WwwGovUkExtractor: WwwGovUkExtractor,
+  WwwKbbComExtractor: WwwKbbComExtractor,
+  WwwNikonpassionComExtractor: WwwNikonpassionComExtractor,
+  WwwProcessStExtractor: WwwProcessStExtractor,
+  MpWeixinQqComExtractor: MpWeixinQqComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
@@ -4949,10 +5316,6 @@ var SEC_DATE_STRING = /^\d{10}$/i;
 var CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
 var TIME_MERIDIAN_SPACE_RE = /(.*\d)(am|pm)(.*)/i;
 var TIME_MERIDIAN_DOTS_RE = /\.m\./i;
-var TIME_NOW_STRING = /^\s*(just|right)?\s*now\s*/i;
-var timeUnits = ['seconds?', 'minutes?', 'hours?', 'days?', 'weeks?', 'months?', 'years?'];
-var allTimeUnits = timeUnits.join('|');
-var TIME_AGO_STRING = new RegExp("(\\d+)\\s+(".concat(allTimeUnits, ")\\s+ago"), 'i');
 var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 var allMonths = months.join('|');
 var timestamp1 = '[0-9]{1,2}:[0-9]{2,2}( ?[ap].?m.?)?';
@@ -5006,15 +5369,6 @@ function cleanDateString(dateString) {
 function createDate(dateString, timezone, format) {
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
     return moment(new Date(dateString));
-  }
-
-  if (TIME_AGO_STRING.test(dateString)) {
-    var fragments = TIME_AGO_STRING.exec(dateString);
-    return moment().subtract(fragments[1], fragments[2]);
-  }
-
-  if (TIME_NOW_STRING.test(dateString)) {
-    return moment();
   }
 
   return timezone ? moment.tz(dateString, format || parseFormat(dateString), timezone) : moment(dateString, format || parseFormat(dateString));
@@ -6296,7 +6650,7 @@ function transformElements($content, $, _ref2) {
   return $content;
 }
 
-function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
+function findMatchingSelector($, selectors, extractHtml) {
   return selectors.find(function (selector) {
     if (_Array$isArray(selector)) {
       if (extractHtml) {
@@ -6309,10 +6663,10 @@ function findMatchingSelector($, selectors, extractHtml, allowMultiple) {
           s = _selector[0],
           attr = _selector[1];
 
-      return (allowMultiple || !allowMultiple && $(s).length === 1) && $(s).attr(attr) && $(s).attr(attr).trim() !== '';
+      return $(s).length === 1 && $(s).attr(attr) && $(s).attr(attr).trim() !== '';
     }
 
-    return (allowMultiple || !allowMultiple && $(selector).length === 1) && $(selector).text().trim() !== '';
+    return $(selector).length === 1 && $(selector).text().trim() !== '';
   });
 }
 
@@ -6329,30 +6683,25 @@ function select(opts) {
   if (typeof extractionOpts === 'string') return extractionOpts;
   var selectors = extractionOpts.selectors,
       _extractionOpts$defau = extractionOpts.defaultCleaner,
-      defaultCleaner = _extractionOpts$defau === void 0 ? true : _extractionOpts$defau,
-      allowMultiple = extractionOpts.allowMultiple;
-  var matchingSelector = findMatchingSelector($, selectors, extractHtml, allowMultiple);
-  if (!matchingSelector) return null;
+      defaultCleaner = _extractionOpts$defau === void 0 ? true : _extractionOpts$defau;
+  var matchingSelector = findMatchingSelector($, selectors, extractHtml);
+  if (!matchingSelector) return null; // Declaring result; will contain either
+  // text or html, which will be cleaned
+  // by the appropriate cleaner type
+  // If the selector type requests html as its return type
+  // transform and clean the element with provided selectors
 
-  function transformAndClean($node) {
-    makeLinksAbsolute$$1($node, $, opts.url || '');
-    cleanBySelectors($node, $, extractionOpts);
-    transformElements($node, $, extractionOpts);
-    return $node;
-  }
+  var $content;
 
-  function selectHtml() {
-    // If the selector type requests html as its return type
-    // transform and clean the element with provided selectors
-    var $content; // If matching selector is an array, we're considering this a
+  if (extractHtml) {
+    // If matching selector is an array, we're considering this a
     // multi-match selection, which allows the parser to choose several
     // selectors to include in the result. Note that all selectors in the
     // array must match in order for this selector to trigger
-
     if (_Array$isArray(matchingSelector)) {
       $content = $(matchingSelector.join(','));
       var $wrapper = $('<div></div>');
-      $content.each(function (_, element) {
+      $content.each(function (index, element) {
         $wrapper.append(element);
       });
       $content = $wrapper;
@@ -6363,28 +6712,14 @@ function select(opts) {
 
     $content.wrap($('<div></div>'));
     $content = $content.parent();
-    $content = transformAndClean($content);
-
-    if (Cleaners[type]) {
-      Cleaners[type]($content, _objectSpread({}, opts, {
-        defaultCleaner: defaultCleaner
-      }));
-    }
-
-    if (allowMultiple) {
-      return $content.children().toArray().map(function (el) {
-        return $.html($(el));
-      });
-    }
-
+    $content = transformElements($content, $, extractionOpts);
+    $content = cleanBySelectors($content, $, extractionOpts);
+    $content = Cleaners[type]($content, _objectSpread({}, opts, {
+      defaultCleaner: defaultCleaner
+    }));
     return $.html($content);
   }
 
-  if (extractHtml) {
-    return selectHtml(matchingSelector);
-  }
-
-  var $match;
   var result; // if selector is an array (e.g., ['img', 'src']),
   // extract the attr
 
@@ -6393,41 +6728,21 @@ function select(opts) {
         selector = _matchingSelector[0],
         attr = _matchingSelector[1];
 
-    $match = $(selector);
-    $match = transformAndClean($match);
-    result = $match.map(function (_, el) {
-      return $(el).attr(attr).trim();
-    });
+    result = $(selector).attr(attr).trim();
   } else {
-    $match = $(matchingSelector);
-    $match = transformAndClean($match);
-    result = $match.map(function (_, el) {
-      return $(el).text().trim();
-    });
-  }
-
-  result = _Array$isArray(result.toArray()) && allowMultiple ? result.toArray() : result[0]; // Allow custom extractor to skip default cleaner
+    var $node = $(matchingSelector);
+    $node = cleanBySelectors($node, $, extractionOpts);
+    $node = transformElements($node, $, extractionOpts);
+    result = $node.text().trim();
+  } // Allow custom extractor to skip default cleaner
   // for this type; defaults to true
 
-  if (defaultCleaner && Cleaners[type]) {
+
+  if (defaultCleaner) {
     return Cleaners[type](result, _objectSpread({}, opts, extractionOpts));
   }
 
   return result;
-}
-function selectExtendedTypes(extend, opts) {
-  var results = {};
-
-  _Reflect$ownKeys(extend).forEach(function (t) {
-    if (!results[t]) {
-      results[t] = select(_objectSpread({}, opts, {
-        type: t,
-        extractionOpts: extend[t]
-      }));
-    }
-  });
-
-  return results;
 }
 
 function extractResult(opts) {
@@ -6522,13 +6837,7 @@ var RootExtractor = {
         url = _ref3.url,
         domain = _ref3.domain;
 
-    var extendedResults = {};
-
-    if (extractor.extend) {
-      extendedResults = selectExtendedTypes(extractor.extend, opts);
-    }
-
-    return _objectSpread({
+    return {
       title: title,
       content: content,
       author: author,
@@ -6541,7 +6850,7 @@ var RootExtractor = {
       excerpt: excerpt,
       word_count: word_count,
       direction: direction
-    }, extendedResults);
+    };
   }
 };
 
@@ -6631,14 +6940,10 @@ var Mercury = {
           fallback,
           _opts$contentType,
           contentType,
-          _opts$headers,
-          headers,
-          extend,
           parsedUrl,
           $,
           Extractor,
           metaCache,
-          extendedTypes,
           result,
           _result,
           title,
@@ -6651,7 +6956,7 @@ var Mercury = {
           switch (_context.prev = _context.next) {
             case 0:
               _ref = _args.length > 1 && _args[1] !== undefined ? _args[1] : {}, html = _ref.html, opts = _objectWithoutProperties(_ref, ["html"]);
-              _opts$fetchAllPages = opts.fetchAllPages, fetchAllPages = _opts$fetchAllPages === void 0 ? true : _opts$fetchAllPages, _opts$fallback = opts.fallback, fallback = _opts$fallback === void 0 ? true : _opts$fallback, _opts$contentType = opts.contentType, contentType = _opts$contentType === void 0 ? 'html' : _opts$contentType, _opts$headers = opts.headers, headers = _opts$headers === void 0 ? {} : _opts$headers, extend = opts.extend; // if no url was passed and this is the browser version,
+              _opts$fetchAllPages = opts.fetchAllPages, fetchAllPages = _opts$fetchAllPages === void 0 ? true : _opts$fetchAllPages, _opts$fallback = opts.fallback, fallback = _opts$fallback === void 0 ? true : _opts$fallback, _opts$contentType = opts.contentType, contentType = _opts$contentType === void 0 ? 'html' : _opts$contentType; // if no url was passed and this is the browser version,
               // set url to window.location.href and load the html
               // from the current page
 
@@ -6668,14 +6973,11 @@ var Mercury = {
                 break;
               }
 
-              return _context.abrupt("return", {
-                error: true,
-                message: 'The url parameter passed does not look like a valid URL. Please check your URL and try again.'
-              });
+              return _context.abrupt("return", Errors.badUrl);
 
             case 6:
               _context.next = 8;
-              return Resource.create(url, html, parsedUrl, headers);
+              return Resource.create(url, html, parsedUrl);
 
             case 8:
               $ = _context.sent;
@@ -6701,16 +7003,6 @@ var Mercury = {
               metaCache = $('meta').map(function (_, node) {
                 return $(node).attr('name');
               }).toArray();
-              extendedTypes = {};
-
-              if (extend) {
-                extendedTypes = selectExtendedTypes(extend, {
-                  $: $,
-                  url: url,
-                  html: html
-                });
-              }
-
               result = RootExtractor.extract(Extractor, {
                 url: url,
                 html: html,
@@ -6723,11 +7015,11 @@ var Mercury = {
               _result = result, title = _result.title, next_page_url = _result.next_page_url; // Fetch more pages if next_page_url found
 
               if (!(fetchAllPages && next_page_url)) {
-                _context.next = 24;
+                _context.next = 22;
                 break;
               }
 
-              _context.next = 21;
+              _context.next = 19;
               return collectAllPages({
                 Extractor: Extractor,
                 next_page_url: next_page_url,
@@ -6739,18 +7031,18 @@ var Mercury = {
                 url: url
               });
 
-            case 21:
+            case 19:
               result = _context.sent;
-              _context.next = 25;
+              _context.next = 23;
               break;
 
-            case 24:
+            case 22:
               result = _objectSpread({}, result, {
                 total_pages: 1,
                 rendered_pages: 1
               });
 
-            case 25:
+            case 23:
               if (contentType === 'markdown') {
                 turndownService = new TurndownService();
                 result.content = turndownService.turndown(result.content);
@@ -6758,9 +7050,9 @@ var Mercury = {
                 result.content = $.text($(result.content));
               }
 
-              return _context.abrupt("return", _objectSpread({}, result, extendedTypes));
+              return _context.abrupt("return", result);
 
-            case 27:
+            case 25:
             case "end":
               return _context.stop();
           }
