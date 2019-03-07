@@ -6,11 +6,11 @@ export const ArstechnicaComExtractor = {
   },
 
   author: {
-    selectors: ['.article-header .author'],
+    selectors: ['span.author[itemprop=name]'],
   },
 
   date_published: {
-    selectors: [['.article-header time[datetime]', 'datetime']],
+    selectors: [['time.date[datetime]', 'datetime']],
   },
 
   dek: {
@@ -18,21 +18,21 @@ export const ArstechnicaComExtractor = {
   },
 
   lead_image_url: {
-    selectors: ['figure.image.center.large img'],
+    selectors: [['meta[name="og:image"]', 'value']],
   },
 
   content: {
-    selectors: ['.article-guts'],
+    selectors: ['.article-content.post-page'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '<ul class="toc">': 'p',
+      '<ul class="toc">': '<ul>',
     },
 
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['aside', 'nav'],
+    clean: ['aside'],
   },
 };

@@ -16,7 +16,7 @@ describe('ArstechnicaComExtractor', () => {
       url =
         'https://arstechnica.com/gaming/2018/12/ars-technicas-ultimate-board-game-buyers-guide-2018-edition/';
       const html = fs.readFileSync(
-        './fixtures/arstechnica.com/1551711673441.html'
+        './fixtures/arstechnica.com/1551954490890.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -82,7 +82,10 @@ describe('ArstechnicaComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(lead_image_url, null);
+      assert.equal(
+        lead_image_url,
+        `https://cdn.arstechnica.net/wp-content/uploads/2018/12/cardboardgiftguide-760x380.jpg`
+      );
     });
 
     it('returns the pages_rendered', async () => {
