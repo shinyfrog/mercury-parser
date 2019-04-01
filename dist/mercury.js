@@ -4850,28 +4850,28 @@ var ArstechnicaComExtractor = {
     selectors: ['.article-header h1']
   },
   author: {
-    selectors: ['.article-header .author']
+    selectors: ['span.author[itemprop=name]']
   },
   date_published: {
-    selectors: [['.article-header time[datetime]', 'datetime']]
+    selectors: [['time.date[datetime]', 'datetime']]
   },
   dek: {
     selectors: ['.article-header h2']
   },
   lead_image_url: {
-    selectors: ['figure.image.center.large img']
+    selectors: [['meta[name="og:image"]', 'value']]
   },
   content: {
-    selectors: ['.article-guts'],
+    selectors: ['.article-content.post-page'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      '<ul class="toc">': 'p'
+      '<ul class="toc">': '<ul>'
     },
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['aside', 'nav']
+    clean: ['aside']
   }
 };
 
@@ -5187,6 +5187,100 @@ var MpWeixinQqComExtractor = {
   }
 };
 
+var WwwEnchantingmarketingComExtractor = {
+  domain: 'www.enchantingmarketing.com',
+  title: {
+    selectors: ['h1.entry-title']
+  },
+  author: {
+    selectors: ['span.entry-author-name']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [//
+    ]
+  },
+  content: {
+    selectors: ['div.entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwWithingsComExtractor = {
+  domain: 'www.withings.com',
+  title: {
+    selectors: ['section.hero h2']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: []
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['main'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {
+      h2: 'p'
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['section.hero', 'section.hidden-sm', 'section.order-bar']
+  }
+};
+
+var eightthlightComExtractor = {
+  domain: '8thlight.com',
+  title: {
+    selectors: ['.blog-post h1']
+  },
+  author: {
+    selectors: ['.blog-post .author']
+  },
+  date_published: {
+    selectors: ['.blog-post .date']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['html'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.breadcrumbs', 'header', 'noscript', '.social-media-share-buttons', '.author-block', '.button-wrap', 'aside', '.hero', 'footer']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -5298,7 +5392,10 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwKbbComExtractor: WwwKbbComExtractor,
   WwwNikonpassionComExtractor: WwwNikonpassionComExtractor,
   WwwProcessStExtractor: WwwProcessStExtractor,
-  MpWeixinQqComExtractor: MpWeixinQqComExtractor
+  MpWeixinQqComExtractor: MpWeixinQqComExtractor,
+  WwwEnchantingmarketingComExtractor: WwwEnchantingmarketingComExtractor,
+  WwwWithingsComExtractor: WwwWithingsComExtractor,
+  eightthlightComExtractor: eightthlightComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
