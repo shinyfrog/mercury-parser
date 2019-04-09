@@ -2,7 +2,7 @@ export const SspaiComExtractor = {
   domain: 'sspai.com',
 
   title: {
-    selectors: ['h1.title'],
+    selectors: ['h1.titleTHISISNOTGONNAWORK'],
   },
 
   author: {
@@ -24,7 +24,7 @@ export const SspaiComExtractor = {
   },
 
   content: {
-    selectors: ['article'],
+    selectors: ['articleTHISISNOTGONNAWORK'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
