@@ -5055,7 +5055,7 @@ var SiversOrgExtractor = {
 var SspaiComExtractor = {
   domain: 'sspai.com',
   title: {
-    selectors: ['h1.title']
+    selectors: ['h1.titleTHISISNOTGONNAWORK']
   },
   author: {
     selectors: ['.user-card h4 span']
@@ -5071,7 +5071,7 @@ var SspaiComExtractor = {
     selectors: ['img']
   },
   content: {
-    selectors: ['article'],
+    selectors: ['articleTHISISNOTGONNAWORK'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
@@ -5184,13 +5184,13 @@ var WwwKbbComExtractor = {
 var WwwNikonpassionComExtractor = {
   domain: 'www.nikonpassion.com',
   title: {
-    selectors: ['h1.entry-title']
+    selectors: ['h1.entry-title.THISNOTGOINGTOWORK']
   },
   author: {
-    selectors: ['.entry-meta .entry-meta-date:first-child']
+    selectors: ['.entry-meta.THISNOTGOINGTOWORK .entry-meta-date:first-child']
   },
   date_published: {
-    selectors: ['.entry-meta .entry-meta-date:nth-child(2)']
+    selectors: ['.entry-meta.THISNOTGOINGTOWORK .entry-meta-date:nth-child(2)']
   },
   dek: {
     selectors: [// enter selectors
@@ -5201,7 +5201,7 @@ var WwwNikonpassionComExtractor = {
     ]
   },
   content: {
-    selectors: ['.entry-content'],
+    selectors: ['.entry-content.THISNOTGOINGTOWORK'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {},
@@ -5398,6 +5398,36 @@ var ClutchpointsComExtractor = {
   }
 };
 
+var GetpocketComExtractor = {
+  domain: 'getpocket.com',
+  title: {
+    selectors: ['.article_header h1']
+  },
+  author: {
+    selectors: ['div.meta_section.section_publisher a.publisher_url']
+  },
+  date_published: {
+    selectors: ['div.meta_section.section_author.profile_image_default span.date']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['div.article_body'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -5515,7 +5545,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwEnchantingmarketingComExtractor: WwwEnchantingmarketingComExtractor,
   WwwWithingsComExtractor: WwwWithingsComExtractor,
   eightthlightComExtractor: eightthlightComExtractor,
-  ClutchpointsComExtractor: ClutchpointsComExtractor
+  ClutchpointsComExtractor: ClutchpointsComExtractor,
+  GetpocketComExtractor: GetpocketComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
