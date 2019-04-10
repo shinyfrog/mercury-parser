@@ -114,3 +114,4 @@ export * from './www.withings.com';
 export * from './8thlight.com';
 export * from './clutchpoints.com';
 export * from './getpocket.com';
+export * from './m.weibo.cn';
