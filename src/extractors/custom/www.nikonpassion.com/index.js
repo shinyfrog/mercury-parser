@@ -2,15 +2,15 @@ export const WwwNikonpassionComExtractor = {
   domain: 'www.nikonpassion.com',
 
   title: {
-    selectors: ['h1.entry-title'],
+    selectors: ['h1.entry-title.THISNOTGOINGTOWORK'],
   },
 
   author: {
-    selectors: ['.entry-meta .entry-meta-date:first-child'],
+    selectors: ['.entry-meta.THISNOTGOINGTOWORK .entry-meta-date:first-child'],
   },
 
   date_published: {
-    selectors: ['.entry-meta .entry-meta-date:nth-child(2)'],
+    selectors: ['.entry-meta.THISNOTGOINGTOWORK .entry-meta-date:nth-child(2)'],
   },
 
   dek: {
@@ -26,7 +26,7 @@ export const WwwNikonpassionComExtractor = {
   },
 
   content: {
-    selectors: ['.entry-content'],
+    selectors: ['.entry-content.THISNOTGOINGTOWORK'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images

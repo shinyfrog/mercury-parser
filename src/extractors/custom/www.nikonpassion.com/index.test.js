@@ -36,10 +36,7 @@ describe('WwwNikonpassionComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        title,
-        `Visite de l’usine Nikon Sendai au Japon, fabrication des Nikon Z 7 et Z 6 et des photos`
-      );
+      assert.equal(title, null);
     });
 
     it('returns the author', async () => {
@@ -49,7 +46,7 @@ describe('WwwNikonpassionComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Jean-Christophe Dichant -');
+      assert.equal(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +56,7 @@ describe('WwwNikonpassionComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2018-08-28T22:00:00.000Z`);
+      assert.equal(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -100,10 +97,7 @@ describe('WwwNikonpassionComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        first13,
-        'L’usine Nikon Sendai … ce nom ne vous dit peut-être rien et pourtant'
-      );
+      assert.equal(first13, null);
     });
   });
 });

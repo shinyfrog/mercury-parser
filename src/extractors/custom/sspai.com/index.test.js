@@ -33,10 +33,7 @@ describe('SspaiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        title,
-        `40000 字、100 张配图，教你如何用 iPhone 拍出好照片 & 视频：iPhone 相机完全操作指南 2.0`
-      );
+      assert.equal(title, null);
     });
 
     it('returns the author', async () => {
@@ -46,7 +43,7 @@ describe('SspaiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '果核Group');
+      assert.equal(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -56,7 +53,7 @@ describe('SspaiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '2019-03-20T23:00:00.000Z');
+      assert.equal(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -97,7 +94,7 @@ describe('SspaiComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, '之所以叫做《iPhone');
+      assert.equal(first13, null);
     });
   });
 });
