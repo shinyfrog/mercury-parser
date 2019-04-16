@@ -1,38 +1,36 @@
-// Rename CustomExtractor
-// to fit your publication
-export const TheAtlanticExtractor = {
+export const WwwTheatlanticComExtractor = {
   domain: 'www.theatlantic.com',
+
   title: {
-    selectors: ['h1.hed'],
+    selectors: [['meta[name="og:title"]', 'value']],
   },
 
   author: {
-    selectors: ['article#article .article-cover-extra .metadata .byline a'],
+    selectors: ['.c-byline__author .c-byline__link'],
+  },
+
+  date_published: {
+    selectors: [['time.c-dateline', 'datetime']],
+  },
+
+  dek: {
+    selectors: ['p.c-dek'],
+  },
+
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']],
   },
 
   content: {
-    selectors: [
-      ['.article-cover figure.lead-img', '.article-body'],
-      '.article-body',
-    ],
+    selectors: ['div.l-article__container'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: [],
+    transforms: {},
 
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: ['.partner-box', '.callout'],
+    clean: [],
   },
-
-  date_published: {
-    selectors: [['time[itemProp="datePublished"]', 'datetime']],
-  },
-
-  lead_image_url: null,
-
-  next_page_url: null,
-
-  excerpt: null,
 };
