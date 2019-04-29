@@ -6514,7 +6514,7 @@ var MDouguoComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div': 'p'
+      div: 'p'
     },
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
@@ -6547,12 +6547,12 @@ var WwwDouguoComExtractor = {
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: {
-      'div': 'span',
-      'h2': 'h3',
-      'table': 'span',
-      'tbody': 'span',
-      'tr': 'p',
-      'td': 'span'
+      div: 'span',
+      h2: 'h3',
+      table: 'span',
+      tbody: 'span',
+      tr: 'p',
+      td: 'span'
     },
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
