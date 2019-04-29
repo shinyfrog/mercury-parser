@@ -8,15 +8,14 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('WwwIlfattoquotidianoItExtractor', () => {
+describe('WwwCommonhealthComTwExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
-      url =
-        'https://www.ilfattoquotidiano.it/2019/04/10/def-giorgetti-flat-tax-finanziata-con-aumenti-iva-si-vedra-nella-manovra-non-si-puo-ancora-dire/5100326/';
+      url = 'https://www.commonhealth.com.tw/article/article.action?nid=79251';
       const html = fs.readFileSync(
-        './fixtures/www.ilfattoquotidiano.it/1554908132787.html'
+        './fixtures/www.commonhealth.com.tw/1556383665831.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -31,20 +30,20 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
     it('returns the title', async () => {
       // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       const { title } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         title,
-        `Def, Giorgetti: "Flat tax finanziata con aumenti Iva? Si vedrà nella manovra, non si può ancora dire"`
+        `喝完咖啡再午睡，醒來後較不會繼續愛睏 效果比起來後立刻洗臉還好 - 康健雜誌`
       );
     });
 
     it('returns the author', async () => {
       // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       const { author } = await result;
 
       // Update these values with the expected values from
@@ -54,51 +53,50 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
     it('returns the date_published', async () => {
       // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       const { date_published } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-10T11:37:26.000Z`);
+      assert.equal(date_published, null);
     });
 
     it('returns the dek', async () => {
       // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       const { dek } = await result;
 
       // Update these values with the expected values from
       // the article.
-
       assert.equal(
         dek,
-        'Per il sottosegretario Giancarlo Giorgetti qualsiasi decisione sugli aumenti Iva da 23 miliardi previsti dalle clausole di salvaguardia è prematura. “La flat tax si farà con l’aumento dell’Iva? Questo si vedrà nella legge di bilancio, adesso non si può ancora dire”. Una posizione possibilista che sembra fare a pugni con gli annunci dei vicepremier Luigi Di Maio e …'
+        '對上班族來說，最令人困擾的在吃完午餐後，因為睡意來襲，導致下午打瞌睡，發生工作效率不佳的情況。然而，靠午睡就能有效驅趕睡...'
       );
     });
 
     it('returns the lead_image_url', async () => {
       // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       const { lead_image_url } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         lead_image_url,
-        `https://st.ilfattoquotidiano.it/wp-content/uploads/2019/02/11/salvini-di-maio-conte-1300.jpg`
+        `https://as.chdev.tw/web/article/a/2/4/a3aa6e29-274f-4c6a-ae3b-ab2498ea220e1556093714.jpg`
       );
     });
 
     it('returns the content', async () => {
       // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/www.commonhealth.com.tw/index.js.
       // You may also want to make use of the clean and transform
       // options.
       const { content } = await result;
 
       const $ = cheerio.load(content || '');
 
-      const first13 = excerptContent(
+      let first13 = excerptContent(
         $('*')
           .first()
           .text(),
@@ -107,10 +105,9 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        first13,
-        'Per il sottosegretario Giancarlo Giorgetti qualsiasi decisione sugli aumenti Iva da 23 miliardi'
-      );
+      first13 = first13.substring(0, 13);
+
+      assert.equal(first13, '對上班族來說，最令人困擾的');
     });
   });
 });

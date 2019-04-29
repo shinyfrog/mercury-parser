@@ -8,16 +8,13 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('WwwIlfattoquotidianoItExtractor', () => {
+describe('VimeoComExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
-      url =
-        'https://www.ilfattoquotidiano.it/2019/04/10/def-giorgetti-flat-tax-finanziata-con-aumenti-iva-si-vedra-nella-manovra-non-si-puo-ancora-dire/5100326/';
-      const html = fs.readFileSync(
-        './fixtures/www.ilfattoquotidiano.it/1554908132787.html'
-      );
+      url = 'https://vimeo.com/182400200';
+      const html = fs.readFileSync('./fixtures/vimeo.com/1556467498906.html');
       result = Mercury.parse(url, { html, fallback: false });
     });
 
@@ -31,20 +28,20 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
     it('returns the title', async () => {
       // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/vimeo.com/index.js.
       const { title } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         title,
-        `Def, Giorgetti: "Flat tax finanziata con aumenti Iva? Si vedrà nella manovra, non si può ancora dire"`
+        `Bear - Safari, Chrome, Firefox and Opera extensions`
       );
     });
 
     it('returns the author', async () => {
       // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/vimeo.com/index.js.
       const { author } = await result;
 
       // Update these values with the expected values from
@@ -54,44 +51,42 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
     it('returns the date_published', async () => {
       // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/vimeo.com/index.js.
       const { date_published } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-04-10T11:37:26.000Z`);
+      assert.equal(date_published, '2019-04-28T14:02:59.000Z');
     });
 
     it('returns the dek', async () => {
       // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
-      const { dek } = await result;
+      // in ./src/extractors/custom/vimeo.com/index.js.
+      let { dek } = await result;
 
       // Update these values with the expected values from
       // the article.
+      dek = dek.substring(0, 20);
 
-      assert.equal(
-        dek,
-        'Per il sottosegretario Giancarlo Giorgetti qualsiasi decisione sugli aumenti Iva da 23 miliardi previsti dalle clausole di salvaguardia è prematura. “La flat tax si farà con l’aumento dell’Iva? Questo si vedrà nella legge di bilancio, adesso non si può ancora dire”. Una posizione possibilista che sembra fare a pugni con gli annunci dei vicepremier Luigi Di Maio e …'
-      );
+      assert.equal(dek, 'Sneak peek of the ne');
     });
 
     it('returns the lead_image_url', async () => {
       // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/vimeo.com/index.js.
       const { lead_image_url } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         lead_image_url,
-        `https://st.ilfattoquotidiano.it/wp-content/uploads/2019/02/11/salvini-di-maio-conte-1300.jpg`
+        `https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F591290877_1280x720.jpg&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png`
       );
     });
 
     it('returns the content', async () => {
       // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.ilfattoquotidiano.it/index.js.
+      // in ./src/extractors/custom/vimeo.com/index.js.
       // You may also want to make use of the clean and transform
       // options.
       const { content } = await result;
@@ -107,10 +102,7 @@ describe('WwwIlfattoquotidianoItExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        first13,
-        'Per il sottosegretario Giancarlo Giorgetti qualsiasi decisione sugli aumenti Iva da 23 miliardi'
-      );
+      assert.equal(first13, '< > </> < > </>');
     });
   });
 });

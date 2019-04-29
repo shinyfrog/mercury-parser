@@ -1,0 +1,672 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  <link rel="dns-prefetch" href="https://github.githubassets.com/">
+  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com/">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com/">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+
+
+
+  <link crossorigin="anonymous" media="all" integrity="sha512-iwkZZWcsyMNnn/6c9v2ab3e7h4ZiFTOEZ9R6jj75bN9JzYuYjQ/AC7ufEcfpqd4GcTwcM+p2OhPzRSyeKL7NMQ==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-f331a618befc2bf99be870c538f9ac95.css">
+  <link crossorigin="anonymous" media="all" integrity="sha512-cNSmDJd2vJZ5aluOBlLP6oTxa7tvVIc54LZk60zATiwTzs+aicoVb3r8TgU/1eiz2s6Nd4yPb7b1LxilONyJOg==" rel="stylesheet" href="https://github.githubassets.com/assets/site-7d7d47ab5852bb08d1180249a6c36bf5.css">
+    <link crossorigin="anonymous" media="all" integrity="sha512-ki+7AdbKST3bwvOQjFv6wZRWjxmrUquFsAdjKeRXsfycs9uk4+aekQpFzYoUNro4yJWsdEaAEHovZ/rmqqMYuQ==" rel="stylesheet" href="https://github.githubassets.com/assets/github-5e268bff246cd3dc6c6923b3feef86e0.css">
+    
+    
+    
+    
+
+  <meta name="viewport" value="width=device-width">
+  
+  <title>Use Buffers when decoding &#xB7; ashtuchkin/iconv-lite Wiki &#xB7; GitHub</title>
+    <meta name="description" value="Convert character encodings in pure javascript. Contribute to ashtuchkin/iconv-lite development by creating an account on GitHub.">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://github.com/opensearch.xml" title="GitHub">
+  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+  <meta value="1401488693436528" name="fb:app_id">
+
+    <meta name="twitter:image:src" value="https://avatars3.githubusercontent.com/u/627997?s=400&amp;v=4"><meta name="twitter:site" value="@github"><meta name="twitter:card" value="summary"><meta name="twitter:title" value="ashtuchkin/iconv-lite"><meta name="twitter:description" value="Convert character encodings in pure javascript. Contribute to ashtuchkin/iconv-lite development by creating an account on GitHub.">
+    <meta value="https://avatars3.githubusercontent.com/u/627997?s=400&amp;v=4" name="og:image"><meta value="GitHub" name="og:site_name"><meta value="object" name="og:type"><meta value="ashtuchkin/iconv-lite" name="og:title"><meta value="https://github.com/ashtuchkin/iconv-lite" name="og:url"><meta value="Convert character encodings in pure javascript. Contribute to ashtuchkin/iconv-lite development by creating an account on GitHub." name="og:description">
+
+  <link rel="assets" href="https://github.githubassets.com/">
+  
+  <meta name="pjax-timeout" value="1000">
+  
+  <meta name="request-id" data-pjax-transient="" value="E067:452D1:203FCA4:31ED1E4:5CC6F3D0">
+
+
+  
+
+  <meta name="selected-link" value="repo_wiki" data-pjax-transient="">
+
+      <meta name="google-site-verification" value="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+    <meta name="google-site-verification" value="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
+    <meta name="google-site-verification" value="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
+
+  <meta name="octolytics-host" value="collector.githubapp.com"><meta name="octolytics-app-id" value="github"><meta name="octolytics-event-url" value="https://collector.githubapp.com/github-external/browser_event"><meta name="octolytics-dimension-request_id" value="E067:452D1:203FCA4:31ED1E4:5CC6F3D0"><meta name="octolytics-dimension-region_edge" value="ams"><meta name="octolytics-dimension-region_render" value="iad">
+<meta name="analytics-location" data-pjax-transient="true" value="/&lt;user-name&gt;/&lt;repo-name&gt;/wiki/show">
+
+
+
+    <meta name="google-analytics" value="UA-3769691-2">
+
+
+<meta class="js-ga-set" name="dimension1" value="Logged Out">
+
+
+
+  
+
+      <meta name="hostname" value="github.com">
+    <meta name="user-login" value="">
+
+      <meta name="expected-hostname" value="github.com">
+    <meta name="js-proxy-site-detection-payload" value="OGM2NmI2MGJhNzc1MzhlOTVlZDNjZmQzNTA4M2I1YzZiNzEyZmI0NWE5MDVkNmRiMTA4NDk2ZGY0NWMzNjEyNXx7InJlbW90ZV9hZGRyZXNzIjoiNzkuMi4xNjcuMTA2IiwicmVxdWVzdF9pZCI6IkUwNjc6NDUyRDE6MjAzRkNBNDozMUVEMUU0OjVDQzZGM0QwIiwidGltZXN0YW1wIjoxNTU2NTQyNDE2LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+
+    <meta name="enabled-features" value="UNIVERSE_BANNER,MARKETPLACE_INVOICED_BILLING,MARKETPLACE_SOCIAL_PROOF_CUSTOMERS,MARKETPLACE_TRENDING_SOCIAL_PROOF,MARKETPLACE_RECOMMENDATIONS">
+
+  <meta name="html-safe-nonce" value="d1cbec3a70da08e72b265c28bcc6c5cc563e36b7">
+
+  <meta http-equiv="x-pjax-version" value="81a508b57630cb48949aa4fed69bdcfa">
+  
+
+      <link href="https://github.com/ashtuchkin/iconv-lite/commits/master.atom" rel="alternate" title="Recent Commits to iconv-lite:master" type="application/atom+xml">
+
+  <meta name="go-import" value="github.com/ashtuchkin/iconv-lite git https://github.com/ashtuchkin/iconv-lite.git">
+
+  <meta name="octolytics-dimension-user_id" value="627997"><meta name="octolytics-dimension-user_login" value="ashtuchkin"><meta name="octolytics-dimension-repository_id" value="2743221"><meta name="octolytics-dimension-repository_nwo" value="ashtuchkin/iconv-lite"><meta name="octolytics-dimension-repository_public" value="true"><meta name="octolytics-dimension-repository_is_fork" value="false"><meta name="octolytics-dimension-repository_network_root_id" value="2743221"><meta name="octolytics-dimension-repository_network_root_nwo" value="ashtuchkin/iconv-lite"><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" value="false">
+
+
+
+
+  <meta name="browser-stats-url" value="https://api.github.com/_private/browser/stats">
+
+  <meta name="browser-errors-url" value="https://api.github.com/_private/browser/errors">
+
+  <link rel="mask-icon" href="https://github.githubassets.com/pinned-octocat.svg" color="#000000">
+  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://github.githubassets.com/favicon.ico">
+
+<meta name="theme-color" value="#1e2327">
+
+
+  <meta name="u2f-enabled" value="true">
+
+
+
+  <link rel="manifest" href="https://github.com/manifest.json" crossorigin="use-credentials">
+
+  </head>
+
+  <body class="logged-out env-production page-responsive min-width-0">
+    
+
+  <div class="position-relative js-header-wrapper ">
+    <a href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding#start-of-content" tabindex="1" class="px-2 py-4 bg-blue text-white show-on-focus js-skip-to-content">Skip to content</a>
+    <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
+
+    
+    
+    <div class="unsupported-browser">
+  <div class="container-lg p-responsive clearfix d-flex flex-items-center py-2">
+    <img src="https://github.githubassets.com/images/icons/ie-notice.png" class="flex-self-start flex-shrink-0 pt-1 mr-2 hide-sm">
+    <div class="d-flex flex-auto flex-column flex-md-row">
+      <div class="flex-auto min-width-0 mr-2">
+          <h5>Please note that GitHub no longer supports your web browser.</h5>
+          <p class="m-0">We recommend upgrading to the latest <a href="https://chrome.google.com/">Google Chrome</a> or <a href="https://mozilla.org/firefox/">Firefox</a>.</p>
+      </div>
+      <div class="d-flex flex-items-center flex-shrink-0 mt-2 mt-md-0">
+                <a href="https://help.github.com/articles/supported-browsers" class="btn ml-2">Learn more</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+        <header class="Header-old header-logged-out js-details-container Details position-relative f4 py-2" role="banner">
+  <div class="container-lg d-lg-flex flex-items-center p-responsive">
+    <div class="d-flex flex-justify-between flex-items-center">
+        <a class="mr-4" href="https://github.com/" aria-label="Homepage" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+          <svg height="32" class="octicon octicon-mark-github text-white" viewbox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+
+          <div class="d-lg-none css-truncate css-truncate-target width-fit p-2">
+            
+              <svg class="octicon octicon-repo" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
+    <a class="Header-link" href="https://github.com/ashtuchkin">ashtuchkin</a>
+    /
+    <a class="Header-link" href="https://github.com/ashtuchkin/iconv-lite">iconv-lite</a>
+
+
+          </div>
+
+        <div class="d-flex flex-items-center">
+            <a class="d-inline-block d-lg-none f5 text-white no-underline border border-gray-dark rounded-2 px-2 py-1 mr-3 mr-sm-5" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="07bf9e61ab9b86fff33d8e95e6d80047decc0dbdc93c7b910b3816e5c8383fac" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up" href="https://github.com/join?source=header-repo">
+              Sign&#xA0;up
+</a>
+          <button class="btn-link d-lg-none mt-1 js-details-target" type="button" aria-label="Toggle navigation" aria-expanded="false">
+            <svg height="24" class="octicon octicon-three-bars text-white" viewbox="0 0 12 16" version="1.1" width="18" aria-hidden="true"><path fill-rule="evenodd" d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"/></svg>
+          </button>
+        </div>
+    </div>
+
+    <div class="HeaderMenu HeaderMenu--logged-out position-fixed top-0 right-0 bottom-0 height-fit position-lg-relative d-lg-flex flex-justify-between flex-items-center flex-auto">
+      <div class="d-flex d-lg-none flex-justify-end border-bottom bg-gray-light p-3">
+        <button class="btn-link js-details-target" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <svg height="24" class="octicon octicon-x text-gray" viewbox="0 0 12 16" version="1.1" width="18" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
+        </button>
+      </div>
+
+        <nav class="mt-0 px-3 px-lg-0 mb-5 mb-lg-0" aria-label="Global">
+          <ul class="d-lg-flex list-style-none">
+              <li class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center ">
+                <details class="HeaderMenu-details details-overlay details-reset width-full">
+                  <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+                    Why GitHub?
+                    <svg x="0px" y="0px" viewbox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative">
+                      <path d="M1,1l6.2,6L13,1"/>
+                    </svg>
+                  </summary>
+                  <div class="dropdown-menu flex-auto rounded-1 bg-white px-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+                    <a href="https://github.com/features" class="py-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Features">Features <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a>
+                    <ul class="list-style-none f5 pb-3">
+                      <li class="edge-item-fix"><a href="https://github.com/features/code-review/" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Code review">Code review</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features/project-management/" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Project management">Project management</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features/integrations" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Integrations">Integrations</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features/actions" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Actions">Actions</a>
+                      </li><li class="edge-item-fix"><a href="https://github.com/features#team-management" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Team management">Team management</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features#social-coding" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Social coding">Social coding</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features#documentation" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Documentation">Documentation</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/features#code-hosting" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Code hosting">Code hosting</a></li>
+                    </ul>
+
+                    <ul class="list-style-none mb-0 border-lg-top pt-lg-3">
+                      <li class="edge-item-fix"><a href="https://github.com/customer-stories" class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Customer stories">Customer stories <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/security" class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Security">Security <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a></li>
+                    </ul>
+                  </div>
+                </details>
+              </li>
+              <li class="border-bottom border-lg-bottom-0 mr-0 mr-lg-3">
+                <a href="https://github.com/enterprise" class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" data-ga-click="(Logged out) Header, go to Enterprise">Enterprise</a>
+              </li>
+
+              <li class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center ">
+                <details class="HeaderMenu-details details-overlay details-reset width-full">
+                  <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+                    Explore
+                    <svg x="0px" y="0px" viewbox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative">
+                      <path d="M1,1l6.2,6L13,1"/>
+                    </svg>
+                  </summary>
+
+                  <div class="dropdown-menu flex-auto rounded-1 bg-white px-0 pt-2 pb-0 mt-0 pb-4 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+                    <ul class="list-style-none mb-3">
+                      <li class="edge-item-fix"><a href="https://github.com/explore" class="py-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Explore">Explore GitHub <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a></li>
+                    </ul>
+
+                    <h4 class="text-gray-light text-normal text-mono f5 mb-2 border-lg-top pt-lg-3">Learn &amp; contribute</h4>
+                    <ul class="list-style-none mb-3">
+                      <li class="edge-item-fix"><a href="https://github.com/topics" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Topics">Topics</a></li>
+                        <li class="edge-item-fix"><a href="https://github.com/collections" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Collections">Collections</a></li>
+                      <li class="edge-item-fix"><a href="https://github.com/trending" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Trending">Trending</a></li>
+                      <li class="edge-item-fix"><a href="https://lab.github.com/" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Learning lab">Learning Lab</a></li>
+                      <li class="edge-item-fix"><a href="https://opensource.guide/" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Open source guides">Open source guides</a></li>
+                    </ul>
+
+                    <h4 class="text-gray-light text-normal text-mono f5 mb-2 border-lg-top pt-lg-3">Connect with others</h4>
+                    <ul class="list-style-none mb-0">
+                      <li class="edge-item-fix"><a href="https://github.com/events" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Events">Events</a></li>
+                      <li class="edge-item-fix"><a href="https://github.community/" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Community forum">Community forum</a></li>
+                      <li class="edge-item-fix"><a href="https://education.github.com/" class="py-2 pb-0 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to GitHub Education">GitHub Education</a></li>
+                    </ul>
+                  </div>
+                </details>
+              </li>
+
+              <li class="border-bottom border-lg-bottom-0 mr-0 mr-lg-3">
+                <a href="https://github.com/marketplace" class="HeaderMenu-link no-underline py-3 d-block d-lg-inline-block" data-ga-click="(Logged out) Header, go to Marketplace">Marketplace</a>
+              </li>
+
+              <li class="d-block d-lg-flex flex-lg-nowrap flex-lg-items-center border-bottom border-lg-bottom-0 mr-0 mr-lg-3 edge-item-fix position-relative flex-wrap flex-justify-between d-flex flex-items-center ">
+                <details class="HeaderMenu-details details-overlay details-reset width-full">
+                  <summary class="HeaderMenu-summary HeaderMenu-link px-0 py-3 border-0 no-wrap d-block d-lg-inline-block">
+                    Pricing
+                    <svg x="0px" y="0px" viewbox="0 0 14 8" xml:space="preserve" fill="none" class="icon-chevon-down-mktg position-absolute position-lg-relative">
+                       <path d="M1,1l6.2,6L13,1"/>
+                    </svg>
+                  </summary>
+
+                  <div class="dropdown-menu flex-auto rounded-1 bg-white px-0 pt-2 pb-4 mt-0 p-lg-4 position-relative position-lg-absolute left-0 left-lg-n4">
+                    <a href="https://github.com/pricing" class="pb-2 lh-condensed-ultra d-block link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Pricing">Plans <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a>
+
+                    <ul class="list-style-none mb-3">
+                      <li class="edge-item-fix"><a href="https://github.com/pricing#feature-comparison" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Compare plans">Compare plans</a></li>
+                      <li class="edge-item-fix"><a href="https://enterprise.github.com/contact" class="py-2 lh-condensed-ultra d-block link-gray no-underline f5" data-ga-click="(Logged out) Header, go to Contact Sales">Contact Sales</a></li>
+                    </ul>
+
+                    <ul class="list-style-none mb-0 border-lg-top pt-lg-3">
+                      <li class="edge-item-fix"><a href="https://github.com/nonprofit" class="py-2 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Nonprofits">Nonprofit <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a></li>
+                      <li class="edge-item-fix"><a href="https://education.github.com/" class="py-2 pb-0 lh-condensed-ultra d-block no-underline link-gray-dark no-underline h5 Bump-link--hover" data-ga-click="(Logged out) Header, go to Education">Education <span class="Bump-link-symbol float-right text-normal text-gray-light">&#x2192;</span></a></li>
+                    </ul>
+                  </div>
+                </details>
+              </li>
+          </ul>
+        </nav>
+
+      <div class="d-lg-flex flex-items-center px-3 px-lg-0 text-center text-lg-left">
+          <div class="d-lg-flex mb-3 mb-lg-0">
+            <div class="header-search flex-self-stretch flex-lg-self-auto mr-0 mr-lg-3 mb-3 mb-lg-0 scoped-search site-scoped-search js-site-search position-relative js-jump-to" role="combobox" aria-owns="jump-to-results" aria-label="Search or jump to" aria-haspopup="listbox" aria-expanded="false">
+  <div class="position-relative">
+      </div>
+</div>
+
+          </div>
+
+        <a class="HeaderMenu-link no-underline mr-3" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header menu&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="c46077007b424d281b7eaa9e69b0f0cf4d9a94e3a1fd109a6e9cbbedec7a58b3" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in" href="https://github.com/login?return_to=%2Fashtuchkin%2Ficonv-lite%2Fwiki%2FUse-Buffers-when-decoding">
+          Sign&#xA0;in
+</a>          <a class="HeaderMenu-link d-inline-block no-underline border border-gray-dark rounded-1 px-2 py-1" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;site header menu&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="afe79b7fc093769c6c4d174b9d7b46343f5af2468e09cc3119082c9a01f078f6" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up" href="https://github.com/join?source=header-repo">
+            Sign&#xA0;up
+</a>      </div>
+    </div>
+  </div>
+</header>
+
+  </div>
+
+  <div id="start-of-content" class="show-on-focus"></div>
+
+
+    <div id="js-flash-container">
+
+</div>
+
+
+
+  <div class="application-main " data-commit-hovercards-enabled="">
+        <div itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="">
+    <main>
+      
+  
+
+
+
+
+
+
+  <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav pt-0 pt-lg-4 ">
+    <div class="repohead-details-container clearfix container-lg p-responsive d-none d-lg-block">
+
+      <ul class="pagehead-actions">
+
+
+
+  <li>
+    
+  <a class="tooltipped tooltipped-s btn btn-sm btn-with-count" aria-label="You must be signed in to watch a repository" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;notification subscription menu watch&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="65c0288b18ca5d2f8f1a0c2552a89e8e3e677a6482e8e790dc1db1b238a294ff" href="https://github.com/login?return_to=%2Fashtuchkin%2Ficonv-lite">
+    <svg class="octicon octicon-eye v-align-text-bottom" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
+    Watch
+</a>    <a class="social-count" href="https://github.com/ashtuchkin/iconv-lite/watchers" aria-label="63 users are watching this repository">
+      63
+    </a>
+
+  </li>
+
+  <li>
+        <a class="btn btn-sm btn-with-count tooltipped tooltipped-s" aria-label="You must be signed in to star a repository" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;star button&quot;,&quot;repository_id&quot;:2743221,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="021ede7a90b5d239393b0e5759f393a0b5e23687288849905b964138ddc75d4f" href="https://github.com/login?return_to=%2Fashtuchkin%2Ficonv-lite">
+      <svg class="octicon octicon-star v-align-text-bottom" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"/></svg>
+      Star
+</a>
+    <a class="social-count js-social-count" href="https://github.com/ashtuchkin/iconv-lite/stargazers" aria-label="1997 users starred this repository">
+      1,997
+    </a>
+
+  </li>
+
+  <li>
+      <a class="btn btn-sm btn-with-count tooltipped tooltipped-s" aria-label="You must be signed in to fork a repository" rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;repo details fork button&quot;,&quot;repository_id&quot;:2743221,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="608f260a694c304ebe79f3423a1310eec99241131697fbcffcfa67265c6cde1f" href="https://github.com/login?return_to=%2Fashtuchkin%2Ficonv-lite">
+        <svg class="octicon octicon-repo-forked v-align-text-bottom" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
+        Fork
+</a>
+    <a href="https://github.com/ashtuchkin/iconv-lite/network/members" class="social-count" aria-label="216 users forked this repository">
+      216
+    </a>
+  </li>
+</ul>
+
+      <h1 class="public ">
+    <svg class="octicon octicon-repo" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
+  <span class="author" itemprop="author"><a class="url fn" rel="author" data-hovercard-type="user" data-hovercard-url="/hovercards?user_id=627997" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="https://github.com/ashtuchkin">ashtuchkin</a></span><span class="path-divider">/</span><strong itemprop="name"><a data-pjax="#js-repo-pjax-container" href="https://github.com/ashtuchkin/iconv-lite">iconv-lite</a></strong>
+  
+
+</h1>
+
+    </div>
+    
+<nav class="reponav js-repo-nav js-sidenav-container-pjax container-lg p-responsive d-none d-lg-block" itemscope="" itemtype="http://schema.org/BreadcrumbList" aria-label="Repository" data-pjax="#js-repo-pjax-container">
+
+  <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a class="js-selected-navigation-item reponav-item" itemprop="url" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /ashtuchkin/iconv-lite" href="https://github.com/ashtuchkin/iconv-lite">
+      <svg class="octicon octicon-code" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg>
+      <span itemprop="name">Code</span>
+      <meta itemprop="position" value="1">
+</a>  </span>
+
+    <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+      <a itemprop="url" data-hotkey="g i" class="js-selected-navigation-item reponav-item" data-selected-links="repo_issues repo_labels repo_milestones /ashtuchkin/iconv-lite/issues" href="https://github.com/ashtuchkin/iconv-lite/issues">
+        <svg class="octicon octicon-issue-opened" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"/></svg>
+        <span itemprop="name">Issues</span>
+        <span class="Counter">26</span>
+        <meta itemprop="position" value="2">
+</a>    </span>
+
+  <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a data-hotkey="g p" itemprop="url" class="js-selected-navigation-item reponav-item" data-selected-links="repo_pulls checks /ashtuchkin/iconv-lite/pulls" href="https://github.com/ashtuchkin/iconv-lite/pulls">
+      <svg class="octicon octicon-git-pull-request" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
+      <span itemprop="name">Pull requests</span>
+      <span class="Counter">10</span>
+      <meta itemprop="position" value="3">
+</a>  </span>
+
+
+
+    <a data-hotkey="g b" class="js-selected-navigation-item reponav-item" data-selected-links="repo_projects new_repo_project repo_project /ashtuchkin/iconv-lite/projects" href="https://github.com/ashtuchkin/iconv-lite/projects">
+      <svg class="octicon octicon-project" viewbox="0 0 15 16" version="1.1" width="15" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/></svg>
+      Projects
+      <span class="Counter">0</span>
+</a>
+
+    <a class="js-selected-navigation-item selected reponav-item" data-hotkey="g w" aria-current="page" data-selected-links="repo_wiki /ashtuchkin/iconv-lite/wiki" href="https://github.com/ashtuchkin/iconv-lite/wiki">
+      <svg class="octicon octicon-book" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+      Wiki
+</a>
+    <a class="js-selected-navigation-item reponav-item" data-selected-links="repo_graphs repo_contributors dependency_graph pulse people alerts /ashtuchkin/iconv-lite/pulse" href="https://github.com/ashtuchkin/iconv-lite/pulse">
+      <svg class="octicon octicon-graph" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"/></svg>
+      Insights
+</a>
+
+</nav>
+
+  <div class="reponav-wrapper reponav-small d-lg-none">
+  <nav class="reponav js-reponav text-center no-wrap" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+
+    <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+      <a class="js-selected-navigation-item reponav-item" itemprop="url" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /ashtuchkin/iconv-lite" href="https://github.com/ashtuchkin/iconv-lite">
+        <span itemprop="name">Code</span>
+        <meta itemprop="position" value="1">
+</a>    </span>
+
+      <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+        <a itemprop="url" class="js-selected-navigation-item reponav-item" data-selected-links="repo_issues repo_labels repo_milestones /ashtuchkin/iconv-lite/issues" href="https://github.com/ashtuchkin/iconv-lite/issues">
+          <span itemprop="name">Issues</span>
+          <span class="Counter">26</span>
+          <meta itemprop="position" value="2">
+</a>      </span>
+
+    <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+      <a itemprop="url" class="js-selected-navigation-item reponav-item" data-selected-links="repo_pulls checks /ashtuchkin/iconv-lite/pulls" href="https://github.com/ashtuchkin/iconv-lite/pulls">
+        <span itemprop="name">Pull requests</span>
+        <span class="Counter">10</span>
+        <meta itemprop="position" value="3">
+</a>    </span>
+
+
+      <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+        <a itemprop="url" class="js-selected-navigation-item reponav-item" data-selected-links="repo_projects new_repo_project repo_project /ashtuchkin/iconv-lite/projects" href="https://github.com/ashtuchkin/iconv-lite/projects">
+          <span itemprop="name">Projects</span>
+          <span class="Counter">0</span>
+          <meta itemprop="position" value="5">
+</a>      </span>
+
+      <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+        <a itemprop="url" class="js-selected-navigation-item selected reponav-item" aria-current="page" data-selected-links="repo_wiki /ashtuchkin/iconv-lite/wiki" href="https://github.com/ashtuchkin/iconv-lite/wiki">
+          <span itemprop="name">Wiki</span>
+          <meta itemprop="position" value="6">
+</a>      </span>
+
+      <a class="js-selected-navigation-item reponav-item" data-selected-links="pulse /ashtuchkin/iconv-lite/pulse" href="https://github.com/ashtuchkin/iconv-lite/pulse">
+        Pulse
+</a>
+
+  </nav>
+</div>
+
+
+  </div>
+<div class="container-lg new-discussion-timeline experiment-repo-nav  p-responsive">
+  <div class="repository-content ">
+
+    
+    
+  <div id="wiki-wrapper" class="page">
+          <div class="signup-prompt signup-prompt-unpacking mx-auto mb-6 p-4 border rounded-2" style="background-image: url(&apos;https://github.githubassets.com/images/modules/site/heroes/octocat-unpacking-hubot.svg&apos;)">
+      <div class="position-relative">
+                <h3 class="col-6 col-md-12 mb-2 lh-condensed">Document your code</h3>
+        <p class="col-md-7">
+          Every project on GitHub comes with a version-controlled wiki to give your
+          documentation the high level of care it deserves. It&#x2019;s easy to create
+          well-maintained, Markdown or rich text documentation alongside your code.
+        </p>
+        <a class="btn btn-primary mr-2" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;releases sign up prompt&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;client_id&quot;:null,&quot;originating_request_id&quot;:&quot;E067:452D1:203FCA4:31ED1E4:5CC6F3D0&quot;,&quot;originating_url&quot;:&quot;https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding&quot;,&quot;referrer&quot;:null,&quot;user_id&quot;:null}}" data-hydro-click-hmac="8a75b7dbcc1f0aa7e674a8edb720801fc55b645060b272ba523b1308a41be89d" data-ga-click="(Logged out) Sign up prompt, click, text:Sign up for free" data-ga-load="Wiki, view, type:redesigned sign up prompt" href="https://github.com/join?source=prompt-wiki-show">Sign up for free</a>
+        <a href="https://github.com/pricing" class="d-block d-sm-inline-block mt-2 mt-sm-0" data-ga-click="(Logged out) Sign up prompt, click, text:See pricing for teams and enterprises" data-ga-load="Wiki, view, type:redesigned sign up prompt">
+          See pricing for teams and enterprises
+        </a>
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-column flex-md-row gh-header">
+      <h1 class="flex-auto min-width-0 mb-2 mb-md-0 mr-0 mr-md-2 gh-header-title instapaper_title">Use Buffers when decoding</h1>
+
+        <div class="mt-0 mt-lg-1 flex-shrink-0 gh-header-actions">
+          <a href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding#wiki-pages-box" class="d-md-none ">Jump to bottom</a>
+
+        </div>
+    </div>
+
+    <div class="mt-2 mt-md-1 pb-3 gh-header-meta">
+      Alexander Shtuchkin edited this page <relative-time datetime="2014-06-11T00:44:50Z">Jun 11, 2014</relative-time>
+      &#xB7;
+      <a href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding/_history" class="muted-link">
+        5 revisions
+      </a>
+    </div>
+
+  <div id="wiki-content" class="d-flex flex-column flex-md-row">
+    <div id="wiki-body" class="mt-4 flex-auto min-width-0 gollum-markdown-content instapaper_body">
+        <div class="markdown-body">
+          <p>Decoding a string is probably the most common mistake when working with legacy encoded resources. Why? Lets see.</p>
+<h3>
+<a id="user-content-problem" class="anchor" href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding#problem" aria-hidden="true"><svg class="octicon octicon-link" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg></a>Problem</h3>
+<p>This is wrong:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> http <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>http<span class="pl-pds">&apos;</span></span>),
+    iconv <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>iconv-lite<span class="pl-pds">&apos;</span></span>);
+
+<span class="pl-smi">http</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>http://website.com/<span class="pl-pds">&quot;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">res</span>) {
+  <span class="pl-k">var</span> body <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&apos;</span><span class="pl-pds">&apos;</span></span>;
+  <span class="pl-smi">res</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>data<span class="pl-pds">&apos;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">chunk</span>) {
+    body <span class="pl-k">+=</span> chunk;
+  });
+  <span class="pl-smi">res</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>end<span class="pl-pds">&apos;</span></span>, <span class="pl-k">function</span>() {
+    <span class="pl-k">var</span> decodedBody <span class="pl-k">=</span> <span class="pl-smi">iconv</span>.<span class="pl-en">decode</span>(body, <span class="pl-s"><span class="pl-pds">&apos;</span>win1252<span class="pl-pds">&apos;</span></span>);
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(decodedBody);
+  });
+});</pre></div>
+<p>Before being decoded with <code>iconv.decode</code> function, the original resource was (unintentionally) already decoded in <code>body += chunk</code> via javascript type conversion. What really happens here is:</p>
+<div class="highlight highlight-source-js"><pre>  <span class="pl-smi">res</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>data<span class="pl-pds">&apos;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">chunkBuffer</span>) {
+    body <span class="pl-k">+=</span> <span class="pl-smi">chunkBuffer</span>.<span class="pl-c1">toString</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>utf8<span class="pl-pds">&apos;</span></span>);
+  });</pre></div>
+<p>The same conversion is done behind the scenes if you call <code>res.setEncoding(&apos;utf8&apos;);</code>.</p>
+<p>Not only double-decoding leads to wrong results, it is also nearly impossible to restore original bytes because utf8 conversion is lossy, so even <code>iconv.decode(new Buffer(body, &apos;utf8&apos;), &apos;win1252&apos;)</code> will not help.</p>
+<p>Note: theoretically, if you use &apos;binary&apos; encoding to first decode to strings, then feed them to <code>decode</code>, you get the correct results. This is a bad practice because it&apos;s slower, it&apos;s mixing concepts and <a href="http://nodejs.org/api/buffer.html#buffer_buffer" rel="nofollow">&apos;binary&apos; encoding is deprecated</a>.</p>
+<h3>
+<a id="user-content-solution" class="anchor" href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding#solution" aria-hidden="true"><svg class="octicon octicon-link" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg></a>Solution</h3>
+<p><strong>Keep original <code>Buffer</code>-s and provide them to <code>iconv.decode</code>. Use <a href="http://nodejs.org/api/buffer.html#buffer_class_method_buffer_concat_list_totallength" rel="nofollow"><code>Buffer.concat()</code></a> if needed.</strong></p>
+<p>In general, keep in mind that all javascript strings are already decoded and should not be decoded again.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">http</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>http://website.com/<span class="pl-pds">&quot;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">res</span>) {
+  <span class="pl-k">var</span> chunks <span class="pl-k">=</span> [];
+  <span class="pl-smi">res</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>data<span class="pl-pds">&apos;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">chunk</span>) {
+    <span class="pl-smi">chunks</span>.<span class="pl-c1">push</span>(chunk);
+  });
+  <span class="pl-smi">res</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>end<span class="pl-pds">&apos;</span></span>, <span class="pl-k">function</span>() {
+    <span class="pl-k">var</span> decodedBody <span class="pl-k">=</span> <span class="pl-smi">iconv</span>.<span class="pl-en">decode</span>(<span class="pl-smi">Buffer</span>.<span class="pl-c1">concat</span>(chunks), <span class="pl-s"><span class="pl-pds">&apos;</span>win1252<span class="pl-pds">&apos;</span></span>);
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(decodedBody);
+  });
+});
+
+<span class="pl-c"><span class="pl-c">//</span> Or, with iconv-lite@0.4 and Node v0.10+, you can use streaming support with `collect` helper</span>
+<span class="pl-smi">http</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>http://website.com/<span class="pl-pds">&quot;</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">res</span>) {
+  <span class="pl-smi">res</span>.<span class="pl-en">pipe</span>(<span class="pl-smi">iconv</span>.<span class="pl-en">decodeStream</span>(<span class="pl-s"><span class="pl-pds">&apos;</span>win1252<span class="pl-pds">&apos;</span></span>)).<span class="pl-en">collect</span>(<span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">decodedBody</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(decodedBody);
+  });
+});</pre></div>
+<h3>
+<a id="user-content-what-if-you-know-what-youre-doing-and-just-want-to-mute-the-warning" class="anchor" href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding#what-if-you-know-what-youre-doing-and-just-want-to-mute-the-warning" aria-hidden="true"><svg class="octicon octicon-link" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/></svg></a>What if you know what you&apos;re doing and just want to mute the warning?</h3>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">iconv</span>.<span class="pl-smi">skipDecodeWarning</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>;</pre></div>
+
+        </div>
+
+    </div>
+
+    <div id="wiki-rightbar" class="mt-4 ml-md-6 flex-shrink-0 width-full wiki-rightbar">
+      <div id="wiki-pages-box" class="mb-4 wiki-pages-box js-wiki-pages-box" role="navigation">
+        
+<div class="Box Box--condensed box-shadow">
+  <div class="Box-header js-wiki-toggle-collapse" style="cursor: pointer">
+    <h3 class="Box-title">
+      <svg class="octicon octicon-triangle-down js-wiki-sidebar-toggle-display" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 5l6 6 6-6H0z"/></svg>
+      <svg class="octicon octicon-triangle-right js-wiki-sidebar-toggle-display d-none" viewbox="0 0 6 16" version="1.1" width="6" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M0 14l6-6-6-6v12z"/></svg>
+      Pages <span class="Counter Counter--gray">5</span>
+    </h3>
+  </div>
+  <div class=" js-wiki-sidebar-toggle-display">
+    <div class="filter-bar">
+      <input type="text" id="wiki-pages-filter" class="form-control input-sm input-block js-filterable-field" placeholder="Find a Page&#x2026;" aria-label="Find a Page&#x2026;">
+    </div>
+
+    <ul class="m-0 p-0 list-style-none" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
+        <li class="Box-row">
+          <strong><a class="d-block" href="https://github.com/ashtuchkin/iconv-lite/wiki">Home</a></strong>
+        </li>
+        <li class="Box-row">
+          <strong><a class="d-block" href="https://github.com/ashtuchkin/iconv-lite/wiki/Javascript-source-file-encodings">Javascript source file encodings</a></strong>
+        </li>
+        <li class="Box-row">
+          <strong><a class="d-block" href="https://github.com/ashtuchkin/iconv-lite/wiki/Node-v4-compatibility">Node v4 compatibility</a></strong>
+        </li>
+        <li class="Box-row">
+          <strong><a class="d-block" href="https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings">Supported Encodings</a></strong>
+        </li>
+        <li class="Box-row">
+          <strong><a class="d-block" href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding">Use Buffers when decoding</a></strong>
+        </li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+
+      <h5 class="mt-0 mb-2">Clone this wiki locally</h5>
+      <div class="width-full input-group">
+        <input id="wiki-clone-url" type="text" data-autoselect="" class="form-control input-sm text-small text-gray input-monospace" aria-label="Clone URL for this wiki" value="https://github.com/ashtuchkin/iconv-lite.wiki.git" readonly="readonly">
+        <span class="input-group-button">
+          <clipboard-copy for="wiki-clone-url" aria-label="Copy to clipboard" class="btn btn-sm zeroclipboard-button">
+            <svg class="octicon octicon-clippy" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"/></svg>
+          </clipboard-copy>
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+  <div class="modal-backdrop js-touch-events"></div>
+</div>
+
+
+    </div></main>
+  </div>
+  
+
+  </div>
+
+        
+<div class="footer container-lg width-full p-responsive" role="contentinfo">
+  <div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+    <ul class="list-style-none d-flex flex-wrap col-12 col-lg-6 flex-justify-center flex-lg-justify-start mb-2 mb-lg-0">
+      <li class="mr-3">&#xA9; 2019 <span title="0.11380s from unicorn-7f7bcbcc-rjfg5">GitHub</span>, Inc.</li>
+        <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
+        <li class="mr-3"><a data-ga-click="Footer, go to security, text:security" href="https://github.com/security">Security</a></li>
+        <li class="mr-3"><a href="https://githubstatus.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+        <li><a data-ga-click="Footer, go to help, text:help" href="https://help.github.com/">Help</a></li>
+    </ul>
+
+    <a aria-label="Homepage" title="GitHub" class="footer-octicon mx-lg-4" href="https://github.com/">
+      <svg height="24" class="octicon octicon-mark-github" viewbox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+   <ul class="list-style-none d-flex flex-wrap col-12 col-lg-6 flex-justify-center flex-lg-justify-end mb-2 mb-lg-0">
+        <li class="mr-3"><a data-ga-click="Footer, go to contact, text:contact" href="https://github.com/contact">Contact GitHub</a></li>
+        <li class="mr-3"><a href="https://github.com/pricing" data-ga-click="Footer, go to Pricing, text:Pricing">Pricing</a></li>
+      <li class="mr-3"><a href="https://developer.github.com/" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li class="mr-3"><a href="https://training.github.com/" data-ga-click="Footer, go to training, text:training">Training</a></li>
+        <li class="mr-3"><a href="https://github.blog/" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
+
+    </ul>
+  </div>
+  <div class="d-flex flex-justify-center pb-6">
+    <span class="f6 text-gray-light"></span>
+  </div>
+</div>
+
+
+
+  <div id="ajax-error-message" class="ajax-error-message flash flash-error">
+    <svg class="octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"/></svg>
+    <button type="button" class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+      <svg class="octicon octicon-x" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
+    </button>
+    You can&#x2019;t perform that action at this time.
+  </div>
+
+
+    
+  <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner" hidden>
+    <svg class="octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"/></svg>
+    <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding">Reload</a> to refresh your session.</span>
+    <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="https://github.com/ashtuchkin/iconv-lite/wiki/Use-Buffers-when-decoding">Reload</a> to refresh your session.</span>
+  </div>
+  <template id="site-details-dialog">
+  <details class="details-reset details-overlay details-overlay-dark lh-default text-gray-dark" open>
+    <summary aria-haspopup="dialog" aria-label="Close dialog"></summary>
+    <details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast">
+      <button class="Box-btn-octicon m-0 btn-octicon position-absolute right-0 top-0" type="button" aria-label="Close dialog" data-close-dialog="">
+        <svg class="octicon octicon-x" viewbox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
+      </button>
+      <div class="octocat-spinner my-6 js-details-dialog-spinner"></div>
+    </details-dialog>
+  </details>
+</template>
+
+  <div class="Popover js-hovercard-content position-absolute" style="display: none; outline: none;" tabindex="0">
+  <div class="Popover-message Popover-message--bottom-left Popover-message--large Box box-shadow-large" style="width:360px;">
+  </div>
+</div>
+
+  <div aria-live="polite" class="js-global-screen-reader-notice sr-only"></div>
+
+  </body>
+</html>
+
