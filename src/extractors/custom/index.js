@@ -154,3 +154,4 @@ export * from './unwire.hk';
 export * from './blog.wilshipley.com';
 export * from './m.douguo.com';
 export * from './www.douguo.com';
+export * from './www.cbsnews.com';
