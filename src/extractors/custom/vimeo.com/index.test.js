@@ -102,7 +102,10 @@ describe('VimeoComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, '< > </> < > </>');
+      assert.equal(
+        first13,
+        'Sneak peek of the new browser extensions for Chrome, Safari and Firefox. The'
+      );
     });
   });
 });

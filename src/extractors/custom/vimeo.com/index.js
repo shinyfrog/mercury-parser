@@ -24,7 +24,7 @@ export const VimeoComExtractor = {
   },
 
   content: {
-    selectors: ['.clip_main'],
+    selectors: ['.clip_main .clip_details-description'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
