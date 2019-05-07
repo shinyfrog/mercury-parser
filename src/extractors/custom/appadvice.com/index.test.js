@@ -8,15 +8,15 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('WwwInstagramComExtractor', () => {
+describe('AppadviceComExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
       url =
-        'https://www.instagram.com/p/Bwn56bll5kp/?utm_source=ig_share_sheet&igshid=4x7vffh7crbq';
+        'https://appadvice.com/appnn/2014/06/kickstarted-mos-reach-makes-it-easier-to-charge-all-your-apple-devices';
       const html = fs.readFileSync(
-        './fixtures/www.instagram.com/1556115788249.html'
+        './fixtures/appadvice.com/1557236158776.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -31,76 +31,63 @@ describe('WwwInstagramComExtractor', () => {
 
     it('returns the title', async () => {
       // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       const { title } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         title,
-        `“•vegetable butteto red •multi bifold wallet -
--
--
--
-#amicus
-#natural
-#cardwallet
-#cardcase
-#leatherbag
-#bag
-.
-.
-.
-.#춘천가죽공방”`
+        `Kickstarted: MOS Reach Makes It Easier To Charge All Your Apple Devices`
       );
     });
 
     it('returns the author', async () => {
       // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       const { author } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '');
+      assert.equal(author, 'AppAdvice Staff Author');
     });
 
     it('returns the date_published', async () => {
       // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       const { date_published } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '');
+      assert.equal(date_published, `2014-06-27T08:09:42.000Z`);
     });
 
     it('returns the dek', async () => {
       // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       const { dek } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, '');
+      assert.equal(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
       // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       const { lead_image_url } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         lead_image_url,
-        `https://scontent-mxp1-1.cdninstagram.com/vp/c69f78871b89359daebe61f471dfd9e8/5D3EC908/t51.2885-15/e35/56781280_386019958660191_2288602119459056615_n.jpg?_nc_ht=scontent-mxp1-1.cdninstagram.com`
+        `https://wpuploads.appadvice.com/wp-content/uploads/2014/06/Featured79-642x427.jpg`
       );
     });
 
     it('returns the content', async () => {
       // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.instagram.com/index.js.
+      // in ./src/extractors/custom/appadvice.com/index.js.
       // You may also want to make use of the clean and transform
       // options.
       const { content } = await result;
@@ -116,7 +103,10 @@ describe('WwwInstagramComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, 'Add the first 13 words of the article here');
+      assert.equal(
+        first13,
+        'MOS Reach is a new Kickstarter project that’s designed to make charging MacBooks,'
+      );
     });
   });
 });

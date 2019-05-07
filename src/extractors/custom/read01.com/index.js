@@ -1,10 +1,8 @@
-export const WwwInstagramComExtractor = {
-  domain: 'www.instagram.com',
+export const Read01ComExtractor = {
+  domain: 'read01.com',
 
   title: {
-    selectors: [
-      // enter title selectors
-    ],
+    selectors: [['meta[name="og:title"]', 'value']],
   },
 
   author: {
@@ -32,9 +30,7 @@ export const WwwInstagramComExtractor = {
   },
 
   content: {
-    selectors: [
-      // enter content selectors
-    ],
+    selectors: ['.content'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
