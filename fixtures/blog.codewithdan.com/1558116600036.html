@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" value="IE=9; IE=8; IE=7; IE=EDGE">
+<meta name="viewport" value="width=device-width, initial-scale=1.0">
+
+<meta name="twitter:card" value="summary">
+<meta name="twitter:site" value="@DanWahlin">
+<meta name="twitter:title" value="Code with Dan">
+<meta name="twitter:description" value="Angular, ES6, JavaScript, TypeScript, HTML5, jQuery, Node.js, ASP.NET, C#, XAML, Docker">
+<meta name="twitter:creator" value="@DanWahlin">
+<meta name="twitter:image:src" value="https://blog.codewithdan.com/wp-content/uploads/2015/09/DanHeadShotBlog.jpg">
+<meta name="twitter:domain" value="https://blog.codewithdan.com">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://blog.codewithdan.com/xmlrpc.php">
+
+<link rel="stylesheet" href="https://cdn-images.mailchimp.com/embedcode/slim-081711.css" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,900">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/vs.min.css">
+
+
+
+<title>4 kubectl Commands to Help Debug Pod Issues in Kubernetes &#x2013; Code with Dan Blog</title>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Code with Dan Blog &#xBB; Feed" href="https://blog.codewithdan.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Code with Dan Blog &#xBB; Comments Feed" href="https://blog.codewithdan.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Code with Dan Blog &#xBB; 4 kubectl Commands to Help Debug Pod Issues in Kubernetes Comments Feed" href="https://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/feed/">
+
+
+<link rel="stylesheet" id="tc-gfonts-css" href="https://fonts.googleapis.com/css?family=Open+Sans%7COpen+Sans" type="text/css" media="all">
+<link rel="stylesheet" id="wp-block-library-css" href="https://blog.codewithdan.com/wp-content/plugins/gutenberg/build/block-library/style.css?ver=1557378961" type="text/css" media="all">
+<link rel="stylesheet" id="wp-components-css" href="https://blog.codewithdan.com/wp-content/plugins/gutenberg/build/components/style.css?ver=1557378961" type="text/css" media="all">
+<link rel="stylesheet" id="wp-editor-font-css" href="https://fonts.googleapis.com/css?family=Noto+Serif%3A400%2C400i%2C700%2C700i&amp;ver=5.2" type="text/css" media="all">
+<link rel="stylesheet" id="wp-block-editor-css" href="https://blog.codewithdan.com/wp-content/plugins/gutenberg/build/block-editor/style.css?ver=1557378961" type="text/css" media="all">
+<link rel="stylesheet" id="wp-nux-css" href="https://blog.codewithdan.com/wp-content/plugins/gutenberg/build/nux/style.css?ver=1557378961" type="text/css" media="all">
+<link rel="stylesheet" id="wp-editor-css" href="https://blog.codewithdan.com/wp-content/plugins/gutenberg/build/editor/style.css?ver=1557378961" type="text/css" media="all">
+<link rel="stylesheet" id="advanced-gutenberg-blocks-style-css" href="https://blog.codewithdan.com/wp-content/plugins/advanced-gutenberg-blocks/dist/blocks.style.build.css?ver=1.9.1" type="text/css" media="all">
+<link rel="stylesheet" id="advanced-gutenberg-blocks-code-mirror-css" href="https://blog.codewithdan.com/wp-content/plugins/advanced-gutenberg-blocks/vendor/codemirror/codemirror.css?ver=1.9.1" type="text/css" media="all">
+<link rel="stylesheet" id="advanced-gutenberg-blocks-code-mirror-theme-css" href="https://blog.codewithdan.com/wp-content/plugins/advanced-gutenberg-blocks/vendor/codemirror/themes/monokai.css?ver=1.9.1" type="text/css" media="all">
+<link rel="stylesheet" id="amazonpolly-css" href="https://blog.codewithdan.com/wp-content/plugins/amazon-polly/public/css/amazonpolly-public.css?ver=1.0.0" type="text/css" media="all">
+<link rel="stylesheet" id="customizr-fa-css" href="https://blog.codewithdan.com/wp-content/themes/customizr/assets/shared/fonts/fa/css/fontawesome-all.min.css?ver=4.1.38" type="text/css" media="all">
+<link rel="stylesheet" id="customizr-common-css" href="https://blog.codewithdan.com/wp-content/themes/customizr/inc/assets/css/tc_common.min.css?ver=4.1.38" type="text/css" media="all">
+<link rel="stylesheet" id="customizr-skin-css" href="https://blog.codewithdan.com/wp-content/themes/customizr/inc/assets/css/blue.min.css?ver=4.1.38" type="text/css" media="all">
+
+<link rel="stylesheet" id="customizr-style-css" href="https://blog.codewithdan.com/wp-content/themes/codeWithDanBlog/style.css?ver=4.1.38" type="text/css" media="all">
+<link rel="stylesheet" id="fancyboxcss-css" href="https://blog.codewithdan.com/wp-content/themes/customizr/assets/front/js/libs/fancybox/jquery.fancybox-1.3.4.min.css?ver=5.2" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css?ver=0.3.7" type="text/css" media="all">
+<link rel="stylesheet" id="amarkal-css" href="https://blog.codewithdan.com/wp-content/plugins/mivhak/vendor/askupa-software/amarkal-framework/Assets/css/amarkal.min.css?ver=0.3.7" type="text/css" media="all">
+<link rel="stylesheet" id="select2-css" href="https://blog.codewithdan.com/wp-content/plugins/mivhak/vendor/askupa-software/amarkal-framework/Assets/css/select2.min.css?ver=0.3.7" type="text/css" media="all">
+<link rel="stylesheet" id="mivhak-css" href="https://blog.codewithdan.com/wp-content/plugins/mivhak/assets/css/mivhak.min.css?ver=1.3.6" type="text/css" media="all">
+
+
+
+
+
+
+
+
+
+
+<link rel="https://api.w.org/" href="https://blog.codewithdan.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.codewithdan.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blog.codewithdan.com/wp-includes/wlwmanifest.xml">
+<link rel="prev" title="Using the Iterator Pattern in JavaScript" href="https://blog.codewithdan.com/using-the-iterator-pattern-in-javascript/">
+<link rel="next" title="Data-Oriented vs. Control-Oriented Programming" href="https://blog.codewithdan.com/data-oriented-vs-control-oriented-programming/">
+<meta name="generator" value="WordPress 5.2">
+<link rel="canonical" href="https://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/">
+<link rel="shortlink" href="https://blog.codewithdan.com/?p=2108">
+<link rel="alternate" type="application/json+oembed" href="https://blog.codewithdan.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblog.codewithdan.com%2F4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://blog.codewithdan.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblog.codewithdan.com%2F4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes%2F&amp;format=xml">
+ 
+<link rel="icon" href="https://blog.codewithdan.com/wp-content/uploads/2015/09/cropped-codeWithDanAppIcon-32x32.png" sizes="32x32">
+<link rel="icon" href="https://blog.codewithdan.com/wp-content/uploads/2015/09/cropped-codeWithDanAppIcon-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://blog.codewithdan.com/wp-content/uploads/2015/09/cropped-codeWithDanAppIcon-180x180.png">
+<meta name="msapplication-TileImage" value="https://blog.codewithdan.com/wp-content/uploads/2015/09/cropped-codeWithDanAppIcon-270x270.png">
+
+
+
+
+
+</head>
+<body class="post-template-default single single-post postid-2108 single-format-standard wp-embed-responsive tc-r-sidebar tc-center-images skin-blue tc-sticky-header sticky-disabled tc-solid-color-on-scroll no-navbar tc-regular-menu tc-sticky-footer" itemscope="" itemtype="http://schema.org/WebPage">
+<div id="tc-page-wrap" class="">
+<header class="tc-header row-fluid">
+<div class="wrapper">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container-fluid">
+<a class="brand" href="https://blog.codewithdan.com/" title="Code with Dan | see it, learn it, code it">
+<img src="https://blog.codewithdan.com/wp-content/themes/codeWithDanBlog/inc/assets/img/codeWithDanLogo.png" alt="Back Home" width="250" height="59">
+</a>
+<div class="nav-collapse pull-right">
+<ul class="nav">
+<li><a href="https://codewithdan.com/products/productType/training">Training</a></li>
+<li><a href="https://codewithdan.com/products/productType/videos">Videos</a></li>
+<li><a href="https://codewithdan.com/contact">Contact</a></li>
+<li><a href="https://blog.codewithdan.com/" class="active">Blog</a></li>
+</ul>
+</div>
+<div class="btn-toggle-nav pull-right">
+<button type="button" class="btn menu-btn" data-toggle="collapse" data-target=".nav-collapse" title="Open the menu">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="subpage-section product-full-width-background">
+<div class="wrapper">
+<div class="container-fluid animated fadeInDown">
+<div class="feature-section-content">
+<div class="featured-item white">
+<div class="item-name">
+<a href="https://blog.codewithdan.com/feed/rss" target="_blank" title="RSS">
+<i class="fa fa-rss"></i>
+</a>
+<a href="https://blog.codewithdan.com/">Blog</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<br><br>
+<div id="tc-reset-margin-top" class="container-fluid" style="margin-top:103px"></div><div id="main-wrapper" class="container">
+<div class="tc-hot-crumble container" role="navigation"><div class="row"><div class="span12"><div class="breadcrumb-trail breadcrumbs"><span class="trail-begin"><a href="https://blog.codewithdan.com/" title="Code with Dan Blog" rel="home" class="trail-begin">Home</a></span> <span class="sep">&#xBB;</span> <a href="https://blog.codewithdan.com/category/docker/" title="Docker">Docker</a> <span class="sep">&#xBB;</span> <span class="trail-end">4 kubectl Commands to Help Debug Pod Issues in Kubernetes</span></div></div></div></div>
+<div class="container" role="main">
+<div class="row column-content-wrapper">
+<div id="content" class="span9 article-container tc-gallery-style">
+<article id="post-2108" class="row-fluid post-2108 post type-post status-publish format-standard has-post-thumbnail hentry category-docker category-kubernetes tag-commands tag-containers tag-debug tag-diagnose tag-kubectl tag-pods">
+<header class="entry-header">
+<h1 class="entry-title ">4 kubectl Commands to Help Debug Pod Issues in Kubernetes</h1><div class="entry-meta">This entry was posted in <a class="btn btn-mini btn-tag" href="https://blog.codewithdan.com/category/docker/" title="View all posts in Docker"> Docker </a><a class="btn btn-mini btn-tag" href="https://blog.codewithdan.com/category/kubernetes/" title="View all posts in kubernetes"> kubernetes </a> and tagged <a class="btn btn-mini" href="https://blog.codewithdan.com/tag/commands/" title="View all posts in commands"> commands </a><a class="btn btn-mini" href="https://blog.codewithdan.com/tag/containers/" title="View all posts in containers"> containers </a><a class="btn btn-mini" href="https://blog.codewithdan.com/tag/debug/" title="View all posts in debug"> debug </a><a class="btn btn-mini" href="https://blog.codewithdan.com/tag/diagnose/" title="View all posts in diagnose"> diagnose </a><a class="btn btn-mini" href="https://blog.codewithdan.com/tag/kubectl/" title="View all posts in kubectl"> kubectl </a><a class="btn btn-mini" href="https://blog.codewithdan.com/tag/pods/" title="View all posts in pods"> pods </a> on <a href="https://blog.codewithdan.com/2019/04/14/" title="10:17 pm" rel="bookmark"><time class="entry-date updated" datetime="2019-04-14T22:17:30-07:00">April 14, 2019</time></a> <span class="by-author">by <span class="author vcard author_name"><a class="url fn n" href="https://blog.codewithdan.com/author/dwahlin/" title="View all posts by Dan Wahlin" rel="author">Dan Wahlin</a></span></span> </div><hr class="featurette-divider __before_content"> </header>
+<section class="entry-content ">
+<aside class="social-block widget">
+<div class="social-links-post">
+<a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;t=Check%20out%20the%20great%20content%20on%20the%20Code%20with%20Dan%20site:%20http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/" onclick="javascript:window.open(this.href, &apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-facebook-square" style="color:#3B5998;"></i>
+</a>
+<a href="https://twitter.com/intent/tweet/?url=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;text=Check%20out%20the%20great%20content%20on%20the%20Code%20with%20Dan%20website!" onclick="javascript:window.open(this.href, &apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-twitter-square" style="color:#00aced;"></i>
+</a>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;title=Code%20With%20Dan&amp;summary=Code%20with%20Dan:%20Training%20and%20Videos&amp;source=Code%20with%20Dan" onclick="javascript:window.open(this.href,&apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-linkedin-square" style="color:#007bb6"></i>
+</a>
+<a href="https://www.youtube.com/channel/UCtbxTmNfHcXLV5nfpnQxFkw" target="_blank">
+<i class="fa fa-youtube-square" style="color:#dd4b39"></i>
+</a>
+<a rel="nofollow" title="Subscribe to my rss feed" aria-label="Subscribe to my rss feed" href="https://blog.codewithdan.com/feed/" target="_blank">
+<i class="fa fa-rss-square" style="color: #E15C2D"></i>
+</a>
+<a rel="nofollow" title="Follow us on Github" aria-label="Follow us on Github" href="https://github.com/danwahlin" target="_blank">
+<i class="fa fa-github-square"></i>
+</a>
+</div>
+</aside>
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w.jpg%202000w,%20https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-300x228.jpg%20300w,%20https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-768x583.jpg%20768w,%20https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-1024x778.jpg%201024w" alt="mac command by Hannah Joshua" class="wp-image-2128" srcset="https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w.jpg 2000w, https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-300x228.jpg 300w, https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-768x583.jpg 768w, https://blog.codewithdan.com/wp-content/uploads/2019/04/46T6nVjRc2w-1024x778.jpg 1024w" sizes="(max-width: 2000px) 100vw, 2000px"><figcaption>mac command by Hannah Joshua</figcaption></figure></div>
+<p><img align="right" class="wp-image-1985" style="width: 150px;padding: 10px 10px;" src="https://blog.codewithdan.com/wp-content/uploads/2019/03/2019-03-10_16-06-42.png" alt="">If you&#x2019;ve worked with containers a lot you&#x2019;re probably good at commands like <strong>docker logs</strong> and <strong>docker exec</strong> to retrieve information about containers that may be having problems. One of the challenges that comes up as people move to Kubernetes is understanding how to get similar details about Pods and any containers running within them. I&#x2019;ve had several people ask me about this recently in my instructor-led <a rel="noreferrer noopener" aria-label="Kubernetes courses (opens in a new tab)" href="https://codewithdan.com/products/docker-kubernetes" target="_blank">Kubernetes course</a> as well as online with my <a rel="noreferrer noopener" aria-label="Docker for Web Developers (opens in a new tab)" href="https://app.pluralsight.com/library/courses/docker-web-development/table-of-contents" target="_blank">Docker for Web Developers</a> course (which has a module on Kubernetes) so I decided to post a few of the initial commands you can use to get started resolving Pod and container issues.</p>
+<h2 id="checking-pod-logs-with-kubectl-logs">Checking Pod Logs with kubectl logs</h2>
+<p>The first thing I normally do if a Pod is having problems is check the logs for any errors. This is very similar to <strong>docker logs</strong>.</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-1566093454" id="codemirror-1566093454"> kubectl logs [pod-name]</textarea></div>
+<p>If the Pod contains more than one container you can use the <strong>-c</strong> switch to define a specific container. Use the container name defined in the Pod or Deployment YAML. </p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-669127080" id="codemirror-669127080"> kubectl logs [pod-name] -c [container-name]</textarea></div>
+<p>Note: Run <strong>kubectl get pod [pod-name] -o yaml</strong> or <strong>kubectl get deployment [deployment-name] -o yaml </strong>if you&#x2019;re not sure about the name of the container. The <strong>-o yaml </strong>switch is useful for getting additional information about the Pod by the way &#x2013; more information on that technique will be provided a little later.</p><div class="codew-content" style="margin-top: 20px; margin-bottom: 20px; " id="codew-312493299"><div style="background-color: #ececec; border: 1px solid #ccc;padding: 15px">
+<strong>Onsite Hands-On Training</strong>
+<br>
+Interested in onsite training for your team? We offer expert hands-on training classes covering a variety of topics from TypeScript and Angular, to C# and ASP.NET Core, to Docker, Kubernetes, and Azure! Visit <a href="https://codewithdan.com/" target="_blank">https://codewithdan.com</a> for more information.
+</div></div>
+<p>To get logs for all containers in a Pod (if you have more than 1) you can run the following:</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-667155496" id="codemirror-667155496"> kubectl logs [pod-name] &#x2013;all-containers=true</textarea></div>
+<p>If you want to get logs for a previously running Pod add the <strong>-p </strong>flag:</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-989771928" id="codemirror-989771928"> kubectl logs -p [pod-name] </textarea></div>
+<p>Finally, to stream the logs for a Pod use the <strong>-f </strong>flag:</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-74602201" id="codemirror-74602201"> kubectl logs -f [pod-name]</textarea></div>
+<p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#logs" target="_blank" rel="noreferrer noopener" aria-label="kubectl logs documentation (opens in a new tab)">kubectl logs documentation</a></p>
+<h2 id="describing-a-pod-with-kubectl-describe">Describing a Pod with kubectl describe</h2>
+<p>You can run the <strong>kubectl describe</strong> command to see information about the Pod as well as events that have run (look at the bottom of the output for the events). This is really helpful to see if the image for a container was pulled correctly, if the container started in the Pod, any Pod reschedule events, and much more.</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-993314073" id="codemirror-993314073"> kubectl describe pod [pod-name]</textarea></div>
+<p>In some cases describe events may lead to the discovery that the troubled Pod has been rescheduled frequently by Kubernetes. It&#x2019;s great that this happens (when setup properly with a Deployment for example), but it&#x2019;s also good to get to the bottom of &#x201C;why&#x201D; a Pod is being rescheduled to determine if there&#x2019;s a bug in the code that&#x2019;s running, a memory leak, or another issue. </p>
+<p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#describe" target="_blank" rel="noreferrer noopener" aria-label="kubectl describe documentation (opens in a new tab)">kubectl describe documentation</a></p>
+<h2 id="viewing-the-pod-yaml-with-o-yaml">Viewing the Pod YAML with -o yaml</h2>
+<p>Finally, you can run <strong>kubectl get</strong> on a troubled Pod but display the YAML (or JSON) instead of just the basic Pod information. In many scenarios this may yield some useful information.</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-1979478286" id="codemirror-1979478286"> kubectl get pods [pod-name] -o yaml</textarea></div>
+<p>You can do the same thing for a specific Deployment as well:</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-671422069" id="codemirror-671422069"> kubectl get deployment [deployment-name] -o yaml</textarea></div>
+<p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get" target="_blank" rel="noreferrer noopener" aria-label=" (opens in a new tab)">kubectl get documentation</a></p>
+<h2 id="shelling-into-a-pod-container-with-kubectl-exec">Shelling into a Pod Container with kubectl exec</h2>
+<p>In some cases you may need to get into a Pod&#x2019;s container to discover what is wrong. With Docker you would use the <strong>docker exec</strong> command. Kubernetes is similar:</p>
+<div class="wp-block-advanced-gutenberg-blocks-code">
+<header class="wp-block-advanced-gutenberg-blocks-code__header"><div class="wp-block-advanced-gutenberg-blocks-code__lang is-lang-shell">
+Shell </div>
+<div class="wp-block-advanced-gutenberg-blocks-code__file">
+</div>
+</header><textarea class="wp-block-advanced-gutenberg-blocks-code__source" name="codemirror-556286590" id="codemirror-556286590"> kubectl exec [pod-name] -it sh</textarea></div>
+<p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#exec" target="_blank" rel="noreferrer noopener" aria-label="kubectl exec documentation (opens in a new tab)">kubectl exec documentation</a></p>
+<p>Running one of these commands will help provide some initial information about what may be going on with a troubled Pod/Container. There are of course many other techniques that can be used as well to diagnose Pod issues (checking the UI Dashboard, monitoring, viewing stats about containers, and much more), but these should help get you started if you&#x2019;re new to Kubernetes.</p>
+<p><a href="https://twitter.com/search?q=https%3A%2F%2Fblog.codewithdan.com%2F4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes%2F&amp;src=typd" target="_blank" rel="noreferrer noopener" aria-label="Discuss on Twitter (opens in a new tab)">Discuss on Twitter</a></p>
+<br>
+<aside class="social-block widget">
+<div class="social-links-post">
+<a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;t=Check%20out%20the%20great%20content%20on%20the%20Code%20with%20Dan%20site:%20http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/" onclick="javascript:window.open(this.href, &apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-facebook-square" style="color:#3B5998;"></i>
+</a>
+<a href="https://twitter.com/intent/tweet/?url=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;text=Check%20out%20the%20great%20content%20on%20the%20Code%20with%20Dan%20website!" onclick="javascript:window.open(this.href, &apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-twitter-square" style="color:#00aced;"></i>
+</a>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/&amp;title=Code%20With%20Dan&amp;summary=Code%20with%20Dan:%20Training%20and%20Videos&amp;source=Code%20with%20Dan" onclick="javascript:window.open(this.href,&apos;&apos;, &apos;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&apos;);return false;">
+<i class="fa fa-linkedin-square" style="color:#007bb6"></i>
+</a>
+<a href="https://www.youtube.com/channel/UCtbxTmNfHcXLV5nfpnQxFkw" target="_blank">
+<i class="fa fa-youtube-square" style="color:#dd4b39"></i>
+</a>
+<a rel="nofollow" title="Subscribe to my rss feed" aria-label="Subscribe to my rss feed" href="https://blog.codewithdan.com/feed/" target="_blank">
+<i class="fa fa-rss-square" style="color: #E15C2D"></i>
+</a>
+<a rel="nofollow" title="Follow us on Github" aria-label="Follow us on Github" href="https://github.com/danwahlin" target="_blank">
+<i class="fa fa-github-square"></i>
+</a>
+</div>
+</aside>
+<br>
+<div class="mailchimp mailchimp-bottom">
+<div id="mc_embed_signup">
+
+</div>
+</div>
+<br>
+</section>
+</article>
+<div id="disqus_thread"></div>
+<hr class="featurette-divider __after_loop">
+<nav id="nav-below" class="navigation" role="navigation">
+<h3 class="assistive-text">
+Post navigation </h3>
+<ul class="pager">
+<li class="previous">
+<span class="nav-previous">
+<a href="https://blog.codewithdan.com/using-the-iterator-pattern-in-javascript/" rel="prev"><span class="meta-nav">&#x2190;</span> Using the Iterator Pattern in JavaScript</a> </span>
+</li>
+<li class="next">
+<span class="nav-next">
+<a href="https://blog.codewithdan.com/data-oriented-vs-control-oriented-programming/" rel="next">Data-Oriented vs. Control-Oriented Programming <span class="meta-nav">&#x2192;</span></a> </span>
+</li>
+</ul>
+</nav>
+</div>
+<div class="span3 right tc-sidebar">
+<div id="right" class="widget-area" role="complementary">
+<aside class="social-block widget widget_social"><div class="social-links"><a rel="nofollow" class="social-icon icon-feed" title="Subscribe to my rss feed" aria-label="Subscribe to my rss feed" href="https://blog.codewithdan.com/feed/" target="_blank" style="font-size:20px"><i class="fas fa-rss"></i></a><a rel="nofollow" class="social-icon icon-twitter" title="Follow us on Twitter" aria-label="Follow us on Twitter" href="https://twitter.com/danwahlin" target="_blank" style="font-size:20px"><i class="fab fa-twitter"></i></a><a rel="nofollow" class="social-icon icon-linkedin" title="Follow us on Linkedin" aria-label="Follow us on Linkedin" href="https://www.linkedin.com/in/danwahlin/" target="_blank" style="font-size:20px"><i class="fab fa-linkedin"></i></a><a rel="nofollow" class="social-icon icon-github" title="Follow us on Github" aria-label="Follow us on Github" href="https://github.com/danwahlin" target="_blank" style="font-size:20px"><i class="fab fa-github"></i></a><a rel="nofollow" class="social-icon icon-facebook" title="Follow us on Facebook" aria-label="Follow us on Facebook" href="https://www.facebook.com/DanWahlin" target="_blank" style="font-size:20px"><i class="fab fa-facebook"></i></a><a rel="nofollow" class="social-icon icon-youtube" title="Follow us on Youtube" aria-label="Follow us on Youtube" href="https://www.youtube.com/channel/UCtbxTmNfHcXLV5nfpnQxFkw" target="_blank" style="font-size:20px"><i class="fab fa-youtube"></i></a></div></aside><aside class="widget widget_video">
+<h3 class="widget-title">Pluralsight Video Courses</h3>
+<ul>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/angular-architecture-best-practices" target="_blank">Angular Architecture and Best Practices (NEW!)</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/containerizing-angular-apps-docker" target="_blank">Containerizing Angular Applications with Docker</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/angular-aspnetcore-restful-services" target="_blank">Integrating Angular with ASP.NET Core RESTful Services</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/angular-nodejs-restful-services" target="_blank">Integrating Angular with Node.js RESTful Services</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/docker-web-development" target="_blank">Docker for Web Developers</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/play-by-play-angular-2-rxjs-http-restful-services-john-papa-dan-wahlin" target="_blank">Play by Play: Angular/RxJS/HTTP and RESTful Services</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/play-by-play-docker-web-developers-john-papa-dan-wahlin" target="_blank">Play by Play: Docker for Web Developers </a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/structuring-javascript" target="_blank">Structuring JavaScript Code</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/typescript" target="_blank">TypeScript Fundamentals</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/web-development" target="_blank">Building ASP.NET MVC, EF Code First, HTML5, and jQuery Apps</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/csharp-events-delegates" target="_blank">C# Events, Delegates &amp; Lambdas</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/jquery-fundamentals" target="_blank">jQuery Fundamentals</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/jquery-tips-and-tricks" target="_blank">jQuery Tips and Tricks</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/html5-canvas-fundamentals" target="_blank">HTML5 Canvas Fundamentals</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/aspdotnet-webforms4-intro" target="_blank">Intro to ASP.NET Web Forms</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/aspnet-webforms45-new-features" target="_blank">New Features in ASP.NET 4.5</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/play-by-play-wahlin-allen" target="_blank">Play by Play: AngularJS Application Design</a></li>
+<li><a href="https://pluralsight.pxf.io/c/1191765/424552/7490?u=https://www.pluralsight.com/courses/win8-intro" target="_blank">Intro to Windows 8 Metro Apps</a></li>
+</ul>
+</aside>
+<aside class="widget widget_video">
+<h3 class="widget-title">Udemy Video Courses</h3>
+<ul>
+<li><a href="https://www.udemy.com/angularjs-jumpstart/#/" target="_blank">AngularJS JumpStart</a></li>
+<li><a href="https://www.udemy.com/angularjs-custom-directives/#/" target="_blank">AngularJS Custom Directives</a></li>
+</ul>
+</aside>
+<aside id="text-5" class="widget widget_text"> <div class="textwidget"><a href="https://pluralsight.pxf.io/c/1191765/512005/7490" target="_blank" rel="noopener noreferrer"><img src="https://a.impactradius-go.com/display-ad/7490-512005" border="0" alt="" width="300" height="250"></a><img height="0" width="0" src="https://pluralsight.pxf.io/i/1191765/512005/7490" style="position:absolute;visibility:hidden;" border="0"></div>
+</aside><aside id="search-4" class="widget widget_search"><h3 class="widget-title">Search</h3></aside> <aside id="recent-posts-8" class="widget widget_recent_entries"> <h3 class="widget-title">Recent Posts</h3> <ul>
+<li>
+<a href="https://blog.codewithdan.com/ng-conf-talk-mastering-the-subject-communication-options-in-rxjs/">ng-conf Talk: Mastering the Subject &#x2013; Communication Options in RxJS</a>
+</li>
+<li>
+<a href="https://blog.codewithdan.com/docker-for-web-developers-now-with-kubernetes/">Docker for Web Developers &#x2013; Now with Kubernetes!</a>
+</li>
+<li>
+<a href="https://blog.codewithdan.com/data-oriented-vs-control-oriented-programming/">Data-Oriented vs. Control-Oriented Programming</a>
+</li>
+<li>
+<a href="https://blog.codewithdan.com/4-kubectl-commands-to-help-debug-pod-issues-in-kubernetes/">4 kubectl Commands to Help Debug Pod Issues in Kubernetes</a>
+</li>
+<li>
+<a href="https://blog.codewithdan.com/using-the-iterator-pattern-in-javascript/">Using the Iterator Pattern in JavaScript</a>
+</li>
+</ul>
+</aside><aside id="categories-8" class="widget widget_categories"><h3 class="widget-title">Categories</h3>
+
+</aside> </div>
+</div>
+</div>
+</div>
+<div id="tc-push-footer"></div>
+</div>
+
+<div class="container">
+<div class="row column-content-wrapper">
+<hr>
+<div class="bonus-content">
+<table id="magazines-table">
+<tr>
+<th colspan="5"><h4>Subscribe to Our Free FlipBoard Magazines:</h4></th>
+</tr>
+<tr>
+<td><a href="https://flipboard.com/@dwahlin/the-angularjs-magazine-f66o0fd8y" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2015/09/angularFlipboard.png"></a></td>
+<td><a href="https://flipboard.com/@dwahlin/the-javascript%2C-html5-and-css-magazine-r54fkughy" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2015/09/javascriptFlipboard.png"></a></td>
+<td><a href="https://flipboard.com/@dwahlin/the-node.js-magazine-aa4fu4jsy" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2015/09/nodeFlipboard.png"></a></td>
+<td><a href="https://flipboard.com/@dwahlin/the-azure-magazine-uo2han4gy" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2015/09/azureFlipboard.png"></a></td>
+<td><a href="https://flipboard.com/@dwahlin/the-asp.net-mvc-%26-web-api-magazine-ghshc9qsy" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2015/09/aspnetFlipboard.png"></a></td>
+<td><a href="https://flipboard.com/@dwahlin/the-docker-magazine-vp93fvnry" target="_blank"><img src="https://blog.codewithdan.com/wp-content/uploads/2016/04/dockerFlipboard.png"></a></td>
+</tr>
+</table>
+<br>
+</div>
+</div>
+</div>
+
+<footer id="footer" class="">
+<div class="colophon">
+<div class="container">
+<div class="row">
+<div class="span4 pull-left">
+<span class="tc-footer-social-links-wrapper">
+<a href="https://blog.codewithdan.com/feed/rss/" title="Subscribe to my rss feed"><i class="fa fa-rss" aria-hidden="true"></i></a>
+</span>
+</div>
+<div class="span4 credits pull-right">
+<p>&#xA9; 2017 <a href="https://blog.codewithdan.com/" title="Code with Dan" rel="bookmark">Wahlin Consulting</a></p>
+</div>
+
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

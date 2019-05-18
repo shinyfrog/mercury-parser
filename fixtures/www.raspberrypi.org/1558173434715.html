@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-GB">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-GB">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" value="width=device-width, user-scalable=no">
+    <title>Using a standard USB webcam - Raspberry Pi Documentation</title>
+    <meta name="description" value="We&apos;ve provided some basic examples to help you discover possible uses for your Raspberry Pi and to get started with software available in Raspbian.">
+    <link rel="icon" type="image/png" href="https://www.raspberrypi.org/wp-content/themes/mind-control/images/favicon.png">
+    <link rel="publisher" href="https://plus.google.com/+RaspberryPi">
+    
+
+    <link rel="preconnect stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,500,700%7CSpace+Mono%7CRoboto:300,400,500" media="all" type="text/css">
+    <link rel="stylesheet" href="https://www.raspberrypi.org/wp-content/themes/mind-control/css/prism.css">
+    <link rel="stylesheet" href="https://www.raspberrypi.org/app/themes/mind-control/style.min.css?ver=1531911812">
+    <link rel="stylesheet" href="https://static.raspberrypi.org/styles/hack-font/hack.css">
+    
+    
+    
+    
+
+    
+
+    <link rel="canonical" href="https://www.raspberrypi.org/">
+    <link rel="shortlink" href="https://www.raspberrypi.org/">
+</head>
+
+<body class="documentation">
+    <header class="o-header">
+        <nav class="o-container o-header__container">
+            <a class="o-header__link o-header__link--home c-big-link c-big-link--home" href="https://www.raspberrypi.org/">
+                <span class="u-visually-hidden">Home</span>
+            </a>
+
+            <ul class="o-header__nav c-nav">
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--blog" href="https://www.raspberrypi.org/blog">Blog</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--downloads" href="https://www.raspberrypi.org/downloads">Downloads</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--community" href="https://www.raspberrypi.org/community">Community</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--help" href="https://www.raspberrypi.org/help">Help</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--forums" href="https://www.raspberrypi.org/forums">Forums</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--education" href="https://www.raspberrypi.org/education">Education</a>
+                </li>
+                <li class="c-nav__item">
+                    <a class="c-nav__link c-nav__link--projects" href="https://projects.raspberrypi.org/">Projects</a>
+                </li>
+            </ul>
+
+            <a class="o-header__link o-header__link--products c-big-link c-big-link--products" href="https://www.raspberrypi.org/products">
+                <span class="u-visually-hidden">Buy a Pi</span>
+            </a>
+
+            <span aria-hidden="true" class="o-header__search-toggle c-search-toggle">
+                <span class="u-visually-hidden">Open Search Input</span>
+            </span>
+
+            <span aria-hidden="true" class="o-header__toggle c-nav-toggle">
+                <span class="c-nav-toggle__inner">
+                    <span class="u-visually-hidden">Open Navigation</span>
+                </span>
+            </span>
+        </nav>
+    </header>
+
+    <div class="o-header__search">
+        
+    </div>
+
+    
+
+    <div class="container">
+        <div class="main">
+
+<nav class="breadcrumbs">
+    <a href="https://www.raspberrypi.org/documentation">documentation</a> &gt; <a href="https://www.raspberrypi.org/documentation/usage">usage</a> &gt; <a href="https://www.raspberrypi.org/documentation/usage/webcams">webcams</a></nav>
+
+<article class="entry-content">
+    <h1>Using a standard USB webcam</h1>
+<p>Rather than using the Raspberry Pi <a href="https://www.raspberrypi.org/documentation/usage/camera/README.md">camera module</a>, you can use a standard USB webcam to take pictures and video on the Raspberry Pi.</p>
+<p>Note that the quality and configurability of the camera module is highly superior to a standard USB webcam.</p>
+<h2>Install fswebcam</h2>
+<p>First, install the <code>fswebcam</code> package:</p>
+<pre><code class="language-bash">sudo apt-get install fswebcam</code></pre>
+<h2>Add your user to <code>video</code> group</h2>
+<p>If you are not using the default <code>pi</code> user account, you need to add your username to the <code>video</code> group, otherwise you will see &apos;permission denied&apos; errors.</p>
+<pre><code class="language-bash">sudo usermod -a -G video &lt;username&gt;</code></pre>
+<p>To check that the user has been added to the group correctly, use the <code>groups</code> command. </p>
+<h2>Basic usage</h2>
+<p>Enter the command <code>fswebcam</code> followed by a filename and a picture will be taken using the webcam, and saved to the filename specified:</p>
+<pre><code class="language-bash">fswebcam image.jpg</code></pre>
+<p>This command will show the following information:</p>
+<pre><code>--- Opening /dev/video0...
+Trying source module v4l2...
+/dev/video0 opened.
+No input was specified, using the first.
+Adjusting resolution from 384x288 to 352x288.
+--- Capturing frame...
+Corrupt JPEG data: 2 extraneous bytes before marker 0xd4
+Captured frame in 0.00 seconds.
+--- Processing captured image...
+Writing JPEG image to &apos;image.jpg&apos;.</code></pre>
+<p><img alt="Basic image capture" src="https://www.raspberrypi.org/documentation/usage/webcams/images/image.jpg"></p>
+<p>Note the small default resolution used, and the presence of a banner showing the timestamp.</p>
+<h3>Specify resolution</h3>
+<p>The webcam used in this example has a resolution of <code>1280 x 720</code> so to specify the resolution I want the image to be taken at, use the <code>-r</code> flag:</p>
+<pre><code class="language-bash">fswebcam -r 1280x720 image2.jpg</code></pre>
+<p>This command will show the following information:</p>
+<pre><code>--- Opening /dev/video0...
+Trying source module v4l2...
+/dev/video0 opened.
+No input was specified, using the first.
+--- Capturing frame...
+Corrupt JPEG data: 1 extraneous bytes before marker 0xd5
+Captured frame in 0.00 seconds.
+--- Processing captured image...
+Writing JPEG image to &apos;image2.jpg&apos;.</code></pre>
+<p><img alt="Full resolution image" src="https://www.raspberrypi.org/documentation/usage/webcams/images/image2.jpg"></p>
+<p>Picture now taken at the full resolution of the webcam, with the banner present.</p>
+<h3>Specify no banner</h3>
+<p>Now add the <code>--no-banner</code> flag:</p>
+<pre><code class="language-bash">fswebcam -r 1280x720 --no-banner image3.jpg</code></pre>
+<p>which shows the following information:</p>
+<pre><code>--- Opening /dev/video0...
+Trying source module v4l2...
+/dev/video0 opened.
+No input was specified, using the first.
+--- Capturing frame...
+Corrupt JPEG data: 2 extraneous bytes before marker 0xd6
+Captured frame in 0.00 seconds.
+--- Processing captured image...
+Disabling banner.
+Writing JPEG image to &apos;image3.jpg&apos;.</code></pre>
+<p><img alt="Full resolution image with no banner" src="https://www.raspberrypi.org/documentation/usage/webcams/images/image3.jpg"></p>
+<p>Now the picture is taken at full resolution with no banner.</p>
+<h2>Bad Pictures</h2>
+<p>You may experience poor quality pictures with a USB webcam, such as this accidentally artistic piece:</p>
+<p><img alt="Bad webcam picture" src="https://www.raspberrypi.org/documentation/usage/webcams/images/jack.jpg"></p>
+<p>Some webcams are more reliable than others, but this sort of issue may occur with poor quality webcams. If the problem persists, ensure your system is <a href="https://www.raspberrypi.org/documentation/raspbian/updating.md">up to date</a>. Also try other webcams, but you&apos;ll get the best performance from the Raspberry Pi <a href="https://www.raspberrypi.org/help/camera-module-setup/">camera module</a>.</p>
+<h2>Bash script</h2>
+<p>You can write a Bash script which takes a picture with the webcam. The script below saves the images in the <code>/home/pi/webcam</code> directory, so create the <code>webcam</code> subdirectory first with:</p>
+<pre><code class="language-bash">mkdir webcam</code></pre>
+<p>To create a script, open up your editor of choice and write the following example code:</p>
+<pre><code class="language-bash">#!/bin/bash
+
+DATE=$(date +&quot;%Y-%m-%d_%H%M&quot;)
+
+fswebcam -r 1280x720 --no-banner /home/pi/webcam/$DATE.jpg</code></pre>
+<p>This script will take a picture and name the file with a timestamp. Say we saved it as <code>webcam.sh</code>, we would first make the file executable:</p>
+<pre><code class="language-bash">chmod +x webcam.sh</code></pre>
+<p>Then run with:</p>
+<pre><code class="language-bash">./webcam.sh</code></pre>
+<p>Which would run the commands in the file and give the usual output:</p>
+<pre><code>--- Opening /dev/video0...
+Trying source module v4l2...
+/dev/video0 opened.
+No input was specified, using the first.
+--- Capturing frame...
+Corrupt JPEG data: 2 extraneous bytes before marker 0xd6
+Captured frame in 0.00 seconds.
+--- Processing captured image...
+Disabling banner.
+Writing JPEG image to &apos;/home/pi/webcam/2013-06-07_2338.jpg&apos;.</code></pre>
+<h2>Time-lapse using cron</h2>
+<p>You can use <code>cron</code> to schedule taking a picture at a given interval, such as every minute to capture a time-lapse.</p>
+<p>First open the cron table for editing:</p>
+<pre><code>crontab -e</code></pre>
+<p>This will either ask which editor you would like to use, or open in your default editor. Once you have the file open in an editor, add the following line to schedule taking a picture every minute (referring to the Bash script from above):</p>
+<pre><code class="language-bash">* * * * * /home/pi/webcam.sh 2&gt;&amp;1</code></pre>
+<p>Save and exit and you should see the message:</p>
+<pre><code class="language-bash">crontab: installing new crontab</code></pre>
+<p>Ensure your script does not save each picture taken with the same filename. This will overwrite the picture each time.</p>
+<h2>Other Useful tools</h2>
+<p>Other tools are available that may come in handy when using the camera or a webcam:</p>
+<ul>
+<li><a href="https://www.raspberrypi.org/documentation/remote-access/ssh/README.md">SSH</a>
+<ul>
+<li>Use SSH to remotely access the Raspberry Pi over your local network</li>
+</ul></li>
+<li><a href="https://www.raspberrypi.org/documentation/remote-access/ssh/scp.md">SCP</a>
+<ul>
+<li>Copy files over SSH to get copies of pictures taken on the Pi on your main computer</li>
+</ul></li>
+<li><a href="https://www.raspberrypi.org/documentation/remote-access/ssh/rsync.md">rsync</a>
+<ul>
+<li>Use <code>rsync</code> to synchronise the folder of pictures taken in a folder between your Pi to your computer</li>
+</ul></li>
+<li><a href="https://www.raspberrypi.org/documentation/linux/usage/cron.md">cron</a>
+<ul>
+<li>Use <code>cron</code> to schedule taking a picture at a given interval, such as every minute to capture a time-lapse</li>
+</ul></li>
+</ul></article>
+
+                <footer class="licence">
+                    <aside class="octocat">
+                        <a href="https://github.com/raspberrypi/documentation/blob/master/usage/webcams/README.md"><img src="https://www.raspberrypi.org/wp-content/themes/mind-control/images/octocat.jpg"></a>
+                    </aside>
+                    <aside class="links">
+                        <a href="https://github.com/raspberrypi/documentation/blob/master/usage/webcams/README.md" class="github">View/Edit this page on GitHub</a><br>
+                        <a href="https://www.raspberrypi.org/creative-commons/">Read our usage and contributions policy</a><br>
+                        <a href="https://www.raspberrypi.org/creative-commons/" class="cc"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="Creative Commons Licence"></a>
+                    </aside>
+                </footer>
+
+                <div style="clear: both;"></div>
+
+            </div>
+
+        <div style="clear: both;"></div>
+    </div>
+
+    <footer class="o-footer">
+        <div class="o-container">
+            <div class="o-footer__grid">
+                <div class="o-footer__social">
+                    <ul class="c-footer-social">
+                        <li class="c-footer-social__item">
+                            <a class="c-footer-social__link c-footer-social__link--facebook" href="https://www.facebook.com/raspberrypi">
+                                <span class="u-visually-hidden">Like Raspberry Pi on Facebook</span>
+                            </a>
+                        </li>
+                        <li class="c-footer-social__item">
+                            <a class="c-footer-social__link c-footer-social__link--twitter" href="https://twitter.com/Raspberry_Pi">
+                                <span class="u-visually-hidden">Follow Raspberry Pi on Twitter</span>
+                            </a>
+                        </li>
+                        <li class="c-footer-social__item">
+                            <a class="c-footer-social__link c-footer-social__link--instagram" href="https://www.instagram.com/raspberrypifoundation/">
+                                <span class="u-visually-hidden">Check out what we&#x2019;re having for lunch on Instagram</span>
+                            </a>
+                        </li>
+                        <li class="c-footer-social__item">
+                            <a class="c-footer-social__link c-footer-social__link--youtube" href="https://youtube.com/raspberrypi">
+                                <span class="u-visually-hidden">Subscribe to the Raspberry Pi YouTube channel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="o-footer__nav">
+                    <div class="o-footer__nav-about">
+                        <div class="c-footer-nav">
+                            <span class="c-footer-nav__title">About Us</span>
+
+                            <ul class="c-footer-nav__list">
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/about">About us</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/about/meet-the-team">Our team</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/about/governance">Governance</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/safeguarding">Safeguarding</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/about/supporters">Our supporters</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://raspberrypi.workable.com/">Jobs</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/contact">Contact us</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="o-footer__nav-support">
+                        <div class="c-footer-nav">
+                            <span class="c-footer-nav__title">Support</span>
+
+                            <ul class="c-footer-nav__list">
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/help">Help</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/documentation">Documentation</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://projects.raspberrypi.org/">Projects</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/training">Training</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/downloads">Downloads</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/research-and-insights">Research</a>
+                                </li>
+                                <li class="c-footer-nav__item">
+                                    <a class="c-footer-nav__link" href="https://www.raspberrypi.org/help/faqs">FAQ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="o-footer__newsletter">
+                    
+                </div>
+
+                <div class="o-footer__charity">
+                    <p class="c-footer-charity">
+                        Raspberry Pi Foundation<br>
+                        UK Registered Charity 1129409
+                    </p>
+                </div>
+
+                <div class="o-footer__additional">
+                    <p class="c-footer-additional">
+                        <a class="c-footer-additional__link" href="https://www.raspberrypi.org/privacy">Privacy</a>
+                        <a class="c-footer-additional__link" href="https://www.raspberrypi.org/cookies">Cookies</a>
+                        <a class="c-footer-additional__link" href="https://www.raspberrypi.org/trademark-rules">Trademark rules and brand guidelines</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
