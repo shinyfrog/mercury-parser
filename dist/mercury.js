@@ -1907,30 +1907,31 @@ var NYTimesExtractor = {
 var NewYorkerExtractor = {
   domain: 'www.newyorker.com',
   title: {
-    selectors: ['h1.title']
+    selectors: ['h1[class^="ArticleHeader__hed"]', ['meta[name="og:title"]', 'value']]
   },
   author: {
-    selectors: ['.contributors']
+    selectors: ['div[class^="ArticleContributors"] a[rel="author"]', 'article header div[class*="Byline__multipleContributors"]']
   },
   content: {
-    selectors: ['div#articleBody', 'div.articleBody'],
+    selectors: ['main[class^="Layout__content"]'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: []
+    clean: ['footer[class^="ArticleFooter__footer"]']
   },
   date_published: {
-    selectors: [['meta[name="article:published_time"]', 'value'], ['time[itemProp="datePublished"]', 'content']],
+    selectors: [['meta[name="pubdate"]', 'value']],
+    format: 'YYYYMMDD',
     timezone: 'America/New_York'
   },
   lead_image_url: {
     selectors: [['meta[name="og:image"]', 'value']]
   },
   dek: {
-    selectors: ['.dek', 'h2.dek']
+    selectors: ['h2[class^="ArticleHeader__dek"]']
   },
   next_page_url: null,
   excerpt: null
@@ -8055,6 +8056,211 @@ var LongreadsComExtractor = {
   }
 };
 
+var WwwHeddelsComExtractor = {
+  domain: 'www.heddels.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.the_author a']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [['meta[name="og:description"]', 'value']]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article.article'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.post_meta', '.related_posts', '.article_tags', '.article_brands']
+  }
+};
+
+var WwwDezeenComExtractor = {
+  domain: 'www.dezeen.com',
+  title: {
+    selectors: [['meta[name="twitter:title"]', 'value']]
+  },
+  author: {
+    selectors: ['a[rel="author"]']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="twitter:image"]', 'value']]
+  },
+  content: {
+    selectors: ['section.main-article-body'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.related-in-article-wrapper', '.read-more']
+  }
+};
+
+var WeeklyAsciiJpExtractor = {
+  domain: 'weekly.ascii.jp',
+  title: {
+    selectors: ['h1[itemprop="headline"]']
+  },
+  author: {
+    selectors: ['p.author']
+  },
+  date_published: {
+    selectors: [['meta[name="odate"]', 'value']]
+  },
+  dek: null,
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['div.article'],
+    transforms: {},
+    clean: []
+  }
+};
+
+var TechlogIijAdJpExtractor = {
+  domain: 'techlog.iij.ad.jp',
+  title: {
+    selectors: ['h1.entry-title']
+  },
+  author: {
+    selectors: ['a[rel="author"]']
+  },
+  date_published: {
+    selectors: [['time.entry-date', 'datetime']]
+  },
+  dek: null,
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['div.entry-content'],
+    defaultCleaner: false,
+    transforms: {},
+    clean: []
+  }
+};
+
+var WiredJpExtractor = {
+  domain: 'wired.jp',
+  title: {
+    selectors: ['h1.post-title']
+  },
+  author: {
+    selectors: ['p[itemprop="author"]']
+  },
+  date_published: {
+    selectors: [['time', 'datetime']]
+  },
+  dek: {
+    selectors: ['.post-intro']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['article.article-detail'],
+    transforms: {
+      'img[data-original]': function imgDataOriginal($node) {
+        var dataOriginal = $node.attr('data-original');
+        var src = $node.attr('src');
+        var url = URL.resolve(src, dataOriginal);
+        $node.attr('src', url);
+      }
+    },
+    clean: ['.post-category', 'time', 'h1.post-title', '.social-area-syncer']
+  }
+};
+
+var JapanZdnetComExtractor = {
+  domain: 'japan.zdnet.com',
+  title: {
+    selectors: ['h1']
+  },
+  author: {
+    selectors: [['meta[name="cXenseParse:author"]', 'value']]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: null,
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['div.article_body'],
+    transforms: {},
+    clean: []
+  }
+};
+
+var WwwRbbtodayComExtractor = {
+  domain: 'www.rbbtoday.com',
+  title: {
+    selectors: ['h1']
+  },
+  author: {
+    selectors: ['.writer.writer-name']
+  },
+  date_published: {
+    selectors: [['header time', 'datetime']]
+  },
+  dek: {
+    selectors: ['.arti-summary']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.arti-content'],
+    transforms: {},
+    clean: ['.arti-giga']
+  }
+};
+
+var WwwLemondeFrExtractor = {
+  domain: 'www.lemonde.fr',
+  title: {
+    selectors: ['h1.article__title']
+  },
+  author: {
+    selectors: ['.author__name']
+  },
+  date_published: {
+    selectors: [['meta[name="og:article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: ['.article__desc']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.article__content'],
+    transforms: {},
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -8263,7 +8469,15 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwHuckmagComExtractor: WwwHuckmagComExtractor,
   WwwVogueItExtractor: WwwVogueItExtractor,
   BaijiahaoBaiduComExtractor: BaijiahaoBaiduComExtractor,
-  LongreadsComExtractor: LongreadsComExtractor
+  LongreadsComExtractor: LongreadsComExtractor,
+  WwwHeddelsComExtractor: WwwHeddelsComExtractor,
+  WwwDezeenComExtractor: WwwDezeenComExtractor,
+  WeeklyAsciiJpExtractor: WeeklyAsciiJpExtractor,
+  TechlogIijAdJpExtractor: TechlogIijAdJpExtractor,
+  WiredJpExtractor: WiredJpExtractor,
+  JapanZdnetComExtractor: JapanZdnetComExtractor,
+  WwwRbbtodayComExtractor: WwwRbbtodayComExtractor,
+  WwwLemondeFrExtractor: WwwLemondeFrExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
