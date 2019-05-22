@@ -220,3 +220,5 @@ export * from './www.nzz.ch';
 export * from './www.thehungrychook.com';
 export * from './www.thetalko.com';
 export * from './www.sonima.com';
+export * from './blog.yidengxuetang.com';
+export * from './juejin.im';
