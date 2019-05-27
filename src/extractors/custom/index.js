@@ -228,3 +228,7 @@ export * from './www.menshealth.com';
 export * from './www.imore.com';
 export * from './www.healthline.com';
 export * from './www.networkworld.com';
+export * from './www.afr.com';
+export * from './ncode.syosetu.com';
+export * from './lucasfcosta.com';
+export * from './www.maketecheasier.com';

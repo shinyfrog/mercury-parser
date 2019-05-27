@@ -8750,6 +8750,133 @@ var WwwNetworkworldComExtractor = {
   }
 };
 
+var WwwAfrComExtractor = {
+  domain: 'www.afr.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: ['#content ._2pclE']
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['#content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {
+      div: 'p'
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['aside', '._15gTA', '._2-p2K._2siYO']
+  }
+};
+
+var NcodeSyosetuComExtractor = {
+  domain: 'ncode.syosetu.com',
+  title: {
+    selectors: ['#novel_contents .novel_title']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['#novel_honbun'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var LucasfcostaComExtractor = {
+  domain: 'lucasfcosta.com',
+  title: {
+    selectors: ['.page-content .post .post-title']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: ['.post-meta .post-date']
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['article.post-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwMaketecheasierComExtractor = {
+  domain: 'www.maketecheasier.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['span.author.vcard']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -8982,7 +9109,11 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwMenshealthComExtractor: WwwMenshealthComExtractor,
   WwwImoreComExtractor: WwwImoreComExtractor,
   WwwHealthlineComExtractor: WwwHealthlineComExtractor,
-  WwwNetworkworldComExtractor: WwwNetworkworldComExtractor
+  WwwNetworkworldComExtractor: WwwNetworkworldComExtractor,
+  WwwAfrComExtractor: WwwAfrComExtractor,
+  NcodeSyosetuComExtractor: NcodeSyosetuComExtractor,
+  LucasfcostaComExtractor: LucasfcostaComExtractor,
+  WwwMaketecheasierComExtractor: WwwMaketecheasierComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" value="IE=edge">
+  <meta name="viewport" value="width=device-width, initial-scale=1">
+
+  <title>Git Bisect A.K.A. Pure Git Wizardry</title>
+  <meta name="description" value="Git&#x2019;s bisect command is one of those things you will wish you&#x2019;ve known since you started using git at all.">
+
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/reset.css">
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/brands.min.css">
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/solid.min.css">
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/pygments.css">
+  <link rel="stylesheet" href="https://lucasfcosta.com/css/main.css">
+  <link rel="canonical" href="http://lucasfcosta.com/2018/01/20/Git-Bisect-Pure-Git-Wizardry.html">
+
+  <link rel="alternate" type="application/rss+xml" title="Lucas F. Costa" href="http://lucasfcosta.com/feed.xml">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://lucasfcosta.com/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://lucasfcosta.com/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://lucasfcosta.com/favicon-16x16.png">
+  <link rel="manifest" href="https://lucasfcosta.com/site.webmanifest">
+  <link rel="mask-icon" href="https://lucasfcosta.com/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" value="#da532c">
+  <meta name="theme-color" value="#ffffff">
+</head>
+
+
+  <body>
+
+    <nav class="navbar">
+    <div class="header-left">
+        <a class="navItem" href="mailto:lucas@lucasfcosta.com">Email</a>
+        <a class="navItem" href="https://twitter.com/thewizardlucas">Twitter</a>
+        <a class="navItem" href="https://github.com/lucasfcosta">Github</a>
+    </div>
+    <div class="header-center">
+        <h1 class="title">
+            <a class="title-link" href="http://lucasfcosta.com/">
+                Lucas F. Costa
+                <span class="subtitle">Human thoughts about exact sciences</span>
+            </a>
+        </h1>
+    </div>
+    <div class="header-right">
+        <a class="navItem" href="http://lucasfcosta.com/">Blog</a>
+        <a class="navItem" href="https://lucasfcosta.com/essays">Essays</a>
+        <a class="navItem" href="https://lucasfcosta.com/about">About Me</a>
+    </div>
+
+    <span id="menu-toggle" class="menu-toggle navItem">MENU</span>
+    <div id="menu-drawer" class="menu-drawer menu-drawer-hidden">
+        <div class="drawer-header">
+            <h1 class="title">
+                <a class="title-link" href="http://lucasfcosta.com/">
+                    Lucas F. Costa
+                    <span class="subtitle">Human thoughts about exact sciences</span>
+                </a>
+            </h1>
+            <span id="menu-close" class="menu-close-button">
+                <i class="fas fa-times fa-2x"></i>
+            </span>
+
+        </div>
+
+        <div class="drawer-menu-items">
+            <a class="drawer-item" href="http://lucasfcosta.com/">Blog</a>
+            <a class="drawer-item" href="https://lucasfcosta.com/essays">Essays</a>
+            <a class="drawer-item" href="https://lucasfcosta.com/about">About Me</a>
+            <a class="drawer-item" href="mailto:lucas@lucasfcosta.com">Email</a>
+            <a class="drawer-item" href="https://twitter.com/thewizardlucas">Twitter</a>
+            <a class="drawer-item" href="https://github.com/lucasfcosta">Github</a>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="page-content">
+        <div class="post">
+    <h1 class="post-title">Git Bisect A.K.A. Pure Git Wizardry</h1>
+
+    <div class="post-headline">
+        <span class="post-meta">
+            <span class="post-date">
+                
+                20th
+                of
+                January,
+                2018
+            </span>
+            <span class="post-separator"> &#x2014; </span>
+            <span class="post-author">
+                Lucas Fernandes da Costa at London, United Kingdom
+            </span>
+            <span class="post-flag">&#x1F1EC;&#x1F1E7;</span>
+        </span>
+
+        <span class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=Git%20Bisect%20A.K.A.%20Pure%20Git%20Wizardry&amp;url=http://lucasfcosta.com/2018/01/20/Git-Bisect-Pure-Git-Wizardry.html&amp;via=thewizardlucas&amp;related=thewizardlucas" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://lucasfcosta.com/2018/01/20/Git-Bisect-Pure-Git-Wizardry.html" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fab fa-facebook-f fa-2x"></i></a>
+            <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://lucasfcosta.com/2018/01/20/Git-Bisect-Pure-Git-Wizardry.html&amp;title=Git%20Bisect%20A.K.A.%20Pure%20Git%20Wizardry&amp;summary=http://lucasfcosta.com&amp;source=http://lucasfcosta.com" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin-in fa-2x"></i></a>
+            <a href="http://www.reddit.com/submit?url=http://lucasfcosta.com/2018/01/20/Git-Bisect-Pure-Git-Wizardry.html&amp;title=Git%20Bisect%20A.K.A.%20Pure%20Git%20Wizardry" rel="nofollow" target="_blank" title="Share on Google+"><i class="fab fa-reddit-alien fa-2x"></i></a>
+        </span>
+    </div>
+
+    <article class="post-content">
+        <p><strong>Git&#x2019;s <code class="highlighter-rouge">bisect</code> command is one of those things you will wish you&#x2019;ve known since you started using <code class="highlighter-rouge">git</code> at all.</strong></p>
+
+<p>I don&#x2019;t use it that often, but whenever I do I ask myself how did I live without this for so long. Since many people I talk to are not aware that <code class="highlighter-rouge">git bisect</code> exists, maybe it would be cool to teach more engineers out there about this <del>time</del>life-saving tool.</p>
+
+<p><br></p>
+
+<h2 id="first-things-first-what-is-git-bisect"><strong><em>First things first, what is <code class="highlighter-rouge">git bisect</code>?</em></strong></h2>
+
+<p>Git&#x2019;s <code class="highlighter-rouge">bisect</code> command is a tool forged in the Olympus by all of the most powerful gods that ever existed for the delight of human software engineers. <strong>It allows you to find the commit that introduced a bug</strong>.</p>
+
+<p><strong>Finding bad commits is its primary utility, but you can actually use it to efficiently find any commits that match certain criteria</strong>, as I will show you later.</p>
+
+<p>Let&#x2019;s say you&#x2019;ve added 7 commits on your <code class="highlighter-rouge">my-feature</code> branch and someone merged a new PR on <code class="highlighter-rouge">master</code> with a few new integration tests you didn&#x2019;t have in your branch. Then you rebased your branch on <code class="highlighter-rouge">master</code> and now you&#x2019;ve got failing tests. How would you find the commit that caused it to fail?</p>
+
+<p>Well, before reading this blog post maybe you would start investigating the tip of your current branch (which has all those changes) or try rolling back commits one-by-one and re-running tests manually. Fortunately, <strong>your life has just changed and from now on you will use <code class="highlighter-rouge">git bisect</code></strong> (yes, I do like being hyperbolic). <code class="highlighter-rouge">bisect</code> will then efficiently help you finding which commit caused that.</p>
+
+<p><br></p>
+
+<h2 id="cool-but-how-do-i-actually-use-it"><strong><em>Cool, but how do I actually use it?</em></strong></h2>
+
+<p>In the situation I&#x2019;ve just described in the previous section, the first thing you would do is start <code class="highlighter-rouge">bisect</code> by running:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect start
+</code></pre></div></div>
+
+<p>Then you need to tell <code class="highlighter-rouge">git</code> which revision (which <code class="highlighter-rouge">commit</code>, practically speaking) is bad. The command below tells <code class="highlighter-rouge">git</code> that the current revision is bad:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect bad
+</code></pre></div></div>
+
+<p>Please notice that the bad commit doesn&#x2019;t necessarily need to be the one on the top of your branch, you can flag any commit as a <code class="highlighter-rouge">bad</code> commit by adding the commit you want to flag just after the command above. If the hash of the commit you want to flag starts with <code class="highlighter-rouge">c77eb11</code> you could do this, for example:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect bad c77eb11
+</code></pre></div></div>
+
+<p>After flagging the first bad commit you need to flag the first good commit you know. In order to do this you can just do <code class="highlighter-rouge">git bisect good</code> followed by the hash of the commit you want to flag:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect good 4bdb7e8
+</code></pre></div></div>
+
+<p>Git will then checkout the commit in the middle of the range between those two and show you how many revisions need to be tested in order to find the bad commit, like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Bisecting: 3 revisions left to test after this (roughly 2 steps)
+</code></pre></div></div>
+
+<p>Now you need to run the tests and tell Git whether the current revision is good or bad. You can do that using the same commands as you used to flag commits initially:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git bisect good
+$ # or
+$ git bisect bad
+</code></pre></div></div>
+
+<p>After you flag the revision Git has just checked out it will move on to checking out the next one that needs to be tested and you must flag it too. Keep doing this for each revision Git checks out and then, when there are no revisions left to test, it will show you which is the first commit that does not work.</p>
+
+<p><strong>If you want to see the full list of revisions and their statuses (either <code class="highlighter-rouge">good</code> or <code class="highlighter-rouge">bad</code>) you can use <code class="highlighter-rouge">git bisect log</code></strong> and you will see an output that looks like the following:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">git bisect start
+</span><span class="gp">#</span> bad: <span class="o">[</span>1de25cdbbfe650dafb7b62d65b87baee56afc662] Add post about JS Fatigue
+<span class="go">git bisect bad 1de25cdbbfe650dafb7b62d65b87baee56afc662
+</span><span class="gp">#</span> good: <span class="o">[</span>2529e01ce77e0f41c158c0ee6d138c5103457560] Fix factorial example
+<span class="go">git bisect good 2529e01ce77e0f41c158c0ee6d138c5103457560
+</span><span class="gp">#</span> good: <span class="o">[</span>4bdb7e87f8bbde7243aa227aa4b576a40ba69f7e] Update about me section
+<span class="go">git bisect good 4bdb7e87f8bbde7243aa227aa4b576a40ba69f7e
+</span><span class="gp">#</span> bad: <span class="o">[</span>3d16abba7b136fcd7cf959ba8ee5530ed1fa90da] Add Big-O blogpost
+<span class="go">git bisect bad 3d16abba7b136fcd7cf959ba8ee5530ed1fa90da
+</span><span class="gp">#</span> bad: <span class="o">[</span>4b89555ab3e69f3417daef77518226a5e6a03a88] Change email
+<span class="go">git bisect bad 4b89555ab3e69f3417daef77518226a5e6a03a88
+</span><span class="gp">#</span> first bad commit: <span class="o">[</span>4b89555ab3e69f3417daef77518226a5e6a03a88] Change email
+</code></pre></div></div>
+
+<p>Almost there but made a mistake? No worries! As you might have noticed, the output of <code class="highlighter-rouge">git bisect log</code> is formatted as a reproducible script, which means you can save the contents of <code class="highlighter-rouge">git log</code> to a file (by doing <code class="highlighter-rouge">git bisect log &gt; bisect_log</code> for example), edit it and then use <code class="highlighter-rouge">git bisect replay &lt;filename&gt;</code> (in this case you will replace <code class="highlighter-rouge">&lt;filename&gt;</code> by <code class="highlighter-rouge">bisect_log</code>) to redo what you have done until that point.</p>
+
+<p>If Git automatically checked out a commit you don&#x2019;t want to test for some reason (maybe it has an unrelated bug so you can&#x2019;t run your scripts accurately) you can just use <code class="highlighter-rouge">git bisect skip</code>. However, this might cause your problem this is what <a href="https://git-scm.com/docs/git-bisect">the official docs for <code class="highlighter-rouge">git bisect</code> (which you should definitely read too)</a> says:</p>
+
+<blockquote>
+  <p>If you skip a commit adjacent to the one you are looking for, Git will be unable to tell exactly which of those commits was the first bad one.</p>
+</blockquote>
+
+<p>Once you have discovered which commit is the one that introduced the problem you were tracking down (or if you just want to end <code class="highlighter-rouge">bisect</code>) you can use <code class="highlighter-rouge">git bisect reset</code> to reset the <code class="highlighter-rouge">bisect</code> state and go back to the top of the branch you were (the original <code class="highlighter-rouge">HEAD</code>).</p>
+
+<p><br></p>
+
+<h2 id="automating-git-bisect"><strong><em>Automating Git Bisect</em></strong></h2>
+
+<p>As if <code class="highlighter-rouge">git bisect</code> wasn&#x2019;t already good enough, you can also automate it so you won&#x2019;t even need to keep testing each one of the commits Git checks out (this means you can go grab another cup of coffee while Git does all the hard work for you, as machines are supposed to).</p>
+
+<p>In order to do that you just need to start <code class="highlighter-rouge">git bisect</code> as I have explained previously:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect start
+</code></pre></div></div>
+
+<p>And flag the first <code class="highlighter-rouge">good</code> and <code class="highlighter-rouge">bad</code> commits (also in the same way we&#x2019;ve done before).</p>
+
+<p>Now you can just use <code class="highlighter-rouge">git bisect run &lt;command&gt; &lt;arguments&gt;</code>. Please notice that your <code class="highlighter-rouge">command</code> must exit with status code <code class="highlighter-rouge">0</code> for success or a status code from <code class="highlighter-rouge">1</code> to <code class="highlighter-rouge">127</code> (excluding <code class="highlighter-rouge">125</code>). Since almost all test runners already do that right out of the box (at least all the good ones do), if you have any unit tests you&#x2019;re good to go.</p>
+
+<p>So let&#x2019;s say you&#x2019;re using JavaScript and you run your tests by using <code class="highlighter-rouge">npm test</code>, all you need to do is run the following command after you have defined which is the first <code class="highlighter-rouge">good</code>  and the first <code class="highlighter-rouge">bad</code> commit:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect run npm <span class="nb">test</span>
+</code></pre></div></div>
+
+<p>Now go for a quick walk or go check <a href="https://news.ycombinator.com/">HackerNews</a> and make sure the cryptocurrencies you own haven&#x2019;t made you a billionaire yet on <a href="https://lucasfcosta.com/2018/01/20/coinmarketcap.com">CoinMarketCap</a>. When you come back to your terminal you will see which commit is the guilty one.</p>
+
+<p><br></p>
+
+<h2 id="git-bisect-behind-the-scenes"><strong><em>Git Bisect Behind the Scenes</em></strong></h2>
+
+<p><strong>Bisect is nothing but a binary search</strong> on commits which depends on you being able to tell whether a commit is good or bad.</p>
+
+<p>Let&#x2019;s say you have flagged the commit on the top of your branch as <code class="highlighter-rouge">good</code> and then, 14 commits before it, you have flagged a commit as <code class="highlighter-rouge">bad</code>, which means you&#x2019;ve got a range of 15 commits. This is what Git will do:</p>
+
+<p><br></p>
+
+<p><img src="https://lucasfcosta.com/assets/bisect-tree-1.png" alt="The first step Git bisect will do"></p>
+
+<p><br></p>
+
+<p>Then, when you flag the commit it has checked out as <code class="highlighter-rouge">good</code> or <code class="highlighter-rouge">bad</code>, it will be able to tell whether it should go forward or backward. If you flag a revision as <code class="highlighter-rouge">good</code> it means the bug must have happened sometime in the future. If you flag a revision as <code class="highlighter-rouge">bad</code> it means the bug might have already been present before this one.</p>
+
+<p>In this case, let&#x2019;s say that the 8th commit is already broken. This means that it&#x2019;s possible for the bug to have happened before, so Git will then checkout the commit in the middle of the range between the first and 8th commits: the 4th.</p>
+
+<p><br></p>
+
+<p><img src="https://lucasfcosta.com/assets/bisect-tree-2.png" alt="The first step Git bisect will do"></p>
+
+<p><br></p>
+
+<p>Now, telling git that the 4th commit is <code class="highlighter-rouge">good</code> is the same as telling it that the bug must have happened sometime in the future since all commits until this point in history will be considered <code class="highlighter-rouge">good</code> too. Git will then checkout the commit in the middle of the range between this <code class="highlighter-rouge">good</code> commit and the next <code class="highlighter-rouge">bad</code> one.</p>
+
+<p><img src="https://lucasfcosta.com/assets/bisect-tree-3.png" alt="The first step Git bisect will do"></p>
+
+<p>By flagging the 6th commit as <code class="highlighter-rouge">bad</code> we also tell Git that this might not be the first <code class="highlighter-rouge">bad</code> commit and therefore we must go back to the middle of the range between this <code class="highlighter-rouge">bad</code> commit and the last <code class="highlighter-rouge">good</code> one. In this case, we only have one commit left to check (the 5th one).</p>
+
+<p>If the 5th commit is <code class="highlighter-rouge">good</code> it means that the revision just after it is guilty, if it&#x2019;s <code class="highlighter-rouge">bad</code> it will be considered the first commit to present the faulty behavior due to the fact that the revision just before it has been considered <code class="highlighter-rouge">good</code>.</p>
+
+<p><img src="https://lucasfcosta.com/assets/bisect-tree-4.png" alt="The first step Git bisect will do"></p>
+
+<p>This will be the final state of the bisection we&#x2019;ve just run. As you can see, by doing a binary search <code class="highlighter-rouge">bisect</code> is able to find the last <code class="highlighter-rouge">good</code> commit and the first <code class="highlighter-rouge">bad</code> one by assuming that as soon as you mark a commit as <code class="highlighter-rouge">good</code>, all the ones before it are considered <code class="highlighter-rouge">good</code> as well and as soon as you mark a commit as bad, it assumes that all the ones after it are bad too.</p>
+
+<p><img src="https://lucasfcosta.com/assets/bisect-tree-5.png" alt="The first step Git bisect will do"></p>
+
+<p><br></p>
+
+<h2 id="finding-changes"><strong><em>Finding Changes</em></strong></h2>
+
+<p>By now might think that I&#x2019;ve forgotten about teaching you how to detect when a certain change has been introduced, but I didn&#x2019;t!</p>
+
+<p>You could certainly run <code class="highlighter-rouge">git bisect start</code> and then mark every version without the feature as <code class="highlighter-rouge">good</code> and every version with the feature as <code class="highlighter-rouge">bad</code>. You could even create a script which checks this for you and then combine it with <code class="highlighter-rouge">git bisect run</code>. But that does not seem very semantic, does it?</p>
+
+<p>Fortunately, the folks who write Git are awesome people and they thought about this. Instead of using <code class="highlighter-rouge">bad</code> and <code class="highlighter-rouge">good</code> you can simply use <code class="highlighter-rouge">old</code> for revisions which do not include that change and <code class="highlighter-rouge">new</code> for commits that do.</p>
+
+<p>Like this:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect old <span class="c"># this revision does not contain the change</span>
+<span class="gp">$</span> git bisect good <span class="c"># this revision contains the change</span>
+</code></pre></div></div>
+
+<p><br></p>
+
+<h2 id="finding-anything"><strong><em>Finding Anything</em></strong></h2>
+
+<p>And the awesomeness continues.</p>
+
+<p>You can find anything using <code class="highlighter-rouge">bisect</code> and still use semantic terms to show your peers how good of a hacker you are, <a href="https://www.youtube.com/watch?v=u1Ds9CeG-VY">just like Hugh Jackman on Swordfish</a>.</p>
+
+<p>Let&#x2019;s say you&#x2019;re looking for a certain change that made one of your buttons yellow instead of cyan (two colors that go really well on a red background). You could then remap <code class="highlighter-rouge">good</code> or <code class="highlighter-rouge">bad</code> to <code class="highlighter-rouge">cyan</code> and <code class="highlighter-rouge">yellow</code>, respectively, by using the following command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span> git bisect start <span class="nt">--term-bad</span> yellow <span class="nt">--term-new</span> cyan
+</code></pre></div></div>
+
+<p>Now look how cool you are using <code class="highlighter-rouge">yellow</code> and <code class="highlighter-rouge">cyan</code> to flag your revisions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git bisect yellow # This version has a yellow button
+$ git bisect cyan # This version has a cyan button
+</code></pre></div></div>
+
+<p><br></p>
+
+<h2 id="further-reading"><strong><em>Further Reading</em></strong></h2>
+
+<p>This post is just an attempt to make <code class="highlighter-rouge">git bisect</code> more popular and accessible for everyone, so if you want more detailed information or if you want to go learn a few more tricks make sure you read these two pages from Git&#x2019;s own docs. People have done a great job writing those:</p>
+
+<ul>
+  <li><a href="https://git-scm.com/docs/git-bisect">Git Bisect Docs</a></li>
+  <li><a href="https://git-scm.com/docs/git-bisect-lk2009.html">Fighting regressions with git bisect, git-blame</a></li>
+</ul>
+
+<p><br></p>
+
+<h2 id="wanna-talk-to-me"><strong><em>Wanna talk to me?</em></strong></h2>
+
+<p>If you have any doubts, corrections or anything else you&#x2019;d like to share with me you can <a href="https://twitter.com/thewizardlucas">reach me on twitter at @thewizardlucas</a> or in the comments below :)</p>
+
+
+    </article>
+</div>
+
+    </div>
+
+    <div class="footer">
+    <span class="copyleft">
+        <span class="copyleft-brand"><strong>My own</strong> content is <strong>not</strong> protected.</span>
+        <span class="copyleft-motto">I believe in freedom.</span>
+    </span>
+</div>
+
+
+
+
+
+
+  </body>
+
+</html>
