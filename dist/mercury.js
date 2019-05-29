@@ -8877,6 +8877,135 @@ var WwwMaketecheasierComExtractor = {
   }
 };
 
+var QiitaComExtractor = {
+  domain: 'qiita.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['a.it-Header_authorName']
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['section[itemprop="articleBody"] div'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwZcoolComCnExtractor = {
+  domain: 'www.zcool.com.cn',
+  title: {
+    selectors: ['div.details-contitle-box.article-details-head h2']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['.work-details-content .left-img-con'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwCbndataComExtractor = {
+  domain: 'www.cbndata.com',
+  title: {
+    selectors: ['header h1']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['header img', 'src']]
+  },
+  content: {
+    selectors: ['section._3peeJj3E'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {
+      section: 'p',
+      div: 'p'
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var BlowStreetvoiceComExtractor = {
+  domain: 'blow.streetvoice.com',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: ['.entry-meta a[rel="author"]']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: []
+  },
+  content: {
+    selectors: ['.entry-content .wpcollab-hello-emoji'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -9113,7 +9242,11 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwAfrComExtractor: WwwAfrComExtractor,
   NcodeSyosetuComExtractor: NcodeSyosetuComExtractor,
   LucasfcostaComExtractor: LucasfcostaComExtractor,
-  WwwMaketecheasierComExtractor: WwwMaketecheasierComExtractor
+  WwwMaketecheasierComExtractor: WwwMaketecheasierComExtractor,
+  QiitaComExtractor: QiitaComExtractor,
+  WwwZcoolComCnExtractor: WwwZcoolComCnExtractor,
+  WwwCbndataComExtractor: WwwCbndataComExtractor,
+  BlowStreetvoiceComExtractor: BlowStreetvoiceComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {

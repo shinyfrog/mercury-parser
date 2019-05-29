@@ -232,3 +232,7 @@ export * from './www.afr.com';
 export * from './ncode.syosetu.com';
 export * from './lucasfcosta.com';
 export * from './www.maketecheasier.com';
+export * from './qiita.com';
+export * from './www.zcool.com.cn';
+export * from './www.cbndata.com';
+export * from './blow.streetvoice.com';
