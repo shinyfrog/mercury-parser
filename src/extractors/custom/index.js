@@ -236,3 +236,4 @@ export * from './qiita.com';
 export * from './www.zcool.com.cn';
 export * from './www.cbndata.com';
 export * from './blow.streetvoice.com';
+export * from './www.fujixpassion.com';
