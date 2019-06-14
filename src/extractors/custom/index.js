@@ -237,3 +237,4 @@ export * from './www.zcool.com.cn';
 export * from './www.cbndata.com';
 export * from './blow.streetvoice.com';
 export * from './www.fujixpassion.com';
+export * from './xelz.info';

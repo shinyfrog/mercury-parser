@@ -1,0 +1,1657 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>&#x6DF1;&#x5EA6;&#x957F;&#x6587;&#xFF1A;&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D; - xelz&apos;s blog</title>
+	<meta name="author" value="xelz">
+
+	
+	<meta name="description" value="All you need to know about iOS Code Signature. What is codesign&#xFF1F; Why do we need codesign&#xFF1F; How to resign an app&#xFF1F;How does iDevice verify codesign? &#x2026;">
+	<meta name="keywords" value="ios, codesign, code signature, resign, developer certificate, entitlements, provisioning profile, mobileprovision">
+	<meta name="viewport" value="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://xelz.info/atom.xml" rel="alternate" title="xelz&apos;s blog" type="application/atom+xml">
+	<link rel="canonical" href="http://xelz.info/blog/2019/01/11/ios-code-signature/">
+	<link href="http://xelz.info/favicon.png" rel="shortcut icon">
+	<link href="http://xelz.info/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+    
+    
+    
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="http://xelz.info/">xelz&apos;s blog</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="http://xelz.info/">Blog</a></li>
+	<li><a href="http://xelz.info/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="http://xelz.info/">Blog</a></li>
+	<li><a href="http://xelz.info/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		<a class="github" href="https://github.com/xelzmm" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="http://xelz.info/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+	
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">&#x6DF1;&#x5EA6;&#x957F;&#x6587;&#xFF1A;&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;</h2>
+	<div class="entry-content"><h2>0x00 &#x524D;&#x8A00;</h2>
+
+<p>2008&#x5E74;&#x82F9;&#x679C;&#x53D1;&#x5E03;iOS2.0&#x65F6;&#x5F15;&#x5165;&#x4E86;&#x5F3A;&#x5236;&#x4EE3;&#x7801;&#x7B7E;&#x540D;(Mandatory Code Signing)&#x6280;&#x672F;&#xFF0C;&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x4E25;&#x683C;&#x63A7;&#x5236;&#x8BBE;&#x5907;&#x4E0A;&#x80FD;&#x591F;&#x8FD0;&#x884C;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x8FD9;&#x4E3A;iOS&#x8BBE;&#x5907;&#x7684;&#x5B89;&#x5168;&#x6027;&#x548C;&#x82F9;&#x679C;&#x7684;AppStore&#x751F;&#x6001;&#x5960;&#x5B9A;&#x4E86;&#x575A;&#x5B9E;&#x7684;&#x57FA;&#x7840;&#x3002;&#x4F5C;&#x4E3A;iOSer&#x603B;&#x662F;&#x8981;&#x8DDF;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x6253;&#x4EA4;&#x9053;&#x7684;&#xFF0C;&#x76F8;&#x4FE1;&#x5927;&#x90E8;&#x5206;&#x4EBA;&#x5BF9;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x90FD;&#x662F;&#x4E00;&#x77E5;&#x534A;&#x89E3;&#xFF0C;&#x672C;&#x6587;&#x5C06;&#x4F1A;&#x7531;&#x6D45;&#x5165;&#x6DF1;&#xFF0C;&#x6DF1;&#x6316;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x5185;&#x90E8;&#x7EC6;&#x8282;&#x3002;</p>
+
+<h4>&#x5BFC;&#x822A;</h4>
+
+<ul>
+<li>&#x4E00;&#x53E3;&#x6C14;&#x8BFB;&#x5B8C;&#xFF0C;&#x5927;&#x7EA6;&#x9700;&#x8981;40-60&#x5206;&#x949F;
+
+<ul>
+<li><a href="http://xelz.info/blog/2019/01/11/ios-code-signature/">&#x6DF1;&#x5EA6;&#x957F;&#x6587;&#xFF1A;&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;</a></li>
+</ul>
+</li>
+<li>&#x5206;&#x6B65;&#x9605;&#x8BFB;
+
+<ul>
+<li><a href="http://xelz.info/blog/2019/01/11/ios-code-signature-1/">&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;(&#x4E00;)</a>&#xFF1A;&#x7B7E;&#x540D;&#x7684;&#x4F5C;&#x7528;&#x53CA;&#x539F;&#x7406;</li>
+<li><a href="http://xelz.info/blog/2019/01/11/ios-code-signature-2/">&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;(&#x4E8C;)</a>&#xFF1A;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x3001;Entitlements&#x3001;Provisioning Profile</li>
+<li><a href="http://xelz.info/blog/2019/01/11/ios-code-signature-3/">&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;(&#x4E09;)</a>&#xFF1A;&#x7B7E;&#x540D;&#x7684;&#x8FC7;&#x7A0B;&#x53CA;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</li>
+<li><a href="http://xelz.info/blog/2019/01/11/ios-code-signature-4/">&#x7EC6;&#x8BF4;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;(&#x56DB;)</a>&#xFF1A;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x3001;&#x8D8A;&#x72F1;&#x3001;&#x91CD;&#x7B7E;&#x540D;</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+<h2>0x01 &#x7B7E;&#x540D;&#x7684;&#x4F5C;&#x7528;</h2>
+
+<p>&#x6570;&#x5B57;&#x7B7E;&#x540D;&#x5176;&#x5B9E;&#x8DDF;&#x6211;&#x4EEC;&#x624B;&#x5199;&#x7684;&#x7B7E;&#x540D;&#x7C7B;&#x4F3C;&#xFF0C;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x4E3B;&#x4F53;(&#x7B7E;&#x540D;&#x8005;)&#x5BF9;&#x7279;&#x5B9A;&#x5185;&#x5BB9;(&#x88AB;&#x7B7E;&#x540D;&#x6570;&#x636E;)&#x7684;&#x7F72;&#x540D;&#x548C;&#x8BA4;&#x53EF;&#xFF0C;&#x7B7E;&#x540D;&#x662F;&#x5BF9;&#x4FE1;&#x606F;&#x53D1;&#x9001;&#x884C;&#x4E3A;&#x771F;&#x5B9E;&#x6027;&#x7684;&#x6709;&#x6548;&#x4FDD;&#x969C;&#x3002;&#x6570;&#x5B57;&#x7B7E;&#x540D;&#x5728;&#x5F88;&#x591A;&#x9886;&#x57DF;&#x90FD;&#x6709;&#x5E94;&#x7528;&#xFF0C;iOS&#x7684;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x6B63;&#x662F;&#x5176;&#x4E2D;&#x6700;&#x5178;&#x578B;&#x7684;&#x4E00;&#x79CD;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5148;&#x5C1D;&#x8BD5;&#x5206;&#x6790;&#x4E00;&#x4E0B;iOS&#x4E0A;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x76EE;&#x7684;&#x548C;&#x597D;&#x5904;&#x3002;</p>
+
+<h4>&#x5B89;&#x5168;&#x6027;</h4>
+
+<p>&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x9996;&#x8981;&#x4EFB;&#x52A1;&#x662F;&#x4FDD;&#x8BC1;&#x8BBE;&#x5907;&#x53CA;&#x7CFB;&#x7EDF;&#x7684;&#x5B89;&#x5168;&#x6027;&#xFF0C;&#x53EA;&#x6709;&#x88AB;&#x82F9;&#x679C;&#x8BBE;&#x5907;&#x8BA4;&#x53EF;&#x7684;&#x8BC1;&#x4E66;&#x7B7E;&#x540D;&#x7684;&#x4EE3;&#x7801;&#x624D;&#x80FD;&#x591F;&#x88AB;&#x6267;&#x884C;&#xFF0C;&#x5426;&#x5219;&#x5728;&#x5B89;&#x88C5;&#x6216;&#x8005;&#x8FD0;&#x884C;&#x65F6;&#x4F1A;&#x56E0;&#x4E3A;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x5185;&#x6838;&#x7684;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x800C;&#x5931;&#x8D25;&#x3002;iOS&#x7684;&#x7CFB;&#x7EDF;&#x4E2D;&#x5185;&#x7F6E;&#x4E86;&#x6765;&#x81EA;&#x82F9;&#x679C;&#x7684;CA&#x8BC1;&#x4E66;&#xFF0C;&#x7CFB;&#x7EDF;&#x81EA;&#x8EAB;&#x7684;&#x4EE3;&#x7801;&#x90FD;&#x662F;&#x88AB;&#x82F9;&#x679C;&#x201D;&#x7B7E;&#x540D;&#x201C;&#x8FC7;&#x7684;&#xFF0C; &#x800C;&#x7528;&#x6237;&#x4ECE;AppStore&#x4E0B;&#x8F7D;&#x7684;App&#x4E5F;&#x90FD;&#x5DF2;&#x88AB;&#x82F9;&#x679C;&#x5B98;&#x65B9;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x3002;&#x7B7E;&#x540D;&#x673A;&#x5236;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x5730;&#x9632;&#x6B62;&#x6765;&#x81EA;&#x5916;&#x90E8;&#x7684;&#x653B;&#x51FB;&#x3002;</p>
+
+<p>&#x8FD9;&#x91CC;&#x5B58;&#x5728;&#x4E24;&#x79CD;&#x573A;&#x666F;&#xFF1A;</p>
+
+<ul>
+<li>&#x7B2C;&#x4E00;&#x79CD;&#x662F;&#x5BF9;&#x7CFB;&#x7EDF;&#x672C;&#x8EAB;&#x7684;&#x653B;&#x51FB;&#xFF0C;&#x6BD4;&#x5982;&#x8D8A;&#x72F1;&#xFF0C;&#x5047;&#x5982;&#x9ED1;&#x5BA2;&#x53D1;&#x73B0;&#x4E86;&#x5185;&#x6838;&#x4EFB;&#x610F;&#x8BFB;&#x5199;&#x7684;&#x6F0F;&#x6D1E;&#xFF0C;&#x501F;&#x6B64;&#x6CE8;&#x5165;&#x63D0;&#x6743;&#x4EE3;&#x7801;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E9B;&#x4EE3;&#x7801;&#x4F1A;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x5408;&#x6CD5;&#x7684;&#x7B7E;&#x540D;&#x800C;&#x88AB;&#x7CFB;&#x7EDF;&#x62D2;&#x7EDD;&#x8FD0;&#x884C;&#xFF0C;&#x4E5F;&#x5C31;&#x81EA;&#x7136;&#x65E0;&#x6CD5;&#x5BF9;&#x7CFB;&#x7EDF;&#x9020;&#x6210;&#x5B9E;&#x8D28;&#x6027;&#x7684;&#x7834;&#x574F;&#x3002;</li>
+<li>&#x7B2C;&#x4E8C;&#x79CD;&#x662F;&#x5BF9;&#x8BBE;&#x5907;&#x6216;&#x8005;&#x7528;&#x6237;&#x7684;&#x653B;&#x51FB;&#xFF0C;&#x4F17;&#x6240;&#x5468;&#x77E5;&#xFF0C;&#x63D0;&#x4EA4;&#x5230;AppStore&#x7684;&#x5E94;&#x7528;&#x4EE3;&#x7801;&#x90FD;&#x4F1A;&#x7ECF;&#x8FC7;&#x82F9;&#x679C;&#x7684;&#x5BA1;&#x67E5;&#xFF0C;&#x5305;&#x542B;&#x6076;&#x610F;&#x4EE3;&#x7801;&#x7684;App&#x662F;&#x65E0;&#x6CD5;&#x4E0A;&#x67B6;&#x7684;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x9ED1;&#x5BA2;&#x53EF;&#x80FD;&#x4F1A;&#x5C1D;&#x8BD5;&#x5148;&#x63D0;&#x4EA4;&#x4E00;&#x4E2A;&#x6B63;&#x5E38;&#x7684;App&#xFF0C;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x6280;&#x672F;&#x624B;&#x6BB5;&#x8EB2;&#x907F;Apple&#x7684;&#x5BA1;&#x67E5;&#xFF0C;&#x4E0A;&#x67B6;&#x540E;&#x4ECE;&#x7F51;&#x7EDC;&#x4E0A;&#x4E0B;&#x8F7D;&#x6076;&#x610F;&#x4EE3;&#x7801;&#x5E76;&#x52A0;&#x8F7D;&#x6267;&#x884C;&#xFF0C;&#x4F46;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x4E5F;&#x4F1A;&#x56E0;&#x4E3A;&#x7B7E;&#x540D;&#x4E0D;&#x5408;&#x6CD5;&#x800C;&#x5931;&#x8D25;&#x3002;</li>
+</ul>
+
+
+<h4>&#x6C99;&#x76D2;</h4>
+
+<p>&#x9664;&#x4E86;&#x80FD;&#x591F;&#x907F;&#x514D;&#x975E;&#x6388;&#x6743;&#x7684;&#x6076;&#x610F;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#xFF0C;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x8FD8;&#x53EF;&#x4EE5;&#x6709;&#x6548;&#x5730;&#x9650;&#x5236;app&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x8FD9;&#x90E8;&#x5206;&#x529F;&#x80FD;&#x4E3B;&#x8981;&#x662F;&#x7531;Sandbox&#x673A;&#x5236;&#x6765;&#x4FDD;&#x8BC1;&#xFF0C;&#x4F46;Sandbox&#x7684;&#x914D;&#x7F6E;&#x662F;&#x7ED1;&#x5B9A;&#x5728;&#x7B7E;&#x540D;&#x4E2D;&#x7684;&#xFF0C;&#x5C31;&#x662F;&#x901A;&#x5E38;&#x6240;&#x8BF4;&#x7684;Entitlements&#x6587;&#x4EF6;&#x3002;&#x8BD5;&#x60F3;&#xFF0C;&#x5982;&#x679C;Entitlements&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x88AB;&#x4EFB;&#x610F;&#x4FEE;&#x6539;&#xFF0C;&#x90A3;&#x4E48;Sandbox&#x4E5F;&#x5C31;&#x5931;&#x53BB;&#x4E86;&#x610F;&#x4E49;&#xFF0C;&#x6240;&#x4EE5;Entitlements&#x6587;&#x4EF6;&#x4E5F;&#x662F;&#x5F3A;&#x5236;&#x7B7E;&#x540D;&#x4FDD;&#x62A4;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x5BF9;&#x4E8E;&#x8D8A;&#x72F1;&#x6765;&#x8BF4;&#xFF0C;&#x5982;&#x679C;&#x65E0;&#x6CD5;&#x7ED5;&#x8FC7;&#x7B7E;&#x540D;&#x548C;Sandbox&#xFF0C;&#x518D;&#x5F3A;&#x5927;&#x7684;&#x63D0;&#x6743;&#x6F0F;&#x6D1E;&#x4E5F;&#x65E0;&#x8BA1;&#x53EF;&#x65BD;&#x3002;</p>
+
+<h4>&#x5784;&#x65AD;</h4>
+
+<p>&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x8FD8;&#x7ED9;&#x82F9;&#x679C;&#x5E26;&#x6765;&#x4E86;&#x4E00;&#x4E2A;&#x5DE8;&#x5927;&#x7684;&#x597D;&#x5904;&#xFF1A;App&#x5206;&#x53D1;&#x7684;&#x7EDD;&#x5BF9;&#x63A7;&#x5236;&#x6743;&#x3002;&#x5728;iOS&#x5E73;&#x53F0;&#x4E0A;(&#x9762;&#x5411;&#x672A;&#x8D8A;&#x72F1;&#x7684;&#x7528;&#x6237;)&#x516C;&#x5F00;&#x53D1;&#x884C;App&#x7684;&#x5408;&#x6CD5;&#x9014;&#x5F84;&#x6709;&#x4E14;&#x53EA;&#x6709;&#x4E00;&#x79CD;&#xFF0C;&#x5C31;&#x662F;&#x4E0A;&#x4F20;&#x5230;&#x82F9;&#x679C;&#x5B98;&#x65B9;&#x7684;AppStore&#x4F9B;&#x7528;&#x6237;&#x4E0B;&#x8F7D;&#x3002;&#x82F9;&#x679C;&#x4F1A;&#x5BF9;App&#x8FDB;&#x884C;&#x4E25;&#x683C;&#x7684;&#x5BA1;&#x67E5;&#x5E76;&#x7B7E;&#x540D;&#xFF0C;App&#x7684;&#x529F;&#x80FD;&#x53CA;&#x652F;&#x4ED8;&#x6E20;&#x9053;&#x4E5F;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x53D7;&#x82F9;&#x679C;&#x7684;&#x4E25;&#x683C;&#x7BA1;&#x5236;&#xFF0C;&#x8FD9;&#x4E3A;&#x82F9;&#x679C;&#x5E26;&#x6765;&#x7684;&#x7ECF;&#x6D4E;&#x6548;&#x76CA;&#x4E0D;&#x8A00;&#x800C;&#x55BB;&#x3002;</p>
+
+<h2>0x02 &#x4EC0;&#x4E48;&#x662F;&#x7B7E;&#x540D;</h2>
+
+<p>&#x7B7E;&#x540D;&#x7684;&#x672C;&#x8D28;&#x662F;&#x7528;&#x4E8E;&#x9A8C;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x5408;&#x6CD5;&#x6027;&#xFF0C;&#x786E;&#x4FDD;&#x88AB;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x6765;&#x81EA;&#x7279;&#x5B9A;&#x7684;&#x6765;&#x6E90;&#xFF0C;&#x5E76;&#x4E14;&#x672A;&#x7ECF;&#x7BE1;&#x6539;&#x3002;&#x5B83;&#x57FA;&#x4E8E;&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#xFF0C;&#x548C;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#xFF0C;&#x7814;&#x7A76;&#x7B7E;&#x540D;&#x4E4B;&#x524D;&#x9700;&#x8981;&#x5BF9;&#x8FD9;&#x4E24;&#x79CD;&#x7B97;&#x6CD5;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x4E86;&#x89E3;&#x3002;</p>
+
+<h4>&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;</h4>
+
+<p>&#x4E5F;&#x53EB;&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#xFF0C;&#x5B83;&#x5728;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x5BC6;&#x94A5;&#xFF0C;&#x5177;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x7279;&#x5F81;&#xFF1A;</p>
+
+<ul>
+<li>&#x6709;&#x4E00;&#x5BF9;&#x5BC6;&#x94A5; <code>a</code> &#x548C;  <code>b</code> &#xFF0C;&#x6EE1;&#x8DB3; <code>a &#x2260; b</code></li>
+<li>&#x7528;&#x5BC6;&#x94A5;<code>a</code>&#x52A0;&#x5BC6;&#x7684;&#x6570;&#x636E;&#x53EA;&#x80FD;&#x7528;<code>b</code>&#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#xFF0C;<code>a</code>&#x81EA;&#x8EAB;&#x65E0;&#x6CD5;&#x89E3;&#x5BC6;&#xFF0C;&#x53CD;&#x4E4B;&#x4EA6;&#x7136;</li>
+<li>&#x53EA;&#x77E5;&#x9053;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x5BC6;&#x94A5;&#xFF0C;&#x65E0;&#x6CD5;&#x63A8;&#x5BFC;&#x51FA;&#x53E6;&#x4E00;&#x4E2A;</li>
+<li>&#x628A;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x516C;&#x5F00;&#x7684;&#x53EB;&#x505A;&#x516C;&#x94A5;&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x4E0D;&#x80FD;&#x516C;&#x5F00;&#x7684;&#x53EB;&#x505A;&#x79C1;&#x94A5;&#x3002;</li>
+</ul>
+
+
+<p><img src="http://xelz.info/assets/2019/pubkey_crypto.png" alt="&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;"></p>
+
+<p>&#x6700;&#x5E38;&#x89C1;&#x7684;&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;&#x662F;RSA&#x516C;&#x94A5;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;&#xFF0C;&#x4E5F;&#x662F;&#x7B7E;&#x540D;&#x4E2D;&#x666E;&#x904D;&#x4F7F;&#x7528;&#x7684;&#x7B97;&#x6CD5;&#x3002;&#x5176;&#x6570;&#x5B66;&#x539F;&#x7406;&#x5982;&#x4E0B;&#xFF1A;</p>
+
+<ul>
+<li>&#x9009;&#x5B9A;&#x4E24;&#x4E2A;&#x8D85;&#x5927;&#x7684;&#x7D20;&#x6570;<code>p</code>, <code>q</code>&#xFF0C;&#x5E76;&#x8BA1;&#x7B97;&#x4ED6;&#x4EEC;&#x7684;&#x4E58;&#x79EF;<code>n = p * q</code></li>
+<li>&#x8BA1;&#x7B97;&#x6B27;&#x62C9;&#x51FD;&#x6570; <code>&#x3C6;(n) = &#x3C6;(p) * &#x3C6;(q) = (p-1) * (q-1)</code></li>
+<li>&#x968F;&#x673A;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x6570;<code>e</code>&#xFF0C;&#x6EE1;&#x8DB3;<code>1 &lt; e &lt; &#x3C6;(n)</code> &#xFF0C;&#x4E14;&#x4E0E;<code>&#x3C6;(n)</code>&#x4E92;&#x8D28;</li>
+<li>&#x6839;&#x636E;&#x6269;&#x5C55;&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x7B97;&#x6CD5;&#x8BA1;&#x7B97;<code>e</code>&#x5BF9;&#x4E8E;<code>&#x3C6;(n)</code>&#x7684;&#x4E58;&#x6CD5;&#x9006;&#x5143;<code>d</code> &#xFF0C;<code>e * d = 1 mod &#x3C6;(n)</code></li>
+<li><code>{n, e}</code> &#x548C; <code>{n, d}</code> &#x5206;&#x522B;&#x7EC4;&#x6210;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x7684;&#x4E00;&#x5BF9;&#x5BC6;&#x94A5;</li>
+<li>&#x5BF9;&#x4E8E;&#x7ED9;&#x5B9A;&#x660E;&#x6587;<code>p</code>,  &#x82E5;&#x4F7F;&#x7528;<code>{n, e}</code> &#x4F5C;&#x4E3A;&#x52A0;&#x5BC6;&#x5BC6;&#x94A5;&#xFF0C;&#x5176;&#x5BC6;&#x6587;&#x8BA1;&#x7B97;&#x65B9;&#x6CD5;&#x4E3A; <code>c = p ^ e mod n</code>
+
+<ul>
+<li>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;<code>&#x5355;&#x5411;&#x51FD;&#x6570;</code>&#xFF0C;&#x5DF2;&#x77E5;<code>{c, n, e}</code> &#x65E0;&#x6CD5;&#x8BA1;&#x7B97;&#x51FA;<code>p</code></li>
+</ul>
+</li>
+<li>&#x76F8;&#x5E94;&#x5730;&#x9700;&#x8981;&#x4F7F;&#x7528;<code>{n, d}</code>&#x8FDB;&#x884C;&#x89E3;&#x5BC6;&#xFF0C; <code>p&apos; = c * d mod n</code>
+
+<ul>
+<li>&#x8FD9;&#x662F;&#x4E0A;&#x4E00;&#x6B65;&#x52A0;&#x5BC6;&#x51FD;&#x6570;&#x7684;<code>&#x9006;&#x51FD;&#x6570;</code></li>
+</ul>
+</li>
+<li>&#x4E24;&#x7EC4;&#x5BC6;&#x94A5;&#x4E2D;<code>n</code>&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x679C;&#x5DF2;&#x77E5;&#x4E86;<code>e</code>&#x548C;<code>d</code>&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#xFF0C;&#x60F3;&#x8981;&#x8BA1;&#x7B97;&#x53E6;&#x4E00;&#x4E2A;&#xFF0C;&#x5FC5;&#x987B;&#x77E5;&#x9053;<code>&#x3C6;(n)</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5FC5;&#x987B;&#x5148;&#x5C06;<code>n</code>&#x5206;&#x89E3;<code>&#x8D28;&#x56E0;&#x6570;</code>&#xFF0C;&#x5F97;&#x5230;<code>p</code>&#x548C;<code>q</code>&#xFF0C;&#x4F46;&#x7531;&#x4E8E;<code>n</code>&#x7684;&#x503C;&#x975E;&#x5E38;&#x5927;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x8BA1;&#x7B97;&#x91CF;&#x57FA;&#x672C;&#x4E0A;&#x662F;<code>&#x4E0D;&#x53EF;&#x80FD;</code>&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x4FDD;&#x969C;&#x4E86;&#x7B97;&#x6CD5;&#x7684;&#x5B89;&#x5168;&#x6027;</li>
+</ul>
+
+
+<p>&#x7406;&#x8BBA;&#x4E0A; <code>{n, e}</code> &#x548C; <code>{n, d}</code> &#x53EF;&#x4EE5;&#x4E92;&#x6362;&#xFF0C;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x90FD;&#x53EF;&#x4EE5;&#x662F;&#x516C;&#x94A5;&#x6216;&#x8005;&#x79C1;&#x94A5;&#xFF0C;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x7684;&#x51FD;&#x6570;&#x4E5F;&#x53EF;&#x4EE5;&#x4E92;&#x6362;&#x3002;&#x4F46;&#x5B9E;&#x8DF5;&#x4E2D;&#xFF0C;&#x4E00;&#x822C;&#x56FA;&#x5B9A;&#x8BBE;&#x7F6E;<code>e=65537(0x10001)</code>&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x516C;&#x5F00;&#x7684;&#x4E00;&#x4E2A;&#x7EA6;&#x5B9A;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x6765;<code>{n, e}</code>&#x5C31;&#x53EA;&#x80FD;&#x4F5C;&#x4E3A;&#x516C;&#x94A5;&#x4F7F;&#x7528;&#x3002;</p>
+
+<h4>&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;</h4>
+
+<p>&#x4E5F;&#x53EB;&#x6563;&#x5217;&#x6216;&#x8005;&#x6458;&#x8981;&#x7B97;&#x6CD5;&#xFF0C;&#x5BF9;&#x4E00;&#x6BB5;&#x4EFB;&#x610F;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x901A;&#x8FC7;&#x4E00;&#x5B9A;&#x7684;&#x6620;&#x5C04;&#x548C;&#x8BA1;&#x7B97;&#xFF0C;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x957F;&#x5EA6;&#x7684;&#x503C;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x5C31;&#x88AB;&#x79F0;&#x4E3A;&#x8FD9;&#x6BB5;&#x6570;&#x636E;&#x7684;&#x54C8;&#x5E0C;&#x503C;(hash)&#x3002;&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#xFF0C;&#x5B83;&#x4E00;&#x5B9A;&#x5177;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x5F81;&#xFF1A;</p>
+
+<ul>
+<li>&#x54C8;&#x5E0C;&#x503C;&#x4E0D;&#x540C;&#x7684;&#x4E24;&#x6BB5;&#x6570;&#x636E;&#x7EDD;&#x5BF9;&#x4E0D;&#x540C;</li>
+<li>&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x7EDD;&#x5BF9;&#x76F8;&#x540C;</li>
+<li>&#x7531;&#x4E8E;&#x54C8;&#x5E0C;&#x503C;&#x662F;&#x56FA;&#x5B9A;&#x957F;&#x5EA6;&#xFF0C; &#x4E5F;&#x5C31;&#x610F;&#x5473;&#x7740;&#x54C8;&#x5E0C;&#x503C;&#x7684;&#x6570;&#x91CF;&#x662F;&#x6709;&#x9650;&#x7684;&#x3002;&#x800C;&#x4EFB;&#x610F;&#x6570;&#x636E;&#x90FD;&#x53EF;&#x4EE5;&#x8BA1;&#x7B97;&#x51FA;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x65E0;&#x9650;&#x96C6;&#x5230;&#x6709;&#x9650;&#x96C6;&#x7684;&#x6620;&#x5C04;&#x3002;&#x56E0;&#x6B64;&#x54C8;&#x5E0C;&#x503C;&#x76F8;&#x540C;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x539F;&#x59CB;&#x6570;&#x636E;&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x540C;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x540C;&#xFF0C;&#x5219;&#x79F0;&#x8FD9;&#x4E24;&#x6BB5;&#x6570;&#x636E;&#x5B58;&#x5728;<code>&#x54C8;&#x5E0C;&#x78B0;&#x649E;</code>&#xFF0C;&#x5B9E;&#x9645;&#x5E94;&#x7528;&#x4E2D;&#x8BA4;&#x4E3A;&#x8FD9;&#x662F;&#x5C0F;&#x6982;&#x7387;&#x4E8B;&#x4EF6;(&#x6570;&#x5B66;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x201D;&#x4E0D;&#x53EF;&#x80FD;&#x4E8B;&#x4EF6;&#x201D;)&#xFF0C;&#x4F18;&#x79C0;&#x7684;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#x90FD;&#x662F;&#x78B0;&#x649E;&#x7387;<code>&#x6781;&#x4F4E;</code>&#x7684;&#x3002;</li>
+<li>&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#x662F;&#x5355;&#x5411;&#x7B97;&#x6CD5;&#xFF0C;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;<code>&#x8BA1;&#x7B97;</code>&#x51FA;&#x539F;&#x59CB;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x975E;&#x5E38;&#x91CD;&#x8981;&#xFF01;</li>
+</ul>
+
+
+<p>&#x5E38;&#x89C1;&#x7684;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#x6709;: md5, sha1, sha256&#x7B49;&#xFF0C;&#x5176;&#x4E2D;sha1&#x957F;&#x5EA6;&#x4E3A;160bits&#xFF0C;&#x800C;sha256&#x957F;&#x5EA6;&#x4E3A;256bits&#xFF0C;&#x4E8C;&#x8005;&#x76F8;&#x6BD4;&#xFF0C;sha256&#x7684;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x66F4;&#x5927;&#xFF0C;&#x56E0;&#x6B64;&#x78B0;&#x649E;&#x548C;&#x7834;&#x89E3;&#x7684;&#x6982;&#x7387;&#x66F4;&#x4F4E;&#xFF0C;&#x4E5F;&#x5C31;&#x76F8;&#x5BF9;&#x66F4;&#x5B89;&#x5168;&#x3002;</p>
+
+<h4>&#x7B7E;&#x540D;&#x7B97;&#x6CD5;</h4>
+
+<p>&#x6709;&#x4E86;&#x4E0A;&#x9762;&#x8FD9;&#x4E24;&#x79CD;&#x7B97;&#x6CD5;&#x4F5C;&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x7EC4;&#x5EFA;&#x4E00;&#x4E2A;&#x7B7E;&#x540D;&#x548C;&#x9A8C;&#x8BC1;&#x7B7E;&#x540D;&#x7684;&#x4F53;&#x7CFB;&#x4E86;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;</p>
+
+<p><img src="http://xelz.info/assets/2019/sign_verify.png" alt="&#x7B7E;&#x540D;&#x4E0E;&#x9A8C;&#x8BC1;"></p>
+
+<p>&#x5047;&#x5982;<code>A</code>&#x8981;&#x7ED9;<code>B</code>&#x53D1;&#x9001;&#x4E00;&#x6BB5;&#x6570;&#x636E;<code>d</code>&#xFF0C;&#x5148;&#x5BF9;&#x5176;&#x7B7E;&#x540D;&#xFF1A;</p>
+
+<ul>
+<li>&#x8BA1;&#x7B97;<code>d</code>&#x7684;&#x54C8;&#x5E0C;&#x503C;<code>h</code>&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x79C1;&#x94A5;<code>a</code> &#x5BF9; <code>h</code> &#x8FDB;&#x884C;&#x52A0;&#x5BC6;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x5BC6;&#x6587;<code>c</code>&#x5C31;&#x662F;&#x7B7E;&#x540D;</li>
+</ul>
+
+
+<p>&#x5F97;&#x5230;&#x7B7E;&#x540D;&#x540E;&#xFF0C;&#x5C06;&#x6570;&#x636E;<code>d</code>&#x548C;&#x7B7E;&#x540D;<code>c</code>&#x901A;&#x8FC7;&#x67D0;&#x79CD;&#x65B9;&#x5F0F;&#x53D1;&#x9001;&#x7ED9;<code>B</code>&#xFF0C;&#x6B64;&#x65F6;<code>B</code>&#x6536;&#x5230;&#x4E86;&#x6570;&#x636E;<code>d&apos;</code>&#x4EE5;&#x53CA;&#x7B7E;&#x540D;<code>c&apos;</code>&#xFF0C;&#x9700;&#x8981;&#x9A8C;&#x8BC1;&#x8FD9;&#x6BB5;&#x6570;&#x636E;&#x662F;&#x5426;&#x88AB;&#x7BE1;&#x6539;&#xFF0C;&#x4EE5;&#x53CA;&#x662F;&#x5426;&#x662F;<code>A</code>&#x53D1;&#x9001;&#x7684;</p>
+
+<ul>
+<li>&#x8BA1;&#x7B97;<code>d&apos;</code>&#x7684;&#x54C8;&#x5E0C;&#x503C;<code>h&apos;</code>&#xFF0C;&#x4F7F;&#x7528;<code>A</code>&#x7684;&#x516C;&#x94A5;<code>b</code>&#x5C06;&#x7B7E;&#x540D;<code>c&apos;</code>&#x89E3;&#x5BC6;&#xFF0C;&#x5F97;&#x5230;<code>h&apos;&apos;</code>&#x3002;&#x901A;&#x8FC7;&#x5BF9;&#x6BD4;<code>h&apos;</code>&#x548C;<code>h&apos;&apos;</code>&#x662F;&#x5426;&#x4E00;&#x81F4;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x6570;&#x636E;&#x6216;&#x7B7E;&#x540D;&#x662F;&#x5426;&#x88AB;&#x7BE1;&#x6539;&#x3002;&#x5E76;&#x4E14;&#xFF0C;&#x5982;&#x679C;&#x54C8;&#x5E0C;&#x503C;&#x662F;&#x5339;&#x914D;&#x7684;&#xFF0C;&#x80FD;&#x591F;&#x8BF4;&#x660E;&#x8FD9;&#x6BB5;&#x6570;&#x636E;&#x4E00;&#x5B9A;&#x662F;&#x7531;<code>A</code>&#x7B7E;&#x540D;&#x5E76;&#x53D1;&#x51FA;&#x7684;</li>
+</ul>
+
+
+<p>&#x5E38;&#x89C1;&#x7684;&#x7B7E;&#x540D;&#x7B97;&#x6CD5;&#xFF1A;</p>
+
+<ul>
+<li>sha1WithRSAEncryption&#xFF1A;&#x5148;&#x5BF9;&#x6570;&#x636E;&#x8BA1;&#x7B97;sha1&#x6458;&#x8981;&#xFF0C;&#x518D;&#x5BF9;&#x6458;&#x8981;&#x8FDB;&#x884C;RSA&#x52A0;&#x5BC6;</li>
+<li>sha256WithRSAEncryption&#xFF1A;&#x5148;&#x5BF9;&#x6570;&#x636E;&#x8BA1;&#x7B97;sha256&#x6458;&#x8981;&#xFF0C;&#x518D;&#x5BF9;&#x6458;&#x8981;&#x8FDB;&#x884C;RSA&#x52A0;&#x5BC6;</li>
+<li>md5WithRSAEncryption&#xFF1A;&#x5148;&#x5BF9;&#x6570;&#x636E;&#x8BA1;&#x7B97;MD5&#x6458;&#x8981;&#xFF0C;&#x518D;&#x5BF9;&#x6458;&#x8981;&#x8FDB;&#x884C;RSA&#x52A0;&#x5BC6;</li>
+</ul>
+
+
+<h4>&#x8BC1;&#x4E66;</h4>
+
+<p>&#x4E0A;&#x9762;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x4EFB;&#x4F55;&#x9700;&#x8981;&#x63A5;&#x53D7;<code>A</code>&#x7684;&#x6D88;&#x606F;&#x7684;&#x4EBA;&#x90FD;&#x9700;&#x8981;&#x4E8B;&#x5148;&#x4FDD;&#x5B58;<code>A</code>&#x7684;&#x516C;&#x94A5;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x65B9;&#x6848;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x5F88;&#x5927;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x516C;&#x94A5;&#x5982;&#x4F55;&#x5206;&#x53D1;&#xFF1F;&#x5982;&#x679C;<code>B</code>&#x8981;&#x63A5;&#x53D7;&#x6765;&#x81EA;&#x5F88;&#x591A;&#x4E0D;&#x540C;&#x6765;&#x6E90;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x4E8B;&#x5148;&#x5C06;&#x6240;&#x6709;&#x6765;&#x6E90;&#x7684;&#x516C;&#x94A5;&#x90FD;&#x63D0;&#x524D;&#x4FDD;&#x5B58;&#x4E0B;&#x6765;&#xFF0C;&#x5E76;&#x4E14;&#x8FD9;&#x6837;&#x65E0;&#x6CD5;&#x9002;&#x5E94;&#x6765;&#x6E90;&#x53D8;&#x52A8;(&#x589E;&#x52A0;&#x3001;&#x5220;&#x9664;&#x3001;&#x53D8;&#x66F4;)&#x7B49;&#x5E26;&#x6765;&#x7684;&#x53D8;&#x5316;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x4E00;&#x822C;&#x4F1A;&#x628A;&#x516C;&#x94A5;&#x5F53;&#x505A;&#x7B7E;&#x540D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x968F;&#x7740;&#x6570;&#x636E;&#x4E00;&#x8D77;&#x5206;&#x53D1;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x4E0D;&#x9700;&#x8981;&#x4E8B;&#x5148;&#x4FDD;&#x5B58;&#x4EFB;&#x4F55;&#x6570;&#x636E;&#x6765;&#x6E90;&#x7684;&#x516C;&#x94A5;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/sign_verify1.png" alt=""></p>
+
+<p>&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x4F1A;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x5982;&#x4F55;&#x77E5;&#x9053;&#x6570;&#x636E;&#x4E2D;&#x6240;&#x643A;&#x5E26;&#x7684;&#x516C;&#x94A5;&#x5C31;&#x662F;&#x5426;&#x662F;&#x53D1;&#x9001;&#x8005;&#x81EA;&#x5DF1;&#x7684;&#x516C;&#x94A5;&#xFF1F;</p>
+
+<p>&#x8FD9;&#x6D89;&#x53CA;&#x5230;&#x5BC6;&#x94A5;&#x7684;&#x7BA1;&#x7406;&#x548C;&#x5206;&#x53D1;&#xFF0C;&#x7EC6;&#x8282;&#x5C55;&#x5F00;&#x7684;&#x8BDD;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x5927;&#x7684;&#x8BFE;&#x9898;&#x3002;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x516C;&#x94A5;&#x548C;&#x6240;&#x6709;&#x8005;&#x7684;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x91CC;&#xFF0C;&#x5E76;&#x8BA9;&#x4E00;&#x4E2A;&#x53EF;&#x4FE1;&#x7684;&#x7B2C;&#x4E09;&#x8005;&#x4F7F;&#x7528;&#x5176;&#x79C1;&#x94A5;&#x5BF9;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x7B7E;&#x4E86;&#x540D;&#x7684;&#x516C;&#x94A5;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5C31;&#x53EB;&#x505A;<code>&#x8BC1;&#x4E66;</code>&#x3002;&#x8BC1;&#x4E66;&#x4F1A;&#x4F5C;&#x4E3A;&#x7B7E;&#x540D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x968F;&#x7740;&#x6570;&#x636E;&#x4E00;&#x8D77;&#x5206;&#x53D1;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/cert_struct.png" alt="&#x8BC1;&#x4E66;&#x7684;&#x7ED3;&#x6784;"></p>
+
+<p>&#x8FD9;&#x91CC;&#x51FA;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x6709;&#x610F;&#x601D;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x6570;&#x636E;&#x7B7E;&#x540D;&#x4E2D;&#x7684;&#x8BC1;&#x4E66;&#x672C;&#x8EAB;&#x4E5F;&#x662F;&#x4E00;&#x6BB5;&#x6570;&#x636E;(&#x516C;&#x94A5;+&#x6240;&#x6709;&#x8005;&#x4FE1;&#x606F;)&#x4EE5;&#x53CA;&#x5176;&#x7B7E;&#x540D;&#x7EC4;&#x6210;&#x7684;&#xFF0C;&#x4F46;&#x8BC1;&#x4E66;&#x4E2D;&#x7684;&#x7B7E;&#x540D;&#x662F;&#x7B80;&#x5355;&#x7B7E;&#x540D;&#xFF0C;&#x4E00;&#x822C;&#x53EA;&#x6709;&#x54C8;&#x5E0C;&#x503C;&#x548C;&#x7B7E;&#x53D1;&#x8005;&#x540D;&#x79F0;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x5C06;&#x7B7E;&#x53D1;&#x8005;&#x7684;&#x8BC1;&#x4E66;&#x5305;&#x542B;&#x5728;&#x7B7E;&#x540D;&#x4E2D;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x9677;&#x5165;&#x65E0;&#x9650;&#x9012;&#x5F52;&#x7684;&#x6B7B;&#x5FAA;&#x73AF;&#x4E86;&#x3002;</p>
+
+<p>&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x8FD8;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x8005;&#x7684;&#x516C;&#x94A5;&#x9A8C;&#x8BC1;&#x8FD9;&#x4E2A;&#x8BC1;&#x4E66;&#x7684;&#x5408;&#x6CD5;&#x6027;&#x3002;&#x867D;&#x7136;&#x9700;&#x8981;&#x591A;&#x9A8C;&#x8BC1;&#x4E00;&#x6B65;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x4E00;&#x6765;&#xFF0C;&#x672C;&#x5730;&#x4E0D;&#x518D;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x6765;&#x6E90;&#x7684;&#x516C;&#x94A5;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x8FD9;&#x4E2A;&#x7B2C;&#x4E09;&#x8005;&#x7684;&#x8BC1;&#x4E66;(&#x516C;&#x94A5;)&#x5373;&#x53EF;&#xFF0C;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x6765;&#x6E90;&#x7684;&#x8BC1;&#x4E66;&#x90FD;&#x7531;&#x8FD9;&#x4E2A;&#x53EF;&#x4FE1;&#x7684;&#x7B2C;&#x4E09;&#x8005;&#x8FDB;&#x884C;&#x7B7E;&#x53D1;&#xFF0C;&#x8FD9;&#x4E2A;&#x53EF;&#x4FE1;&#x7684;&#x7B2C;&#x4E09;&#x8005;&#x5C31;&#x88AB;&#x79F0;&#x4E3A;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;(Certification Authority)&#xFF0C;&#x7B80;&#x79F0;<code>CA</code>&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/sign_struct.png" alt="&#x7B7E;&#x540D;&#x7684;&#x7ED3;&#x6784;"></p>
+
+<p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;CA&#x7684;&#x8BC1;&#x4E66;&#x53EF;&#x80FD;&#x4E5F;&#x662F;&#x7531;&#x5176;&#x4ED6;&#x66F4;&#x9AD8;&#x4E00;&#x7EA7;&#x7684;CA&#x8FDB;&#x884C;&#x7B7E;&#x53D1;&#x7684;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4F1A;&#x4EA7;&#x751F;3&#x7EA7;&#x751A;&#x81F3;3&#x7EA7;&#x4EE5;&#x4E0A;&#x7684;&#x8BC1;&#x4E66;&#x94FE;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E2D;&#x53EA;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x6700;&#x9AD8;&#x7EA7;CA&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x4E2D;&#x95F4;CA&#x7684;&#x8BC1;&#x4E66;&#x548C;&#x4FE1;&#x606F;&#x63D0;&#x4F9B;&#x8005;&#x7684;&#x8BC1;&#x4E66;&#x4F9D;&#x6B21;&#x8FDB;&#x884C;&#x9012;&#x5F52;&#x6821;&#x9A8C;&#x5373;&#x53EF;&#x3002;</p>
+
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x5BFC;&#x51FA;Xcode&#x5E94;&#x7528;&#x4E2D;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x7684;&#x7B7E;&#x540D;&#x8BC1;&#x4E66;&#xFF0C;mac OS&#x4E0A;&#x7684;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x683C;&#x5F0F;&#x4E0E;iOS&#x5E73;&#x53F0;&#x662F;&#x76F8;&#x540C;&#x7684;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>codesign -d --extract-certificates<span class="o">=</span>cert /Applications/Xcode.app/Contents/MacOS/Xcode
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x4F1A;&#x4EA7;&#x751F;&#x4E09;&#x4E2A;&#x8BC1;&#x4E66;&#x6587;&#x4EF6;<code>cert0</code> <code>cert1</code> <code>cert2</code>&#x3002;&#x5176;&#x4E2D;cert0&#x662F;&#x7531;cert1&#x7B7E;&#x53D1;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;cert1&#x9A8C;&#x8BC1;&#x5176;&#x5408;&#x6CD5;&#x6027;&#xFF0C;&#x540C;&#x7406;cert2&#x53EF;&#x4EE5;&#x9A8C;&#x8BC1;cert1&#x7684;&#x5408;&#x6CD5;&#x6027;&#x3002;&#x800C;&#x5BF9;&#x4E8E;cert2&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5BF9;&#x6BD4;&#x7CFB;&#x7EDF;&#x7684;keychain&#x4E2D;&#x662F;&#x5426;&#x6709;&#x76F8;&#x540C;&#x7684;&#x8BC1;&#x4E66;&#x6587;&#x4EF6;&#x5373;&#x53EF;&#x3002;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x5206;&#x522B;&#x67E5;&#x770B;&#x4ED6;&#x4EEC;&#x7684;&#x6240;&#x6709;&#x8005;&#x540D;&#x79F0;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span><span class="k">for </span>i in 0 1 2<span class="p">;</span> <span class="k">do </span>openssl x509 -inform DER -text -noout -in cert<span class="nv">$i</span> <span class="p">|</span> grep Subject:<span class="p">;</span> <span class="k">done</span>
+</span><span class="line"><span class="k">        </span>Subject: <span class="nv">CN</span><span class="o">=</span>Apple Mac OS Application Signing, <span class="nv">O</span><span class="o">=</span>Apple Inc., <span class="nv">C</span><span class="o">=</span>US
+</span><span class="line">        Subject: <span class="nv">C</span><span class="o">=</span>US, <span class="nv">O</span><span class="o">=</span>Apple Inc., <span class="nv">OU</span><span class="o">=</span>Apple Worldwide Developer Relations, <span class="nv">CN</span><span class="o">=</span>Apple Worldwide Developer Relations Certification Authority
+</span><span class="line">        Subject: <span class="nv">C</span><span class="o">=</span>US, <span class="nv">O</span><span class="o">=</span>Apple Inc., <span class="nv">OU</span><span class="o">=</span>Apple Certification Authority, <span class="nv">CN</span><span class="o">=</span>Apple Root CA
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>0x03 &#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;</h2>
+
+<p>&#x5728;&#x4E86;&#x89E3;&#x4E86;&#x7B7E;&#x540D;&#x548C;&#x8BC1;&#x4E66;&#x7684;&#x57FA;&#x672C;&#x7ED3;&#x6784;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x7814;&#x7A76;&#x4E00;&#x4E0B;iOS&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#xFF0C;&#x5B83;&#x662F;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#x5FC5;&#x4E0D;&#x53EF;&#x5C11;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x90FD;&#x6709;&#x63A5;&#x89E6;&#x3002;&#x4F17;&#x6240;&#x5468;&#x77E5;&#xFF0C;iOS&#x8BBE;&#x5907;&#x5E76;&#x4E0D;&#x80FD;&#x50CF;Android&#x90A3;&#x6837;&#x4EFB;&#x610F;&#x5730;&#x5B89;&#x88C5;app&#xFF0C;app&#x5FC5;&#x987B;&#x88AB;Apple&#x7B7E;&#x540D;&#x4E4B;&#x540E;&#x624D;&#x80FD;&#x5B89;&#x88C5;&#x5230;&#x8BBE;&#x5907;&#x4E0A;&#x3002;&#x800C;&#x5F00;&#x53D1;&#x8005;&#x5728;&#x5F00;&#x53D1;App&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x9891;&#x7E41;&#x5730;&#x4FEE;&#x6539;&#x4EE3;&#x7801;&#x5E76;&#x5B89;&#x88C5;&#x5230;&#x8BBE;&#x5907;&#x4E0A;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x6BCF;&#x6B21;&#x90FD;&#x5148;&#x4E0A;&#x4F20;&#x7ED9;Apple&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x4E00;&#x79CD;&#x4E0D;&#x9700;&#x8981;&#x82F9;&#x679C;&#x7B7E;&#x540D;&#x5C31;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x7684;&#x673A;&#x5236;&#x3002;&#x8FD9;&#x4E2A;&#x673A;&#x5236;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x662F;&#xFF1A;</p>
+
+<ul>
+<li>&#x5F00;&#x53D1;&#x8005;&#x81EA;&#x5DF1;&#x6301;&#x6709;&#x4E00;&#x5957;&#x5BC6;&#x94A5;&#x548C;&#x8BC1;&#x4E66;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x5BF9;app&#x8FDB;&#x884C;&#x7B7E;&#x540D;</li>
+<li>&#x7531;Apple&#x5BF9;&#x5F00;&#x53D1;&#x8005;&#x7684;&#x8EAB;&#x4EFD;&#x8FDB;&#x884C;&#x201C;&#x80CC;&#x4E66;&#x201D;&#xFF0C;&#x8BA9;&#x8BBE;&#x5907;&#x95F4;&#x80FD;&#x591F;&#x63A5;&#x4FE1;&#x4EFB;&#x5F00;&#x53D1;&#x8005;&#x81EA;&#x884C;&#x7B7E;&#x540D;&#x7684;app&#xFF0C;&#x8FD9;&#x4E2A;&#x201C;&#x80CC;&#x4E66;&#x201D;&#x7684;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x540E;&#x9762;&#x4F1A;&#x63D0;&#x5230;&#x7684;<code>Provisioning Profile</code></li>
+</ul>
+
+
+<p>&#x90A3;&#x4E48;&#x5148;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x662F;&#x5982;&#x4F55;&#x4EA7;&#x751F;&#x7684;&#xFF1A;&#x5728;Xcode 8&#x53CA;&#x4E4B;&#x540E;&#x7684;&#x7248;&#x672C;&#xFF0C;Xcode&#x4F1A;&#x81EA;&#x52A8;&#x5E2E;&#x6211;&#x4EEC;&#x7BA1;&#x7406;&#x8BC1;&#x4E66;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x6839;&#x672C;&#x4E0D;&#x4F1A;&#x6709;&#x673A;&#x4F1A;&#x53BB;&#x7814;&#x7A76;&#x5B83;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x65E9;&#x671F;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x52A8;&#x624B;&#x64CD;&#x4F5C;&#xFF0C;&#x83B7;&#x53D6;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x6B65;&#x9AA4;</p>
+
+<h4>&#x751F;&#x6210;CSR&#x6587;&#x4EF6;(Certificate Signing Request)</h4>
+
+<p>&#x5728;Keychain&#x83DC;&#x5355;&#x680F;&#x9009;&#x62E9;&#x201D;&#x4ECE;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x8BF7;&#x6C42;&#x8BC1;&#x4E66;&#x2026;&#x201D;</p>
+
+<p><img src="http://xelz.info/assets/2019/csr1.png" alt="csr1"></p>
+
+<p><img src="http://xelz.info/assets/2019/csr2.png" alt="csr2"></p>
+
+<p>&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;<code>CertificateSigningRequest.certSigningRequest</code> &#x7684;&#x7B7E;&#x540D;&#x8BF7;&#x6C42;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x751F;&#x6210;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#x5176;&#x5B9E;Keychain&#x5DF2;&#x7ECF;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E86;&#x4E00;&#x5BF9;&#x516C;&#x3001;&#x79C1;&#x94A5;</p>
+
+<p><img src="http://xelz.info/assets/2019/csr3.png" alt="csr3"></p>
+
+<p><img src="http://xelz.info/assets/2019/csr4.png" alt="csr4"></p>
+
+<p>&#x53EF;&#x4EE5;&#x5728;Keychain&#x4E2D;&#x9009;&#x4E2D;&#x8FD9;&#x4E2A;&#x6761;&#x76EE;&#xFF0C;&#x53F3;&#x952E;&#x9009;&#x62E9;&#x5BFC;&#x51FA;&#xFF0C;&#x5C06;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#x5BFC;&#x51FA;&#x4E3A;p12&#x6587;&#x4EF6;&#xFF0C;&#x4F7F;&#x7528;openssl&#x67E5;&#x770B;&#x5176;&#x5185;&#x5BB9;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>openssl pkcs12 -in JustForTesting.p12 -out private_key.pem  <span class="c"># &#x5BFC;&#x51FA;p12&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x5BC6;&#x94A5;</span>
+</span><span class="line">Enter Import Password:    <span class="c"># &#x8F93;&#x5165;p12&#x6587;&#x4EF6;&#x7684;&#x5BC6;&#x7801;</span>
+</span><span class="line">MAC verified OK
+</span><span class="line">Enter PEM pass phrase:    <span class="c"># &#x8BBE;&#x5B9A;&#x5BFC;&#x51FA;&#x7684;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#x7684;&#x5BC6;&#x7801;</span>
+</span><span class="line">Verifying - Enter PEM pass phrase:    <span class="c"># &#x786E;&#x8BA4;&#x5BC6;&#x7801;</span>
+</span><span class="line"><span class="nv">$ </span>openssl rsa -in private_key.pem -noout -text  <span class="c"># &#x67E5;&#x770B;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;</span>
+</span><span class="line">Enter pass phrase <span class="k">for </span>private_key.pem:   <span class="c"># &#x8F93;&#x5165;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#x7684;&#x5BC6;&#x7801;</span>
+</span><span class="line">Private-Key: <span class="o">(</span>2048 bit<span class="o">)</span>
+</span><span class="line">modulus:
+</span><span class="line">    00:c2:98:f5:02:eb:dc:a6:fd:4b:12:4c:70:17:a6:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">publicExponent: 65537 <span class="o">(</span>0x10001<span class="o">)</span>
+</span><span class="line">privateExponent:
+</span><span class="line">    00:a1:67:68:e1:51:6c:a4:fd:36:45:29:2d:58:10:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">prime1:
+</span><span class="line">    00:f3:91:5d:5b:dc:c1:de:d2:ab:7a:5f:b2:27:41:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">prime2:
+</span><span class="line">    00:cc:87:b5:c9:7e:81:39:94:13:c1:ff:3f:d7:7b:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">exponent1:
+</span><span class="line">    00:a5:a0:22:c0:f5:d3:eb:86:8c:4e:b1:c6:3e:85:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">exponent2:
+</span><span class="line">    00:8b:e1:00:85:a6:7c:10:79:e2:2d:5a:39:3a:51:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">coefficient:
+</span><span class="line">    7e:30:60:84:fc:47:6b:90:fe:e7:32:1a:2f:b0:c4:
+</span><span class="line">    xx:xx:xx:xx:xx:xx:xx:...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x8FD9;&#x91CC;&#x51FA;&#x73B0;&#x4E86;&#x51E0;&#x4E2A;&#x719F;&#x6089;&#x7684;&#x9762;&#x5B54;&#xFF1A;</p>
+
+<ul>
+<li>prime1/prime2 &#x5C31;&#x662F;&#x751F;&#x6210;&#x5BC6;&#x94A5;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x4E24;&#x4E2A;&#x8D85;&#x5927;&#x7684;&#x7D20;&#x6570;<code>p, q</code></li>
+<li>modulus &#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x8D85;&#x5927;&#x7D20;&#x6570;&#x7684;&#x4E58;&#x79EF; <code>n = p * q</code></li>
+<li>publicExponent &#x662F;&#x516C;&#x94A5;&#x56E0;&#x5B50;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x524D;&#x6587;&#x4E2D;&#x7684;<code>e</code>, &#x8FD9;&#x91CC;&#x56FA;&#x5B9A;&#x4E3A; 0x10001 (65535)</li>
+<li>privateExponent &#x662F;&#x79C1;&#x94A5;&#x56E0;&#x5B50;&#xFF0C;&#x5373;&#x524D;&#x6587;&#x4E2D;&#x7684;<code>d</code></li>
+</ul>
+
+
+<p>CSR&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E2A;&#x4EBA;&#x4FE1;&#x606F;&#x3001;&#x516C;&#x94A5;(Modulus + PublicExponent)&#xFF0C;&#x4EE5;&#x53CA;&#x81EA;&#x7B7E;&#x540D;(&#x4F7F;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x79C1;&#x94A5;&#x8FDB;&#x884C;&#x7B7E;&#x540D;)&#xFF0C; &#x53EF;&#x901A;&#x8FC7;openssl&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x5176;&#x5185;&#x5BB9;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>openssl req -in ~/Desktop/CertificateSigningRequest.certSigningRequest -text -noout
+</span><span class="line">Certificate Request:
+</span><span class="line">    Data:
+</span><span class="line">        Version: 0 <span class="o">(</span>0x0<span class="o">)</span>
+</span><span class="line">        Subject: <span class="nv">emailAddress</span><span class="o">=</span>me@xelz.info, <span class="nv">CN</span><span class="o">=</span>JustForTesting, <span class="nv">C</span><span class="o">=</span>CN
+</span><span class="line">        Subject Public Key Info:
+</span><span class="line">            Public Key Algorithm: rsaEncryption
+</span><span class="line">                Public-Key: <span class="o">(</span>2048 bit<span class="o">)</span>
+</span><span class="line">                Modulus:
+</span><span class="line">                    00:c2:98:f5:02:eb:dc:a6:fd:4b:12:4c:70:17:a6:
+</span><span class="line">                    xx:xx:xx:xx:xx:xx:xx:...
+</span><span class="line">                Exponent: 65537 <span class="o">(</span>0x10001<span class="o">)</span>
+</span><span class="line">        Attributes:
+</span><span class="line">            a0:00
+</span><span class="line">    Signature Algorithm: sha256WithRSAEncryption
+</span><span class="line">         b7:11:aa:48:2f:b3:10:e9:71:c7:93:c3:ec:44:8d:0f:a0:5a:
+</span><span class="line">         xx:xx:xx:xx:xx:xx:xx:...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>&#x63D0;&#x4EA4;&#x7ED9;Apple&#x8FDB;&#x884C;&#x7B7E;&#x540D;</h4>
+
+<p>&#x5728;&#x82F9;&#x679C;&#x5F00;&#x53D1;&#x8005;&#x7F51;&#x7AD9;&#xFF0C;&#x5C06;CSR&#x63D0;&#x4EA4;&#x7ED9;Apple&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;Apple&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x7B7E;&#x597D;&#x540D;&#x7684;<code>&#x8BC1;&#x4E66;&#x6587;&#x4EF6;</code>&#xFF0C;&#x540E;&#x7F00;&#x540D;&#x4E3A;<code>cer</code>&#x3002;</p>
+
+<p>&#x5148;&#x67E5;&#x770B;&#x4E00;&#x4E0B;&#x4ED6;&#x7684;<code>sha1</code>&#x503C;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x7528;&#x5230;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>shasum ios_development.cer
+</span><span class="line">11447116f2c5521b057b9b67290f0fdadeadfa0a  ios_development.cer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x53CC;&#x51FB;&#x5373;&#x53EF;&#x5C06;&#x5176;&#x5BFC;&#x5165;&#x5230;Keychain&#x4E2D;&#xFF0C;Keychain&#x4F1A;&#x81EA;&#x52A8;&#x628A;&#x5B83;&#x4E4B;&#x524D;&#x521B;&#x5EFA;CSR&#x65F6;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#x5BC6;&#x94A5;&#x5F52;&#x4E3A;&#x4E00;&#x7EC4;&#x3002;&#x65E0;&#x8BBA;&#x662F;&#x5728;&#x8BC1;&#x4E66;&#x5217;&#x8868;&#x4E2D;&#x67E5;&#x770B;&#x8FD8;&#x662F;&#x5728;&#x5BC6;&#x94A5;&#x5217;&#x8868;&#x4E2D;&#x67E5;&#x770B;&#xFF0C;&#x90FD;&#x80FD;&#x770B;&#x5230;&#x4E0E;&#x4E4B;&#x5339;&#x914D;&#x7684;<code>&#x53E6;&#x4E00;&#x534A;</code>&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/csr5.png" alt=""></p>
+
+<p>&#x67E5;&#x770B;&#x8BC1;&#x4E66;&#x7684;&#x5185;&#x5BB9;</p>
+
+<p><img src="http://xelz.info/assets/2019/cert1.png" alt=""></p>
+
+<p>&#x53EF;&#x4EE5;&#x4ECE;&#x8BC1;&#x4E66;&#x4E2D;&#x5F97;&#x5230;&#x51E0;&#x4E2A;&#x5173;&#x952E;&#x4FE1;&#x606F;&#xFF1A;</p>
+
+<ol>
+<li>&#x8BC1;&#x4E66;&#x7684;&#x6240;&#x6709;&#x8005;&#xFF0C;&#x8FD9;&#x90E8;&#x5206;&#x4FE1;&#x606F;&#x5E76;&#x975E;&#x7531;&#x6211;&#x4EEC;&#x81EA;&#x884C;&#x6307;&#x5B9A;&#xFF0C;&#x800C;&#x662F;&#x7B7E;&#x53D1;&#x8005;Apple&#x6839;&#x636E;&#x6211;&#x4EEC;&#x7684;&#x8D26;&#x53F7;&#x4FE1;&#x606F;&#x81EA;&#x52A8;&#x751F;&#x6210;</li>
+<li>&#x8BC1;&#x4E66;&#x7684;&#x7B7E;&#x53D1;&#x8005;&#xFF0C;&#x5373;&#x524D;&#x6587;&#x6240;&#x8FF0;&#x7684;<code>CA</code></li>
+<li>&#x8BC1;&#x4E66;&#x7684;&#x516C;&#x94A5;&#x4FE1;&#x606F;&#xFF0C;&#x4E0E;&#x4E4B;&#x524D;&#x751F;&#x6210;&#x7684;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#x53CA;CSR&#x5B8C;&#x5168;&#x4E00;&#x81F4;</li>
+</ol>
+
+
+<p>&#x73B0;&#x5728;&#x5E94;&#x8BE5;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x8BC1;&#x4E66;&#x548C;&#x5BC6;&#x94A5;&#x7684;&#x5173;&#x7CFB;&#x4E86;&#xFF0C;&#x5BC6;&#x94A5;&#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x79C1;&#x94A5;&#x548C;&#x516C;&#x94A5;&#xFF0C;&#x79C1;&#x94A5;&#x7528;&#x4E8E;&#x7B7E;&#x540D;&#xFF0C;&#x800C;&#x8BC1;&#x4E66;&#x91CC;&#x9762;&#x6709;&#x4E14;&#x53EA;&#x6709;&#x516C;&#x94A5;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x88AB;&#x7B2C;&#x4E09;&#x65B9;<code>CA</code> &#x201C;&#x8BA4;&#x8BC1;&#x201D; &#x8FC7;&#xFF0C;&#x7528;&#x4E8E;&#x89E3;&#x5BC6;&#x548C;&#x6821;&#x9A8C;&#x3002;</p>
+
+<p>&#x4E00;&#x822C;&#x6211;&#x4EEC;&#x8BF4;&#x4F7F;&#x7528;<code>&#x8BC1;&#x4E66;</code>&#x7B7E;&#x540D;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4F7F;&#x7528;&#x4E0E;&#x8BC1;&#x4E66;&#x6240;&#x5339;&#x914D;&#x7684;&#x79C1;&#x94A5;&#x8FDB;&#x884C;<code>&#x7B7E;&#x540D;</code>&#xFF0C;<code>&#x8BC1;&#x4E66;</code>&#x53EA;&#x662F;&#x4F5C;&#x4E3A;&#x7B7E;&#x540D;&#x6570;&#x636E;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x88AB;&#x5D4C;&#x5165;&#x5230;&#x7B7E;&#x540D;&#x7ED3;&#x6784;&#x4E2D;&#x3002;&#x5982;&#x679C;Keychain&#x4E2D;&#x53EA;&#x6709;&#x8BC1;&#x4E66;&#xFF0C;&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x94A5;&#x6587;&#x4EF6;&#xFF0C;&#x662F;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x7684;&#xFF0C;&#x4F1A;&#x5F97;&#x5230;<code>Missing private key</code>&#x4E4B;&#x7C7B;&#x7684;&#x62A5;&#x9519;&#x63D0;&#x793A;&#x3002;</p>
+
+<p>&#x56FE;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x4E2A;&#x8BC1;&#x4E66;&#x7684;&#x7B7E;&#x53D1;&#x8005;&#x662F;<code>Apple Worldwide Developer Relations Certification Authority</code>&#xFF0C;&#x5728;Keychain&#x4E2D;&#x641C;&#x7D22;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#xFF0C; &#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B83;&#x7684;&#x8BC1;&#x4E66;&#x8BE6;&#x60C5;&#x3002;&#x6211;&#x4EEC;&#x4F1A;&#x53D1;&#x73B0;&#xFF0C;&#x5B83;&#x7684;&#x7C7B;&#x578B;&#x662F;<code>&#x4E2D;&#x7EA7;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;(&#x4E2D;&#x7EA7;CA)</code>&#xFF0C;&#x5B83;&#x4E5F;&#x5305;&#x542B;&#x7B7E;&#x540D;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x7531;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x53EB;&#x505A;<code>Apple Root CA</code>&#x7684;<code>&#x6839;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;(&#x6839;CA)</code>&#x8FDB;&#x884C;&#x7B7E;&#x53D1;&#x7684;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x5F62;&#x6210;&#x4E86;&#x4E00;&#x6761;&#x8BC1;&#x4E66;&#x94FE;&#x3002;&#x800C;&#x7EE7;&#x7EED;&#x67E5;&#x770B;<code>Apple Root CA</code>&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x662F;&#x81EA;&#x7B7E;&#x540D;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4F1A;&#x88AB;&#x5185;&#x7F6E;&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#xFF0C;&#x8BBE;&#x5907;&#x65E0;&#x6761;&#x4EF6;&#x4FE1;&#x4EFB;&#x5B83;&#xFF0C;&#x4E5F;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x5176;&#x4ED6;&#x7684;&#x673A;&#x6784;&#x4E3A;&#x5176;&#x80CC;&#x4E66;&#x4E86;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/cert2.png" alt=""></p>
+
+<p>&#x8FD9;&#x6837;&#x7684;&#x8BC1;&#x4E66;&#x94FE;&#x673A;&#x5236;&#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x6839;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x540C;&#x65F6;&#x63D0;&#x5347;&#x8BC1;&#x4E66;&#x7BA1;&#x7406;&#x7684;&#x5B89;&#x5168;&#x6027;&#x3002;&#x5C06;&#x9881;&#x53D1;&#x5E95;&#x5C42;&#x8BC1;&#x4E66;&#x7684;&#x5DE5;&#x4F5C;&#x5206;&#x6563;&#x7ED9;&#x591A;&#x4E2A;&#x4E2D;&#x7EA7;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x6839;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x53EA;&#x9700;&#x8981;&#x5BF9;&#x4E0B;&#x4E00;&#x7EA7;&#x673A;&#x6784;&#x7684;&#x8BC1;&#x4E66;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x548C;&#x7B7E;&#x53D1;&#xFF0C;&#x964D;&#x4F4E;&#x6839;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x79C1;&#x94A5;&#x7684;&#x4F7F;&#x7528;&#x9891;&#x7387;&#xFF0C;&#x4E5F;&#x5C31;&#x964D;&#x4F4E;&#x4E86;&#x79C1;&#x94A5;&#x6CC4;&#x9732;&#x7684;&#x98CE;&#x9669;&#x3002;&#x4E2D;&#x7EA7;&#x8BC1;&#x4E66;&#x9881;&#x53D1;&#x673A;&#x6784;&#x5404;&#x53F8;&#x5176;&#x804C;&#xFF0C;&#x5373;&#x4F7F;&#x51FA;&#x73B0;&#x79C1;&#x94A5;&#x6CC4;&#x9732;&#x8FD9;&#x6837;&#x7684;&#x91CD;&#x5927;&#x5B89;&#x5168;&#x4E8B;&#x6545;&#xFF0C;&#x4E5F;&#x4E0D;&#x81F3;&#x4E8E;&#x6CE2;&#x53CA;&#x6574;&#x4E2A;&#x8BC1;&#x4E66;&#x7F51;&#x7EDC;&#x3002;</p>
+
+<h4>&#x5F00;&#x53D1;&#x8BC1;&#x4E66;&#x4E0E;&#x53D1;&#x5E03;&#x8BC1;&#x4E66;</h4>
+
+<p>&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x6309;&#x7528;&#x9014;&#x53EF;&#x5206;&#x4E3A;Development&#x8BC1;&#x4E66;&#x548C;Distribution&#x8BC1;&#x4E66;&#xFF1A;</p>
+
+<ul>
+<li>Development&#x8BC1;&#x4E66;&#x662F;&#x7528;&#x4E8E;&#x5F00;&#x53D1;&#x53CA;&#x6D4B;&#x8BD5;&#x9636;&#x6BB5;&#x4F7F;&#x7528;&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x5B83;&#x7528;&#x4E8E;&#x5728;&#x8BBE;&#x5907;&#x5B89;&#x88C5;&#x4E0A;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x7684;App&#x540E;&#x5BF9;App&#x7684;&#x5B8C;&#x6574;&#x6027;&#x8FDB;&#x884C;&#x6821;&#x9A8C;&#xFF0C;&#x4E00;&#x822C;&#x8BC1;&#x4E66;&#x540D;&#x79F0;&#x4E3A; iPhone Developer: xxxxxxx&#x3002;&#x5982;&#x679C;&#x662F;&#x591A;&#x4EBA;&#x534F;&#x4F5C;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#xFF0C;&#x4EFB;&#x610F;&#x6210;&#x5458;&#x90FD;&#x53EF;&#x4EE5;&#x7533;&#x8BF7;&#x81EA;&#x5DF1;&#x7684;Development&#x8BC1;&#x4E66;&#x3002;</li>
+<li>Distribution&#x8BC1;&#x4E66;&#x662F;&#x7528;&#x4E8E;&#x63D0;&#x4EA4;AppStore&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x4E00;&#x822C;&#x547D;&#x540D;&#x4E3A; iPhone Distribution: xxxxxxxxx&#xFF0C;&#x7528;&#x4E8E;&#x8BA9;AppStore&#x6821;&#x9A8C;&#x63D0;&#x4EA4;&#x4E0A;&#x6765;&#x7684;App&#x7684;&#x5B8C;&#x6574;&#x6027;&#xFF0C;&#x53EA;&#x6709;&#x7BA1;&#x7406;&#x5458;&#x4EE5;&#x4E0A;&#x8EAB;&#x4EFD;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x624D;&#x53EF;&#x4EE5;&#x7533;&#x8BF7;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x63A7;&#x5236;&#x63D0;&#x4EA4;&#x6743;&#x9650;&#x7684;&#x8303;&#x56F4;&#x3002;&#x540C;&#x65F6;&#xFF0C;Distribution&#x8BC1;&#x4E66;&#x4E0D;&#x80FD;&#x7528;&#x4E8E;&#x5F00;&#x53D1;&#x53CA;&#x8C03;&#x8BD5;&#x3002;</li>
+</ul>
+
+
+<h4>&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;</h4>
+
+<p>&#x9664;&#x4E86;&#x666E;&#x901A;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;(&#x4E2A;&#x4EBA;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x548C;&#x516C;&#x53F8;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x4F7F;&#x7528;&#x7684;&#x8BC1;&#x4E66;)&#x5916;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;<code>&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;</code>&#xFF0C;&#x8FD9;&#x79CD;&#x8BC1;&#x4E66;&#x7B7E;&#x540D;&#x7684;App&#x53EF;&#x4EE5;&#x88AB;&#x76F4;&#x63A5;&#x5B89;&#x88C5;&#x5728;&#x4EFB;&#x610F;&#x7684;iOS&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;&#x53EA;&#x8981;&#x7528;&#x6237;&#x4E3B;&#x52A8;&#x4FE1;&#x4EFB;&#x8BE5;&#x8BC1;&#x4E66;&#x5373;&#x53EF;&#x3002;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x65B9;&#x4FBF;&#x4F01;&#x4E1A;&#x7ED9;&#x5185;&#x90E8;&#x5458;&#x5DE5;&#x5206;&#x53D1;&#x751F;&#x4EA7;&#x529B;&#x5DE5;&#x5177;&#xFF0C;&#x6BD4;&#x5982;&#x5F80;&#x5F80;&#x5B58;&#x5728;&#x8FD9;&#x6837;&#x4E00;&#x4E9B;&#x573A;&#x666F;&#xFF1A;&#x4F01;&#x4E1A;&#x5185;&#x90E8;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x4E92;&#x8054;&#x7F51;&#xFF0C;&#x81EA;&#x7136;&#x4E5F;&#x5C31;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;AppStore&#x5B89;&#x88C5;&#x5E94;&#x7528;&#xFF0C;&#x6216;&#x662F;&#x4F7F;&#x7528;&#x79C1;&#x6709;API&#xFF0C;&#x5B8C;&#x6210;&#x4E00;&#x4E9B;AppStore&#x4E0D;&#x5141;&#x8BB8;&#x7684;&#x529F;&#x80FD;&#x3002;&#x524D;&#x9762;&#x6240;&#x8BF4;&#x7684;&#x4E0D;&#x9700;&#x8981;&#x82F9;&#x679C;&#x7B7E;&#x540D;&#x5373;&#x53EF;&#x5B89;&#x88C5;&#x8FD0;&#x884C;&#x7684;&#x673A;&#x5236;&#x540C;&#x6837;&#x9002;&#x7528;&#x4E8E;&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x7684;&#x57FA;&#x7840;&#x3002;</p>
+
+<p>&#x4ECE;&#x8BC1;&#x4E66;&#x7684;&#x7533;&#x8BF7;&#x65B9;&#x5F0F;&#x548C;&#x5185;&#x5BB9;&#x6765;&#x770B;&#xFF0C;&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x548C;&#x666E;&#x901A;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x5E76;&#x65E0;&#x4E0D;&#x540C;&#xFF0C;&#x53EA;&#x662F;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x7684;&#x7533;&#x8BF7;&#x65B9;&#x5F0F;&#x548C;&#x8D39;&#x7528;&#x6709;&#x533A;&#x522B;&#x3002;&#x6B64;&#x5916;&#xFF0C;Apple&#x5BF9;&#x8FD9;&#x4E24;&#x79CD;&#x8BC1;&#x4E66;&#x6240;&#x80FD;&#x63D0;&#x4F9B;&#x7684;Provisioning Profile&#x6709;&#x7EC6;&#x5FAE;&#x7684;&#x5DEE;&#x5F02;&#xFF0C;&#x4E0B;&#x4E00;&#x8282;&#x9A6C;&#x4E0A;&#x5C31;&#x4F1A;&#x5206;&#x6790;&#x3002;</p>
+
+<h2>0x04 Entitlements &amp; Provisioning Profile</h2>
+
+<p>&#x9664;&#x4E86;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#xFF0C;&#x5728;&#x8FDB;&#x884C;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x9700;&#x8981;&#x6709;&#x8FD9;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x4ED6;&#x4EEC;&#x662F;&#x88AB;&#x7B7E;&#x540D;&#x5185;&#x5BB9;&#x7684;&#x4E00;&#x90E8;&#x5206;</p>
+
+<h4>Entitlements</h4>
+
+<p>&#x6C99;&#x76D2;(Sandbox)&#x6280;&#x672F;&#x662F;iOS&#x5B89;&#x5168;&#x4F53;&#x7CFB;&#x4E2D;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x4E00;&#x9879;&#x6280;&#x672F;&#xFF0C;&#x4ED6;&#x7684;&#x76EE;&#x7684;&#x662F;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x6280;&#x672F;&#x624B;&#x6BB5;&#x9650;&#x5236;App&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x6BD4;&#x5982;&#x53EF;&#x8BFB;&#x5199;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x5141;&#x8BB8;&#x8BBF;&#x95EE;&#x7684;&#x786C;&#x4EF6;&#xFF0C;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x7684;&#x670D;&#x52A1;&#x7B49;&#x7B49;&#xFF0C;&#x5373;&#x4F7F;&#x5E94;&#x7528;&#x51FA;&#x73B0;&#x4EFB;&#x610F;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x7684;&#x6F0F;&#x6D1E;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x5F71;&#x54CD;&#x5230;&#x6C99;&#x76D2;&#x5916;&#x7684;&#x7CFB;&#x7EDF;&#x3002;&#xFF08;&#x56FE;&#x6765;&#x81EA;<a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html">Apple&#x5F00;&#x53D1;&#x8005;&#x7F51;&#x7AD9;</a>&#xFF09;</p>
+
+<p><img src="http://xelz.info/assets/2019/sandboxing.png" alt=""></p>
+
+<p>&#x901A;&#x5E38;&#x6240;&#x8BF4;&#x7684;Entitlements(&#x6388;&#x6743;&#x6587;&#x4EF6;)&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6307;iOS&#x6C99;&#x76D2;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x58F0;&#x660E;&#x4E86;app&#x6240;&#x9700;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x5982;&#x679C;app&#x4E2D;&#x4F7F;&#x7528;&#x5230;&#x4E86;&#x67D0;&#x9879;&#x6C99;&#x76D2;&#x9650;&#x5236;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4F46;&#x6CA1;&#x6709;&#x58F0;&#x660E;&#x5BF9;&#x5E94;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x53EF;&#x80FD;&#x8FD0;&#x884C;&#x5230;&#x76F8;&#x5173;&#x7684;&#x4EE3;&#x7801;&#x65F6;&#x4F1A;&#x76F4;&#x63A5;Crash&#x3002;</p>
+
+<p>&#x5168;&#x65B0;&#x7684;iOS&#x5DE5;&#x7A0B;&#x4E2D;&#x662F;&#x6CA1;&#x6709;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x5728;<code>Capabilities</code>&#x4E2D;&#x5F00;&#x542F;&#x4E86;&#x4E00;&#x4E9B;&#x9700;&#x8981;&#x6743;&#x9650;&#x7684;&#x529F;&#x80FD;&#x4E4B;&#x540E;&#xFF0C;Xcode&#x4F1A;&#x81EA;&#x52A8;(Xcode 8&#x53CA;&#x4E4B;&#x540E;&#x7684;&#x7248;&#x672C;)&#x751F;&#x6210;Entilements&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x5C06;&#x5BF9;&#x5E94;&#x7684;&#x6743;&#x9650;&#x58F0;&#x660E;&#x6DFB;&#x52A0;&#x5230;Entitlements&#x6587;&#x4EF6;&#x4E2D;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/ent1.png" alt=""></p>
+
+<p><img src="http://xelz.info/assets/2019/ent2.png" alt=""></p>
+
+<p>&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5176;&#x5B9E;&#x662F;xml&#x683C;&#x5F0F;&#x7684;<code>plist</code>&#x6587;&#x4EF6;&#xFF0C;&#x5185;&#x5BB9;&#x5982;&#x4E0B;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class="line"><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</span><span class="line"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>inter-app-audio<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;true/&gt;</span>
+</span><span class="line"><span class="nt">&lt;/dict&gt;</span>
+</span><span class="line"><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x5E76;&#x975E;&#x662F;&#x5168;&#x90E8;&#x7684;&#x6388;&#x6743;&#x5185;&#x5BB9;&#xFF0C;&#x56E0;&#x4E3A;&#x7F3A;&#x7701;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;App&#x9ED8;&#x8BA4;&#x4F1A;&#x5305;&#x542B;&#x4EE5;&#x4E0B;&#x4E0E;Team ID&#x53CA;App ID&#x76F8;&#x5173;&#x7684;&#x6743;&#x9650;&#x58F0;&#x660E;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="nt">&lt;dict&gt;</span>
+</span><span class="line">    <span class="nt">&lt;key&gt;</span>keychain-access-groups<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">    <span class="nt">&lt;array&gt;</span>
+</span><span class="line">        <span class="nt">&lt;string&gt;</span>xxxxxxxxxx.*<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">    <span class="nt">&lt;/array&gt;</span>
+</span><span class="line">    <span class="nt">&lt;key&gt;</span>get-task-allow<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">    <span class="nt">&lt;true/&gt;</span>
+</span><span class="line">    <span class="nt">&lt;key&gt;</span>application-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">    <span class="nt">&lt;string&gt;</span>xxxxxxxxxx.test.CodeSign<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">    <span class="nt">&lt;key&gt;</span>com.apple.developer.team-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">    <span class="nt">&lt;string&gt;</span>xxxxxxxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line"><span class="nt">&lt;/dict&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5176;&#x4E2D;<code>get-task-allow</code>&#x4EE3;&#x8868;&#x662F;&#x5426;&#x5141;&#x8BB8;&#x88AB;&#x8C03;&#x8BD5;&#xFF0C;&#x5B83;&#x5728;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x662F;&#x5FC5;&#x9700;&#x7684;&#x4E00;&#x9879;&#x6743;&#x9650;&#xFF0C;&#x800C;&#x5728;&#x8FDB;&#x884C;Archive&#x6253;&#x5305;&#x7528;&#x4E8E;&#x4E0A;&#x67B6;&#x65F6;&#x4F1A;&#x88AB;&#x53BB;&#x9664;&#x3002;</p>
+
+<p>&#x8FDB;&#x884C;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x65F6;&#xFF0C;&#x4F1A;&#x5C06;&#x8FD9;&#x4E2A;Entitlements&#x6587;&#x4EF6;(&#x5982;&#x6709;)&#x4E0E;&#x4E0A;&#x8FF0;&#x7F3A;&#x7701;&#x5185;&#x5BB9;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#xFF0C;&#x5F97;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x6388;&#x6743;&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x5D4C;&#x5165;&#x4E8C;&#x8FDB;&#x5236;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4F5C;&#x4E3A;&#x88AB;&#x7B7E;&#x540D;&#x5185;&#x5BB9;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x7531;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x4FDD;&#x8BC1;&#x5176;&#x4E0D;&#x53EF;&#x7BE1;&#x6539;&#x6027;&#x3002;</p>
+
+<h4>Provisioning Profile</h4>
+
+<p>Xcode&#x5BF9;Provisioning Profile&#x7684;&#x89E3;&#x91CA;&#x662F;</p>
+
+<blockquote><p> A provisioning profile is a collection of digital entities that uniquely ties developers and devices to an authorized iPhone Development Team and enables a device to be used for testing.</p></blockquote>
+
+<p>Provisioning Profile&#x5728;&#x8FD9;&#x91CC;&#x5C31;&#x8D77;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x5BF9;&#x8BBE;&#x5907;&#x548C;&#x5F00;&#x53D1;&#x8005;&#x6388;&#x6743;&#x7684;&#x4F5C;&#x7528;&#xFF0C;&#x4ED6;&#x5C06;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x3001;&#x8BC1;&#x4E66;&#x3001;entitlements&#x6587;&#x4EF6;&#x4EE5;&#x53CA;&#x8BBE;&#x5907;&#x8FDB;&#x884C;&#x4E86;&#x7ED1;&#x5B9A;&#x3002;</p>
+
+<p>&#x540C;&#x6837;&#x5730;&#xFF0C;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;Xcode 8&#x53CA;&#x540E;&#x7EED;&#x7248;&#x672C;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x81EA;&#x52A8;&#x5E2E;&#x6211;&#x4EEC;&#x7BA1;&#x7406;Provisioining Profile&#xFF0C;&#x81EA;&#x52A8;&#x4E0B;&#x8F7D;&#x7684;Provisioning Profile&#x90FD;&#x88AB;&#x5B58;&#x653E;&#x5728;<code>~/Library/MobileDevice/Provisioning\ Profiles/</code>&#x8DEF;&#x5F84;&#x4E0B;&#xFF0C;&#x4EE5;<code>UUID</code>&#x683C;&#x5F0F;&#x547D;&#x540D;&#x3002;&#x76F4;&#x63A5;&#x62D6;&#x62FD;&#x4E0B;&#x56FE;&#x4E2D;&#x7684;&#x9F7F;&#x8F6E;&#x56FE;&#x6807;&#x5230;Finder&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x590D;&#x5236;&#x51FA;&#x6765;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/provision1.png" alt=""></p>
+
+<p>&#x7531;&#x4E8E;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x662F;&#x88AB;&#x82F9;&#x679C;&#x7B7E;&#x8FC7;&#x540D;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x4F2A;&#x9020;&#x6216;&#x8005;&#x4FEE;&#x6539;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x5B83;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x6807;&#x51C6;&#x7684;CMS(Cryptographic Message Syntax)&#x683C;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;security&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x5B83;&#x7684;&#x7B7E;&#x540D;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x5C06;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x63D0;&#x53D6;&#x51FA;&#x6765;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>security cms -D -i xxxxxxxxxxx.mobileprovision -h 1 -n  <span class="c"># &#x67E5;&#x770B;&#x7B7E;&#x540D;&#x4FE1;&#x606F;</span>
+</span><span class="line">SMIME:    <span class="nv">level</span><span class="o">=</span>1.2<span class="p">;</span> <span class="nb">type</span><span class="o">=</span>signedData<span class="p">;</span> <span class="nv">nsigners</span><span class="o">=</span>1<span class="p">;</span>
+</span><span class="line">      signer0.id<span class="o">=</span><span class="s2">&quot;Apple iPhone OS Provisioning Profile Signing&quot;</span><span class="p">;</span> signer0.status<span class="o">=</span>GoodSignature<span class="p">;</span>
+</span><span class="line">  <span class="nv">level</span><span class="o">=</span>1.1<span class="p">;</span> <span class="nb">type</span><span class="o">=</span>data<span class="p">;</span>
+</span><span class="line"><span class="nv">$ </span>security cms -D -i ea8585cd-c2da-4b08-81c2-e32b28c34871.mobileprovision -o provision.plist  <span class="c"># &#x5C06;&#x5185;&#x5BB9;&#x5BFC;&#x51FA;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Provisioning Profile&#x7EDF;&#x4E00;&#x90FD;&#x662F;&#x7531;<code>Apple iPhone OS Provisioning Profile Signing</code>&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x7684;&#xFF0C;&#x673A;&#x6784;&#x540D;&#x79F0;&#x8A00;&#x7B80;&#x610F;&#x8D45;&#x3002;&#x5BFC;&#x51FA;&#x7684;provision.plist&#x5185;&#x5BB9;&#x5982;&#x4E0B;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class="line"><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</span><span class="line"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>AppIDName<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;string&gt;</span>TestCodeSign<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">    ...
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>DeveloperCertificates<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;array&gt;</span>
+</span><span class="line">      <span class="nt">&lt;data&gt;</span>xxxxx<span class="nt">&lt;/data&gt;</span>
+</span><span class="line">        <span class="nt">&lt;data&gt;</span>xxxxx<span class="nt">&lt;/data&gt;</span>
+</span><span class="line">        <span class="nt">&lt;data&gt;</span>xxxxx<span class="nt">&lt;/data&gt;</span>
+</span><span class="line">  <span class="nt">&lt;/array&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>Entitlements<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;dict&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>keychain-access-groups<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;array&gt;</span>
+</span><span class="line">          <span class="nt">&lt;string&gt;</span>xxxxx.*<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">      <span class="nt">&lt;/array&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>inter-app-audio<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;true/&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>get-task-allow<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;true/&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>application-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;string&gt;</span>xxxxx.test.CodeSign<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>com.apple.developer.team-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;string&gt;</span>xxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">      <span class="nt">&lt;key&gt;</span>com.apple.developer.siri<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">      <span class="nt">&lt;true/&gt;</span>
+</span><span class="line">  <span class="nt">&lt;/dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>ExpirationDate<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;date&gt;</span>2020-01-22T05:14:57Z<span class="nt">&lt;/date&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>Name<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;string&gt;</span>iOS Team Provisioning Profile: test.CodeSign<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>ProvisionedDevices<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;array&gt;</span>
+</span><span class="line">      <span class="nt">&lt;string&gt;</span>xxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">      <span class="nt">&lt;string&gt;</span>xxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">      <span class="nt">&lt;string&gt;</span>xxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">  <span class="nt">&lt;/array&gt;</span>
+</span><span class="line">  ...
+</span><span class="line"><span class="nt">&lt;/dict&gt;</span>
+</span><span class="line"><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5F88;&#x660E;&#x663E;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;xml&#x683C;&#x5F0F;&#x7684;plist&#x6587;&#x4EF6;&#xFF0C;&#x91CC;&#x9762;&#x7684;&#x5185;&#x5BB9;&#x4E0D;&#x96BE;&#x7406;&#x89E3;&#xFF0C;&#x6700;&#x5173;&#x952E;&#x7684;&#x662F;&#x8FD9;&#x51E0;&#x9879;</p>
+
+<ul>
+<li><strong>DeveloperCertificates</strong>&#xFF1A;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5217;&#x8868;&#xFF0C;&#x4E00;&#x822C;&#x5305;&#x542B;&#x751F;&#x6210;&#x8FD9;&#x4E2A;Provisioning Profile&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x5F53;&#x524D;&#x5F00;&#x53D1;&#x8005;&#x8D26;&#x53F7;&#x4E0B;&#x6240;&#x6709;&#x6709;&#x6548;&#x7684;Development&#x8BC1;&#x4E66;&#xFF0C;&#x4EE5;base64&#x683C;&#x5F0F;&#x4FDD;&#x5B58;&#xFF0C;&#x4F7F;&#x7528;base64&#x89E3;&#x7801;&#x4E4B;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;DER&#x683C;&#x5F0F;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x3002;&#x901A;&#x8FC7;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;&#x8BC1;&#x4E66;&#x7684;sha1&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x524D;&#x6587;&#x4E2D;&#x65B0;&#x7533;&#x8BF7;&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x5C31;&#x5728;&#x8FD9;&#x4E2A;&#x5217;&#x8868;&#x4E2D;</li>
+</ul>
+
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span><span class="k">for </span>i in <span class="sb">`</span>seq 3<span class="sb">`</span><span class="p">;</span> <span class="k">do</span> /usr/libexec/PlistBuddy -x -c <span class="s1">&apos;Print:DeveloperCertificates:&apos;</span><span class="nv">$i</span> provision.plist <span class="p">|</span> sed -n <span class="s1">&apos;/&lt;data&gt;/,/&lt;\/data&gt;/p&apos;</span> <span class="p">|</span> sed -e <span class="s1">&apos;1d;$d&apos;</span> <span class="p">|</span> base64 -D <span class="p">|</span> shasum <span class="p">;</span> <span class="k">done</span>
+</span><span class="line"><span class="k">  </span>11447116f2c5521b057b9b67290f0fdadeadfa0a  -    <span class="c"># &lt;--- &#x65B0;&#x7533;&#x8BF7;&#x7684;&#x8BC1;&#x4E66;</span>
+</span><span class="line">  df446e4fad5aa292c7323da4cf7b8869fa5c89e7  -
+</span><span class="line">  9d31f7e8c27760ffa061598ba90ea614948224bf  -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Entitlements</strong>&#xFF1A;&#x5141;&#x8BB8;&#x4F7F;&#x7528;&#x7684;&#x6743;&#x9650;&#x5217;&#x8868;&#xFF0C;&#x5B9E;&#x9645;&#x5728;App&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x6743;&#x9650;&#x5FC5;&#x987B;&#x662F;&#x8FD9;&#x4E2A;&#x5217;&#x8868;&#x7684;&#x5B50;&#x96C6;&#xFF0C;&#x5426;&#x5219;&#x5B89;&#x88C5;&#x65F6;&#x4F1A;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x6821;&#x9A8C;&#x800C;&#x5931;&#x8D25;&#x3002;&#x5982;&#x679C;&#x66FE;&#x7ECF;&#x5F00;&#x542F;&#x8FC7;&#x67D0;&#x4E2A;&#x529F;&#x80FD;&#xFF0C;Xcode&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x4E86;Provisioning Profile&#xFF0C;&#x540E;&#x6765;&#x53C8;&#x5173;&#x95ED;&#x5B83;&#xFF0C;Xcode&#x5E76;&#x4E0D;&#x4F1A;&#x5C06;&#x5176;&#x4ECE;Provisioning Profile&#x4E2D;&#x5220;&#x53BB;&#xFF0C;&#x5982;&#x793A;&#x4F8B;&#x4E2D;&#x7684;<code>com.apple.developer.siri</code>&#x3002;</li>
+<li><strong>ProvisionedDevices</strong>&#xFF1A;&#x5141;&#x8BB8;&#x5B89;&#x88C5;&#x7684;&#x8BBE;&#x5907;&#x5217;&#x8868;&#xFF0C;&#x5982;&#x679C;&#x76EE;&#x6807;&#x8BBE;&#x5907;&#x7684;UUID&#x4E0D;&#x5728;&#x8FD9;&#x4E2A;&#x5217;&#x8868;&#x4E2D;&#xFF0C;&#x4F1A;&#x5B89;&#x88C5;&#x5931;&#x8D25;&#x3002;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E00;&#x9879;&#xFF0C;&#x666E;&#x901A;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x548C;&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x7684;&#x5F85;&#x9047;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x666E;&#x901A;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x4F7F;&#x7528;Provisioning Profile&#x7684;&#x65B9;&#x5F0F;&#x5B89;&#x88C5;App&#x5230;&#x8BBE;&#x5907;&#xFF0C;&#x53EA;&#x662F;&#x51FA;&#x4E8E;&#x6D4B;&#x8BD5;&#x548C;&#x8C03;&#x8BD5;&#x7684;&#x9700;&#x8981;&#xFF0C;&#x56E0;&#x6B64;Apple&#x53EA;&#x5141;&#x8BB8;&#x6700;&#x591A;&#x6CE8;&#x518C;100&#x53F0;&#x7528;&#x4E8E;&#x6D4B;&#x8BD5;&#x7684;&#x8BBE;&#x5907;&#xFF0C;&#x5426;&#x5219;&#x5F00;&#x53D1;&#x8005;&#x5C31;&#x53EF;&#x4EE5;&#x4EE5;&#x6D4B;&#x8BD5;&#x7684;&#x540D;&#x4E49;&#x4EFB;&#x610F;&#x4EFB;&#x610F;&#x5206;&#x53D1;&#x81EA;&#x5DF1;&#x7684;App&#x4E86;&#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x4F01;&#x4E1A;&#x7EA7;&#x5F00;&#x53D1;&#x8005;&#x6765;&#x8BF4;&#xFF0C;&#x672C;&#x8EAB;&#x5C31;&#x6709;&#x4EFB;&#x610F;&#x5B89;&#x88C5;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x5206;&#x53D1;&#x65F6;&#xFF0C;&#x8FD9;&#x4E00;&#x9879;&#x4F1A;&#x88AB;<code>ProvisionsAllDevices</code>&#x53D6;&#x4EE3;&#xFF0C;&#x4EE3;&#x8868;&#x6388;&#x6743;&#x4EFB;&#x610F;&#x8BBE;&#x5907;&#x3002;</li>
+</ul>
+
+
+<p>&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x4E2D;&#x6709;&#x4EFB;&#x4F55;&#x53D8;&#x52A8;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6BD4;&#x5982;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x6709;&#x65B0;&#x589E;&#x6216;&#x8005;&#x5931;&#x6548;&#xFF0C;&#x5728;Capabilities&#x4E2D;&#x542F;&#x7528;&#x4E86;&#x5F53;&#x524D;App&#x4ECE;&#x672A;&#x4F7F;&#x7528;&#x8FC7;&#x7684;&#x65B0;&#x529F;&#x80FD;&#xFF0C;&#x6216;&#x662F;&#x5C06;&#x65B0;&#x7684;iPhone&#x8FDE;&#x63A5;&#x5230;Xcode&#x7528;&#x4E8E;&#x6D4B;&#x8BD5;&#xFF0C;Xcode&#x90FD;&#x4F1A;&#x81EA;&#x52A8;&#x91CD;&#x65B0;&#x7533;&#x8BF7;Provisioning Profile&#x3002;</p>
+
+<p>Provisioning Profile&#x4F1A;&#x88AB;&#x5185;&#x7F6E;&#x5728;App&#x4E2D;&#xFF0C;&#x7F6E;&#x4E8E;App&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x7684;<code>embedded.mobileprovision</code>&#x3002;&#x5B89;&#x88C5;App&#x65F6;&#x5982;&#x679C;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x901A;&#x8FC7;&#xFF0C;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4F1A;&#x81EA;&#x52A8;&#x88AB;&#x62F7;&#x8D1D;&#x5230;iOS&#x8BBE;&#x5907;&#x7684;<code>/Library/MobileDevice/Provisioning\ Profiles/</code>&#x8DEF;&#x5F84;&#x4E0B;&#x3002;&#x7531;&#x4E8E;&#x8BE5;&#x6587;&#x4EF6;&#x5DF2;&#x88AB;Apple&#x5B98;&#x65B9;&#x7B7E;&#x540D;&#xFF0C;&#x7CFB;&#x7EDF;&#x53EF;&#x4EE5;&#x65E0;&#x6761;&#x4EF6;&#x4FE1;&#x4EFB;&#x5B83;&#xFF0C;&#x5E76;&#x7528;&#x5B83;&#x6765;&#x6821;&#x9A8C;App&#x7684;&#x7B7E;&#x540D;&#x3001;&#x6743;&#x9650;&#xFF0C;&#x4EE5;&#x53CA;&#x672C;&#x673A;&#x7684;UUID&#x7B49;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x6765;&#x81EA;&#x5B98;&#x65B9;&#x7684;&#x6388;&#x6743;&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x95F4;&#x63A5;&#x4FE1;&#x4EFB;&#x4E86;&#x4F7F;&#x7528;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x7B7E;&#x540D;&#x7684;App&#xFF0C;&#x8BA9;iOS&#x8BBE;&#x5907;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x975E;&#x82F9;&#x679C;&#x5B98;&#x65B9;&#x7B7E;&#x540D;&#x7684;App&#x3002;</p>
+
+<p>&#x5047;&#x5982;&#x4F60;&#x6709;&#x4E00;&#x53F0;&#x8D8A;&#x72F1;&#x7684;&#x8BBE;&#x5907;&#xFF0C;&#x67E5;&#x770B;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x4ECE;AppStore&#x4E0A;&#x4E0B;&#x8F7D;&#x4E0B;&#x6765;&#x7684;App&#xFF0C;&#x91CC;&#x9762;&#x90FD;&#x4E0D;&#x4F1A;&#x6709;embedded.mobileprovision&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x56E0;&#x4E3A;&#x7ECF;&#x8FC7;Apple&#x91CD;&#x65B0;&#x7B7E;&#x540D;&#x4EE5;&#x540E;&#xFF0C;&#x8BBE;&#x5907;&#x5C31;&#x4E0D;&#x518D;&#x9700;&#x8981;&#x5B83;&#x4E86;&#x3002;</p>
+
+<h2>0x05 CodeSign</h2>
+
+<p>&#x4E07;&#x4E8B;&#x5177;&#x5907;&#xFF0C;&#x53EA;&#x6B20;&#x4E1C;&#x98CE;&#xFF0C;&#x5DF2;&#x7ECF;&#x5177;&#x5907;&#x4E86;&#x7B7E;&#x540D;&#x6240;&#x9700;&#x7684;&#x6240;&#x6709;&#x6761;&#x4EF6;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x53EF;&#x4EE5;&#x5F00;&#x59CB;&#x7814;&#x7A76;&#x7B7E;&#x540D;&#x7684;&#x5177;&#x4F53;&#x8FC7;&#x7A0B;&#x4E86;&#x3002;</p>
+
+<p>&#x5728;&#x7F16;&#x8BD1;iOS App&#x65F6;&#xFF0C;Xcode&#x5728;&#x7F16;&#x8BD1;&#x7684;&#x6253;&#x5305;&#x7684;&#x6D41;&#x7A0B;&#x4E2D;&#x4F1A;&#x81EA;&#x52A8;&#x8FDB;&#x884C;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#xFF0C; &#x53EF;&#x4EE5;&#x5728;&#x7F16;&#x8BD1;&#x65E5;&#x5FD7;&#x754C;&#x9762;&#x627E;&#x5230;&#x4E00;&#x4E2A;<code>Sign</code>&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x5185;&#x90E8;&#x662F;&#x8C03;&#x7528;&#x4E86;<code>codesign</code>&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x5BF9;app&#x8FDB;&#x884C;&#x7B7E;&#x540D;</p>
+
+<p><img src="http://xelz.info/assets/2019/sign1.png" alt="codesign"></p>
+
+<p>codesign&#x6709;&#x51E0;&#x4E2A;&#x5173;&#x952E;&#x53C2;&#x6570;</p>
+
+<ul>
+<li><code>--sign sign_identity</code> &#x6307;&#x5B9A;&#x7B7E;&#x540D;&#x6240;&#x7528;&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x8BC1;&#x4E66;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x6BD4;&#x5982;<code>&quot;iPhone Developer: xxx (xxx)&quot;</code>&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5199;&#x8BC1;&#x4E66;&#x6587;&#x4EF6;&#x7684;sha1&#x503C;&#xFF0C;xcode&#x4E2D;&#x5C31;&#x662F;&#x76F4;&#x63A5;&#x6307;&#x5B9A;sha1&#x503C;&#x7684;&#x3002;&#x901A;&#x8FC7;&#x89C2;&#x5BDF;&#x56FE;&#x4E2D;&#x7684;sha1&#x503C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;xcode&#x81EA;&#x52A8;&#x9009;&#x62E9;&#x4E86;&#x521A;&#x7533;&#x8BF7;&#x7684;&#x6700;&#x65B0;&#x8BC1;&#x4E66;&#x3002;</li>
+<li><code>--entitlements entitlements_file</code> &#x6307;&#x5B9A;&#x7B7E;&#x540D;&#x6240;&#x9700;&#x8981;&#x7684;entitlements&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;entitlements&#x6587;&#x4EF6;&#x8DDF;&#x524D;&#x9762;&#x770B;&#x5230;&#x7684;&#x5E76;&#x4E0D;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x662F;&#x57FA;&#x4E8E;&#x539F;&#x6709;entitlements&#x6587;&#x4EF6;&#xFF0C;&#x8865;&#x5145;&#x4E0A;&#x7F3A;&#x7701;&#x6743;&#x9650;&#x540E;&#x751F;&#x6210;&#x7684;&#x4E34;&#x65F6;&#x6587;&#x4EF6;</li>
+</ul>
+
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span class="line"><span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+</span><span class="line"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>application-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;string&gt;</span>xxxxxxxxxx.test.CodeSign<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>com.apple.developer.team-identifier<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;string&gt;</span>xxxxxxxxxx<span class="nt">&lt;/string&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>get-task-allow<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;true/&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>inter-app-audio<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;true/&gt;</span>
+</span><span class="line"><span class="nt">&lt;/dict&gt;</span>
+</span><span class="line"><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5982;&#x679C;&#x60F3;&#x5BF9;&#x6BD4;&#x7B7E;&#x540D;&#x524D;&#x540E;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;<code>Build Settings</code>&#x4E2D;&#x627E;&#x5230;<code>Code Signing Identity</code>&#xFF0C;&#x9009;&#x62E9;<code>Other</code>&#x5E76;&#x5C06;&#x5185;&#x5BB9;&#x6E05;&#x9664;(&#x5373;&#x8BBE;&#x7F6E;&#x4E3A;&#x7A7A;)&#xFF0C;&#x5373;&#x53EF;&#x8DF3;&#x8FC7;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x3002;&#x5206;&#x522B;&#x7F16;&#x8BD1;&#x4E00;&#x4E2A;&#x4E0D;&#x7B7E;&#x540D;&#x7684;&#x7248;&#x672C;&#x548C;&#x7B7E;&#x540D;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x5BF9;&#x6BD4;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;</p>
+
+<p><img src="http://xelz.info/assets/2019/sign2.png" alt="compare"></p>
+
+<ul>
+<li>&#x7B7E;&#x540D;&#x8FC7;&#x7684;app&#x4E2D;&#x591A;&#x4E86;&#x4E00;&#x4E2A;<code>_CodeSignature</code>&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x91CC;&#x9762;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;<code>CodeResources</code></li>
+<li>&#x8FD8;&#x591A;&#x4E86;&#x4E00;&#x4E2A;<code>embedded.mobileprovision</code> &#x6587;&#x4EF6;</li>
+<li>&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x5B58;&#x5728;&#x5DEE;&#x5F02;&#xFF0C;&#x5E76;&#x4E14;&#x7B7E;&#x540D;&#x540E;&#x4F53;&#x79EF;&#x53D8;&#x5927;&#x4E86;</li>
+</ul>
+
+
+<p>&#x5176;&#x4E2D;<code>embedded.mobileprovision</code>&#x5C31;&#x662F;&#x524D;&#x6587;&#x63D0;&#x5230;&#x7684;Provisioning Profile&#x6587;&#x4EF6;&#xFF0C;&#x5B83;&#x76F4;&#x63A5;&#x88AB;&#x62F7;&#x8D1D;&#x5230;&#x4E86;app&#x7684;&#x6839;&#x76EE;&#x5F55;&#x5E76;&#x91CD;&#x547D;&#x540D;&#xFF0C;&#x5728;&#x6B64;&#x4E0D;&#x518D;&#x8D58;&#x8FF0;&#xFF0C;&#x91CD;&#x70B9;&#x7814;&#x7A76;&#x4E0B;&#x53E6;&#x5916;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x70B9;&#x3002;</p>
+
+<h4>_CodeSignature/CodeResources</h4>
+
+<p>&#x9996;&#x5148;&#x662F;<code>_CodeSingature/CodeResources</code>&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;plist&#x6587;&#x4EF6;&#xFF0C;&#x91CC;&#x9762;&#x4FDD;&#x5B58;&#x4E86;app&#x4E2D;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#xFF08;&#x9664;&#x4E86;App&#x7684;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#xFF09;&#x7684;<code>&#x660E;&#x6587;&#x54C8;&#x5E0C;&#x503C;</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+</pre></td><td class="code"><pre><code class="xml"><span class="line"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>files<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;dict&gt;</span>
+</span><span class="line">        <span class="nt">&lt;key&gt;</span>Base.lproj/Main.storyboardc/Info.plist<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">        <span class="nt">&lt;data&gt;</span>
+</span><span class="line">            MDrKFvFWroTb0+KEbQShBcoBvo4=
+</span><span class="line">        <span class="nt">&lt;/data&gt;</span>
+</span><span class="line">      ...
+</span><span class="line">  <span class="nt">&lt;/dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>files2<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  <span class="nt">&lt;dict&gt;</span>
+</span><span class="line">        <span class="nt">&lt;key&gt;</span>Base.lproj/Main.storyboardc/Info.plist<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">        <span class="nt">&lt;dict&gt;</span>
+</span><span class="line">            <span class="nt">&lt;key&gt;</span>hash<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">            <span class="nt">&lt;data&gt;</span>
+</span><span class="line">                MDrKFvFWroTb0+KEbQShBcoBvo4=
+</span><span class="line">            <span class="nt">&lt;/data&gt;</span>
+</span><span class="line">            <span class="nt">&lt;key&gt;</span>hash2<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">            <span class="nt">&lt;data&gt;</span>
+</span><span class="line">                PpvapAjR62rl6Ym4E6hkTgpKmBICxTaQXeUqcpHmmqQ=
+</span><span class="line">            <span class="nt">&lt;/data&gt;</span>
+</span><span class="line">        <span class="nt">&lt;/dict&gt;</span>
+</span><span class="line">      ...
+</span><span class="line">  <span class="nt">&lt;/dict&gt;</span>
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>rules<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  ...
+</span><span class="line">  <span class="nt">&lt;key&gt;</span>rules2<span class="nt">&lt;/key&gt;</span>
+</span><span class="line">  ...
+</span><span class="line"><span class="nt">&lt;/dict&gt;</span>
+</span><span class="line"><span class="nt">&lt;/plist&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>files</code>&#x548C;<code>files2</code>&#x5206;&#x522B;&#x662F;&#x65E7;&#x7248;&#x672C;&#x548C;&#x65B0;&#x7248;&#x672C;&#x7684;&#x6587;&#x4EF6;&#x5217;&#x8868;&#xFF0C;&#x800C;<code>rules</code>&#x4E0E;<code>rules2</code>&#x5206;&#x522B;&#x662F;&#x4E0E;&#x4E4B;&#x5BF9;&#x5E94;&#x7684;&#x89C4;&#x5219;&#x8BF4;&#x660E;&#xFF0C;&#x91CC;&#x9762;&#x63CF;&#x8FF0;&#x4E86;&#x8BA1;&#x7B97;hash&#x65F6;&#x9700;&#x8981;&#x88AB;&#x6392;&#x9664;&#x7684;&#x6587;&#x4EF6;&#x4EE5;&#x53CA;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x6743;&#x91CD;&#x3002;</p>
+
+<p><code>files</code>&#x4E2D;&#x4FDD;&#x5B58;&#x7684;&#x662F;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x7684;sha1&#x503C;&#xFF0C;&#x800C;<code>files2</code>&#x4E2D;&#x540C;&#x65F6;&#x4FDD;&#x5B58;&#x4E86;sha1&#x548C;sha256&#xFF0C;&#x56E0;&#x4E3A;sha1&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x786C;&#x4EF6;&#x9AD8;&#x5EA6;&#x53D1;&#x8FBE;&#x7684;&#x4ECA;&#x5929;&#xFF0C;&#x5DF2;&#x7ECF;&#x76F8;&#x5BF9;&#x6CA1;&#x6709;&#x90A3;&#x4E48;&#x5B89;&#x5168;&#x4E86;&#xFF0C;&#x56E0;&#x6B64;&#x6700;&#x65B0;&#x7684;&#x7B7E;&#x540D;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x5F15;&#x5165;&#x4E86;sha256&#x3002;&#x6CE8;&#x610F;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;hash&#x503C;&#x90FD;&#x662F;base64&#x7F16;&#x7801;&#x7684;&#x660E;&#x6587;&#xFF0C;&#x6709;&#x4E9B;&#x6587;&#x7AE0;&#x8BF4;&#x8FD9;&#x4E9B;&#x503C;&#x662F;&#x4F7F;&#x7528;&#x79C1;&#x94A5;&#x52A0;&#x5BC6;&#x7684;&#x54C8;&#x5E0C;&#xFF0C;&#x8FD9;&#x662F;&#x5F88;&#x4E0D;&#x8D1F;&#x8D23;&#x4EFB;&#x7684;&#x9519;&#x8BEF;&#x8BF4;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x51E0;&#x6761;&#x7B80;&#x5355;&#x7684;&#x547D;&#x4EE4;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>cat Base.lproj/Main.storyboardc/Info.plist <span class="p">|</span> shasum -a 1
+</span><span class="line">303aca16f156ae84dbd3e2846d04a105ca01be8e  -
+</span><span class="line"><span class="nv">$ </span><span class="nb">echo</span> -n <span class="s1">&apos;MDrKFvFWroTb0+KEbQShBcoBvo4=&apos;</span> <span class="p">|</span> base64 -D <span class="p">|</span> hexdump
+</span><span class="line">0000000 30 3a ca 16 f1 56 ae 84 db d3 e2 84 6d 04 a1 05
+</span><span class="line">0000010 ca 01 be 8e
+</span><span class="line"><span class="nv">$ </span><span class="c"># =========== &#x5206;&#x5272;&#x7EBF; ===========</span>
+</span><span class="line"><span class="nv">$ </span>cat Base.lproj/Main.storyboardc/Info.plist <span class="p">|</span> shasum -a 256
+</span><span class="line">3e9bdaa408d1eb6ae5e989b813a8644e0a4a981202c536905de52a7291e69aa4  -
+</span><span class="line"><span class="nv">$ </span><span class="nb">echo</span> -n <span class="s1">&apos;PpvapAjR62rl6Ym4E6hkTgpKmBICxTaQXeUqcpHmmqQ=&apos;</span> <span class="p">|</span> base64 -D <span class="p">|</span> hexdump
+</span><span class="line">0000000 3e 9b da a4 08 d1 eb 6a e5 e9 89 b8 13 a8 64 4e
+</span><span class="line">0000010 0a 4a 98 12 02 c5 36 90 5d e5 2a 72 91 e6 9a a4
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>_CodeSignature/CodeResources</code>&#x6587;&#x4EF6;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#x4FDD;&#x5B58;&#x7B7E;&#x540D;&#x65F6;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x54C8;&#x5E0C;&#x503C;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x90FD;&#x8FDB;&#x884C;&#x52A0;&#x5BC6;&#xFF0C;&#x56E0;&#x4E3A;&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7684;&#x6027;&#x80FD;&#x662F;&#x6BD4;&#x8F83;&#x5DEE;&#x7684;&#xFF0C;&#x5168;&#x90E8;&#x90FD;&#x52A0;&#x5BC6;&#x53EA;&#x4F1A;&#x62D6;&#x6162;&#x7B7E;&#x540D;&#x548C;&#x6821;&#x9A8C;&#x7684;&#x901F;&#x5EA6;&#x3002;&#x5176;&#x5B9E;&#x53EA;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x6CA1;&#x6709;&#x88AB;&#x7BE1;&#x6539;&#xFF0C;&#x81EA;&#x7136;&#x4E5F;&#x5C31;&#x53EF;&#x4EE5;&#x786E;&#x4FDD;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x90FD;&#x662F;&#x7B7E;&#x540D;&#x65F6;&#x7684;&#x539F;&#x59CB;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x5728;&#x540E;&#x7EED;&#x7684;&#x5185;&#x5BB9;&#x4E2D;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x9A8C;&#x8BC1;&#x3002;</p>
+
+<h4>LC_CODE_SIGNATURE</h4>
+
+<p>&#x4F7F;&#x7528;<code>otool -l</code>&#x5BF9;&#x6BD4;&#x7B7E;&#x540D;&#x524D;&#x540E;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x7B7E;&#x540D;&#x540E;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;<code>LC_CODE_SIGNATURE</code>&#x7684;Load Command</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>otool -l TestCodeSign <span class="p">|</span> tail -n 5
+</span><span class="line">Load <span class="nb">command </span>21
+</span><span class="line">      cmd LC_CODE_SIGNATURE
+</span><span class="line">  cmdsize 16
+</span><span class="line">  dataoff 54016
+</span><span class="line"> datasize 19888
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MachOView&#x4E2D;&#x67E5;&#x770B;&#x5982;&#x4E0B;</p>
+
+<p><img src="http://xelz.info/assets/2019/codesign1.png" alt=""></p>
+
+<p>&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x662F;&#x4E00;&#x6BB5;&#x7EAF;&#x4E8C;&#x8FDB;&#x5236;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;<a href="https://opensource.apple.com/source/Security/Security-55471/sec/Security/Tool/codesign.c.auto.html">https://opensource.apple.com/source/Security/Security-55471/sec/Security/Tool/codesign.c.auto.html</a> &#x770B;&#x5230;&#x4E00;&#x4E9B;&#x7ED3;&#x6784;&#x5B9A;&#x4E49;&#xFF0C;&#x7ED3;&#x5408;&#x6570;&#x636E;&#x5B9A;&#x4E49;&#x6765;&#x5206;&#x6790;</p>
+
+<p><img src="http://xelz.info/assets/2019/codesign2.png" alt=""></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="c1">// &#x7EA2;&#x8272;&#x90E8;&#x5206;&#x2460;  Offset: 0xD300 = 54016 LC_CODE_SIGNATURE-&gt;dataoff</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__SuperBlob</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">magic</span><span class="p">;</span>   <span class="cm">/* 0xFADE0CC0 = CSMAGIC_EMBEDDED_SIGNATURE */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>  <span class="cm">/* 0x1A1E -&gt; 6686 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">count</span><span class="p">;</span>   <span class="cm">/* 5 */</span>
+</span><span class="line">    <span class="n">CS_BlobIndex</span> <span class="n">index</span><span class="p">[];</span>  <span class="cm">/* &#x84DD;&#x8272;&#x90E8;&#x5206; */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="c1">// &#x84DD;&#x8272;&#x90E8;&#x5206;&#x2461;  5&#x4E2A;BlobIndex</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__BlobIndex</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">type</span><span class="p">;</span>    <span class="cm">/* 0x0 -&gt; Code Directory */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>  <span class="cm">/* 0x34 -&gt; 0xD300 + 0x34 = 0xD334 &#x6307;&#x5411;&#x7EFF;&#x8272;&#x2462;*/</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__BlobIndex</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">type</span><span class="p">;</span>    <span class="cm">/* 0x2 -&gt; Requirements */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>  <span class="cm">/* 0x221 -&gt; 0xD300 + 0x221 = 0xD521 */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__BlobIndex</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">type</span><span class="p">;</span>    <span class="cm">/* 0x5 -&gt; Entitlements */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>  <span class="cm">/* 0x2CD -&gt; 0xD300 + 0x2CD = 0xD5CD */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__BlobIndex</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">type</span><span class="p">;</span>    <span class="cm">/* 0x1000 -&gt; Code Directory */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>  <span class="cm">/* 0x475 -&gt; 0xD300 + 0x475 = 0xD775 */</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__BlobIndex</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">type</span><span class="p">;</span>    <span class="cm">/* 0x10000 -&gt; CMS Signature */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">;</span>  <span class="cm">/* 0x746 -&gt; 0xD300 + 0x746 = 0xDA46 */</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x8FD9;&#x90E8;&#x5206;&#x662F;&#x5178;&#x578B;&#x7684;&#x6570;&#x636E;&#x5934;&#x7ED3;&#x6784;&#xFF0C;&#x58F0;&#x660E;&#x4E86;5&#x4E2A;Blob&#xFF0C;&#x4EE5;&#x53CA;&#x6BCF;&#x4E2A;Blob&#x7684;&#x7C7B;&#x578B;&#x548C;&#x76F8;&#x5BF9;&#x7B7E;&#x540D;&#x5934;&#x90E8;&#x7684;&#x504F;&#x79FB;&#x91CF;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x628A;&#x6BCF;&#x4E2A;&#x90E8;&#x5206;&#x5206;&#x522B;&#x63D0;&#x53D6;&#x51FA;&#x6765;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x3002;</p>
+
+<h4>CodeDirectory</h4>
+
+<p>CodeDirectory&#x662F;&#x7B7E;&#x540D;&#x6570;&#x636E;&#x4E2D;&#x6700;&#x7EC8;&#x8981;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x76F4;&#x8BD1;&#x8FC7;&#x6765;&#x5C31;&#x662F;&#x4EE3;&#x7801;&#x76EE;&#x5F55;&#xFF0C;&#x5176;&#x5B9E;&#x91CC;&#x9762;&#x662F;&#x6574;&#x4E2A;MachO&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x54C8;&#x5E0C;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x6B21;&#x6027;&#x5BF9;&#x6574;&#x4E2A;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#xFF0C;&#x800C;&#x662F;&#x5C06;MachO&#x6587;&#x4EF6;&#x6309;&#x7167;pageSize(&#x4E00;&#x822C;&#x662F;4k&#x4E5F;&#x5C31;&#x662F;4096&#x5B57;&#x8282;)&#x8FDB;&#x884C;&#x5206;&#x9875;&#xFF0C;&#x6BCF;&#x4E00;&#x9875;&#x5355;&#x72EC;&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;&#xFF0C;&#x5E76;&#x6309;&#x7167;&#x987A;&#x5E8F;&#x4FDD;&#x5B58;&#x4E0B;&#x6765;&#xFF0C;&#x5C31;&#x50CF;&#x76EE;&#x5F55;&#x4E00;&#x6837;&#x3002;</p>
+
+<p>&#x7EC6;&#x5FC3;&#x7684;&#x540C;&#x5B66;&#x4F1A;&#x53D1;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x6570;&#x636E;&#x4E2D;&#x51FA;&#x73B0;&#x4E86;&#x4E24;&#x4E2A;CodeDirectory&#xFF0C;type&#x5206;&#x522B;&#x662F;<code>0x0</code>&#x548C;<code>0x1000</code>&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x5386;&#x53F2;&#x9057;&#x7559;&#x95EE;&#x9898;&#xFF0C;<code>0x0</code>&#x5BF9;&#x5E94;&#x7684;&#x662F;&#x65E7;&#x7248;&#x672C;&#x7684;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#xFF0C;&#x4F7F;&#x7528;sha1&#x7B97;&#x6CD5;&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#x503C;&#x7684;&#x8BA1;&#x7B97;&#xFF0C;&#x800C;<code>0x1000</code>&#x662F;&#x540E;&#x6765;&#x5F15;&#x5165;&#x7684;&#xFF0C;&#x91C7;&#x7528;sha256&#x4F5C;&#x4E3A;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#xFF0C;&#x9664;&#x4E86;&#x7B97;&#x6CD5;&#x548C;&#x54C8;&#x5E0C;&#x7684;&#x957F;&#x5EA6;&#x4E0D;&#x540C;&#x4E4B;&#x5916;&#xFF0C;&#x5176;&#x4ED6;&#x5185;&#x5BB9;&#x57FA;&#x672C;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;&#x53D6;&#x7B2C;&#x4E00;&#x4E2A;&#x8FDB;&#x884C;&#x5206;&#x6790;&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="c1">// &#x7EFF;&#x8272;&#x90E8;&#x5206;&#x2462; Offset: 0xD334</span>
+</span><span class="line"><span class="k">struct</span> <span class="n">__CodeDirectory</span> <span class="p">{</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">magic</span><span class="p">;</span>         <span class="cm">/* 0xFADE0C02 -&gt; CSMAGIC_CODEDIRECTORY */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>        <span class="cm">/* 0x1ED -&gt; 493 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>       <span class="cm">/* 0x00020400 -&gt; v2.4.0 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">flags</span><span class="p">;</span>         <span class="cm">/* 0 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">hashOffset</span><span class="p">;</span>    <span class="cm">/* 0xD5 -&gt; 0xD334 + 0xD5 = 0xD409 &#x6307;&#x5411;&#x2464;*/</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">identOffset</span><span class="p">;</span>   <span class="cm">/* 0x58 -&gt; 0xD334 + 0x58 = 0xD38B &#x6307;&#x5411;&#x2463;*/</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">nSpecialSlots</span><span class="p">;</span> <span class="cm">/* 5 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">nCodeSlots</span><span class="p">;</span>    <span class="cm">/* 0xE -&gt; 14 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">codeLimit</span><span class="p">;</span>     <span class="cm">/* 0xD300 */</span>
+</span><span class="line">    <span class="kt">uint8_t</span> <span class="n">hashSize</span><span class="p">;</span>       <span class="cm">/* 0x14 -&gt; 20bytes -&gt; 160bits (sha1) */</span>
+</span><span class="line">    <span class="kt">uint8_t</span> <span class="n">hashType</span><span class="p">;</span>       <span class="cm">/* 0x01 (sha1) */</span>
+</span><span class="line">    <span class="kt">uint8_t</span> <span class="n">spare1</span><span class="p">;</span>         <span class="cm">/* unused (must be zero) */</span>
+</span><span class="line">    <span class="kt">uint8_t</span> <span class="n">pageSize</span><span class="p">;</span>       <span class="cm">/* 0x0C -&gt; 2 ^ 0x0C = 0x1000 = 4096 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">spare2</span><span class="p">;</span>        <span class="cm">/* unused (must be zero) */</span>
+</span><span class="line">    <span class="cm">/* followed by dynamic content as located by offset fields above */</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>hashOffset&#x5C31;&#x662F;&#x201D;&#x76EE;&#x5F55;&#x201D;&#x7B2C;&#x4E00;&#x9875;&#x7684;&#x504F;&#x79FB;&#xFF0C;&#x4ECE;&#x8FD9;&#x4E2A;&#x4F4D;&#x7F6E;(0xD409)&#x53EF;&#x4EE5;&#x63D0;&#x53D6;&#x5230;&#x4E00;&#x4E32;20&#x5B57;&#x8282;&#x7684;sha1&#x503C;(&#x56FE;&#x4E2D;&#x9EC4;&#x8272;&#x2464;):</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="mi">9</span><span class="n">D452342F9ED06189E4F099BCA7CB68D6432F775</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x8FD9;&#x4E2A;&#x503C;&#x4EE3;&#x8868;&#x7684;&#x5C31;&#x662F;&#x8BE5;&#x6587;&#x4EF6;&#x7B2C;&#x4E00;&#x9875;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x8BA1;&#x7B97;&#x6587;&#x4EF6;&#x524D;4096&#x5B57;&#x8282;&#x7684;sha1&#x53EF;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>dd <span class="nv">bs</span><span class="o">=</span>1 <span class="nv">skip</span><span class="o">=</span>0 <span class="nv">count</span><span class="o">=</span>0x1000 <span class="k">if</span><span class="o">=</span>TestCodeSign 2&gt;/dev/null <span class="p">|</span> shasum -a 1
+</span><span class="line">9d452342f9ed06189e4f099bca7cb68d6432f775  -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x800C;&#x7D27;&#x63A5;&#x7740;&#x7684;20&#x4E2A;&#x5B57;&#x8282;&#x5C31;&#x662F;&#x7B2C;&#x4E8C;&#x9875;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x4EE5;&#x6B64;&#x7C7B;&#x63A8;&#xFF0C;&#x76F4;&#x5230;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x540E;&#x4E00;&#x9875;&#x3002;</p>
+
+<p>&#x7531;&#x4E8E;&#x6587;&#x4EF6;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;pageSize&#x7684;&#x6574;&#x6570;&#x500D;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x9875;&#x5F80;&#x5F80;&#x4E0D;&#x8DB3;&#x201D;&#x4E00;&#x6574;&#x9875;&#x201D;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x5B57;&#x6BB5;<code>codeLimit</code>&#x8BB0;&#x5F55;&#x6587;&#x4EF6;&#x7684;&#x5B9E;&#x9645;&#x5927;&#x5C0F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x9700;&#x8981;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x7684;&#x5B9E;&#x9645;&#x5927;&#x5C0F;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x503C;&#x8BA1;&#x7B97;&#x51FA;&#x6700;&#x540E;&#x4E00;&#x9875;&#x7684;&#x5B9E;&#x9645;&#x5927;&#x5C0F;&#xFF0C;&#x5E76;&#x63D0;&#x53D6;&#x76F8;&#x5E94;&#x6570;&#x636E;&#x8BA1;&#x7B97;&#x6700;&#x540E;&#x4E00;&#x9875;&#x7684;&#x7B7E;&#x540D;&#x3002;&#x4F8B;&#x5B50;&#x4E2D;<code>codeLimit=0xD300</code>&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x5F97;&#x51FA;&#x6700;&#x540E;&#x4E00;&#x9875;&#x5927;&#x5C0F;&#x4E3A;<code>0x300</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>dd <span class="nv">bs</span><span class="o">=</span>1 <span class="nv">skip</span><span class="o">=</span>0xD000 <span class="nv">count</span><span class="o">=</span>0x300 <span class="k">if</span><span class="o">=</span>TestCodeSign 2&gt;/dev/null <span class="p">|</span> shasum -a 1
+</span><span class="line">9dc960fc86f803c1fa100f2a1145cf7cbe58e803  -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x8BA1;&#x7B97;&#x51FA;&#x6700;&#x540E;&#x4E00;&#x9875;&#x7684;sha1&#x503C;&#x4E0E;CodeDirectory&#x4E2D;(&#x56FE;&#x4E2D;&#x9EC4;&#x8272;&#x2465;)&#x4E00;&#x81F4;&#x3002;</p>
+
+<p>nCodeSlots&#x8BB0;&#x5F55;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x603B;&#x9875;&#x6570;14&#xFF0C;&#x53EF;&#x901A;&#x8FC7;<code>0xD300 / 0x1000 = 13.1875</code>&#x5F97;&#x51FA;&#x786E;&#x5B9E;&#x662F;14&#x9875;&#x3002;</p>
+
+<p>&#x7EC6;&#x5FC3;&#x7684;&#x670B;&#x53CB;&#x5DF2;&#x7ECF;&#x53D1;&#x73B0;&#x4E86;&#xFF0C;&#x2463; identifier&#x548C; &#x2464; hashSlots &#x4E4B;&#x95F4;&#x6709;&#x4E00;&#x6BB5;&#x591A;&#x51FA;&#x7684;&#x6570;&#x636E;&#x2466;&#xFF0C;&#x5E76;&#x4E14;CodeDirectory&#x4E2D;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x5947;&#x602A;&#x7684;&#x503C;<code>nSpecialSlots=5</code>&#xFF0C;&#x6574;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x90FD;&#x5DF2;&#x7ECF;&#x5305;&#x542B;&#x5728;&#x2464;&#x548C;&#x2465;&#x4E4B;&#x95F4;&#x4E86;&#xFF0C;&#x8FD9;&#x591A;&#x51FA;&#x6765;&#x7684;&#x6570;&#x636E;&#x662F;&#x600E;&#x4E48;&#x56DE;&#x4E8B;&#x5462;&#xFF1F;</p>
+
+<p>&#x539F;&#x6765;&#xFF0C;&#x5728;&#x7B2C;&#x4E00;&#x9875;&#x7684;&#x524D;&#x9762;&#xFF0C;&#x8FD8;&#x6709;5&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x8D1F;&#x6570;&#x9875;&#xFF0C;&#x7528;&#x6765;&#x4FDD;&#x5B58;&#x8FD9;&#x4E9B;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x3002;</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> &#x5E8F;&#x53F7; </th>
+<th>                       &#x5BF9;&#x5E94;&#x5185;&#x5BB9;                   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> -1   </td>
+<td> App&#x6839;&#x76EE;&#x5F55;&#x7684;Info.plist&#x6587;&#x4EF6;                             </td>
+</tr>
+<tr>
+<td></td>
+<td> -2   </td>
+<td> Requirements(&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x7B2C;&#x4E8C;&#x90E8;&#x5206;)                      </td>
+</tr>
+<tr>
+<td></td>
+<td> -3   </td>
+<td> Resource Directory (_CodeSignature/CodeResources&#x6587;&#x4EF6;) </td>
+</tr>
+<tr>
+<td></td>
+<td> -4   </td>
+<td> &#x6682;&#x672A;&#x4F7F;&#x7528;                                              </td>
+</tr>
+<tr>
+<td></td>
+<td> -5   </td>
+<td> Entitlements (&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x7B2C;&#x4E09;&#x90E8;&#x5206;)                     </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>&#x540C;&#x6837;&#x5730;&#xFF0C;&#x51FA;&#x4E8E;&#x6027;&#x80FD;&#x8003;&#x8651;&#xFF0C;&#x8FD9;&#x4E9B;&#x54C8;&#x5E0C;&#x503C;&#x5E76;&#x672A;&#x7ECF;&#x8FC7;&#x4EFB;&#x4F55;&#x52A0;&#x5BC6;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x8FD9;&#x4E9B;&#x54C8;&#x5E0C;&#x503C;&#x672A;&#x7ECF;&#x7BE1;&#x6539;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8BF4;&#x660E;&#x4EE3;&#x7801;&#x672C;&#x8EAB;&#x6CA1;&#x6709;&#x88AB;&#x7BE1;&#x6539;&#x3002;</p>
+
+<h4>Requirements</h4>
+
+<p>&#x7528;&#x4E8E;&#x6307;&#x5B9A;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x65F6;&#x7684;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x7684;&#x7EA6;&#x675F;&#xFF0C;&#x7B7E;&#x540D;&#x65F6;codesign&#x547D;&#x4EE4;&#x4F1A;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x8FD9;&#x90E8;&#x5206;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x76EE;&#x524D;&#x5E76;&#x6CA1;&#x6709;&#x770B;&#x5230;&#x4EC0;&#x4E48;&#x5730;&#x65B9;&#x4F7F;&#x7528;&#x4E86;&#x5B83;&#xFF0C;&#x5C31;&#x4E0D;&#x6DF1;&#x5165;&#x5206;&#x6790;&#x4E86;&#xFF0C;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x6709;&#x5BF9;&#x8FD9;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x7684;&#x8BE6;&#x7EC6;&#x63CF;&#x8FF0;</p>
+
+<ul>
+<li><a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html">Code Signing Tasks</a></li>
+<li><a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/RequirementLang/RequirementLang.html#//apple_ref/doc/uid/TP40005929-CH5-SW1">Code Signing Requirement Language</a></li>
+</ul>
+
+
+<h4>Entitlements</h4>
+
+<p><img src="http://xelz.info/assets/2019/codesign3.png" alt=""></p>
+
+<p>&#x901A;&#x8FC7;&#x5934;&#x90E8;&#x7684;&#x504F;&#x79FB;&#x5B9A;&#x4F4D;&#x5230;&#x6570;&#x636E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x663E;&#x7136;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;Blob&#x7ED3;&#x6784;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="k">struct</span> <span class="n">__Blob</span> <span class="p">{</span>       <span class="cm">/* Address: 0xD5CD */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">magic</span><span class="p">;</span>   <span class="cm">/* 0xFADE7171 -&gt; CSMAGIC_ENTITLEMENT */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>  <span class="cm">/* 0x1A8 -&gt; 424 */</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x4E4B;&#x524D;&#x7531;Xcode&#x751F;&#x6210;&#x7684;Entitlements&#x6587;&#x4EF6;&#x88AB;&#x6574;&#x4E2A;&#x5D4C;&#x5165;&#x5230;&#x7B7E;&#x540D;&#x6570;&#x636E;&#x4E2D;&#x3002;</p>
+
+<h4>CMS Signature</h4>
+
+<p>CMS&#x662F;<code>Cryptographic Message Syntax</code>&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x6807;&#x51C6;&#x7684;&#x7B7E;&#x540D;&#x683C;&#x5F0F;&#xFF0C;&#x7531;<a href="https://www.ietf.org/rfc/rfc3852.txt">RFC3852</a>&#x5B9A;&#x4E49;&#x3002;&#x8FD8;&#x8BB0;&#x5F97;Provisioning Profile&#x7684;&#x7B7E;&#x540D;&#x5417;&#xFF1F;&#x5B83;&#x4EEC;&#x662F;&#x76F8;&#x540C;&#x7684;&#x683C;&#x5F0F;&#x3002;CMS&#x683C;&#x5F0F;&#x7684;&#x7B7E;&#x540D;&#x4E2D;&#xFF0C;&#x9664;&#x4E86;&#x5305;&#x542B;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x63A8;&#x5BFC;&#x51FA;&#x7684;&#x52A0;&#x5BC6;&#x54C8;&#x5E0C;&#x548C;&#x8BC1;&#x4E66;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x627F;&#x8F7D;&#x4E86;&#x4E00;&#x4E9B;&#x5176;&#x4ED6;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x7531;&#x4E8E;&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x683C;&#x5F0F;&#xFF0C;&#x4E0D;&#x65B9;&#x4FBF;&#x5206;&#x6790;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x5185;&#x5BB9;&#x4ECE;MachO&#x6587;&#x4EF6;&#x4E2D;&#x5265;&#x79BB;&#x51FA;&#x6765;&#xFF0C;&#x518D;&#x627E;&#x5408;&#x9002;&#x7684;&#x5DE5;&#x5177;&#x8FDB;&#x884C;&#x89E3;&#x6790;&#x3002;&#x6839;&#x636E;&#x504F;&#x79FB;&#x91CF;&#x5B9A;&#x4F4D;&#x5230;CMS Signature&#x7684;&#x4F4D;&#x7F6E;<code>0xDA46</code></p>
+
+<p><img src="http://xelz.info/assets/2019/codesign4.png" alt=""></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="k">struct</span> <span class="n">__Blob</span> <span class="p">{</span>       <span class="cm">/* Address: 0xDA46 */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">magic</span><span class="p">;</span>   <span class="cm">/* 0xFADE0B01 -&gt; CSMAGIC_BLOBWRAPPER */</span>
+</span><span class="line">    <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>  <span class="cm">/* 0x12D8 -&gt; 4824 */</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x9664;&#x53BB;&#x5934;&#x90E8;&#x7684;8&#x4E2A;&#x5B57;&#x8282;&#xFF0C;&#x628A;&#x5BF9;&#x5E94;&#x7684;&#x5185;&#x5BB9;&#x63D0;&#x53D6;&#x51FA;&#x6765;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>dd <span class="nv">bs</span><span class="o">=</span>1 <span class="nv">skip</span><span class="o">=</span>0xDA4E <span class="nv">count</span><span class="o">=</span>0x12D0 <span class="k">if</span><span class="o">=</span>TestCodeSign <span class="nv">of</span><span class="o">=</span>cms_signature
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x53EF;&#x4EE5;&#x5C06;&#x5BFC;&#x51FA;&#x7684;cms_signature&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x5230;<a href="http://lapo.it/asn1js/">&#x5728;&#x7EBF;ASN.1&#x89E3;&#x6790;&#x5DE5;&#x5177;</a>(&#x652F;&#x6301;CMS&#x683C;&#x5F0F;&#x89E3;&#x6790;)&#x8FDB;&#x884C;&#x5206;&#x6790;</p>
+
+<p><img src="http://xelz.info/assets/2019/codesign5.png" alt=""></p>
+
+<p>&#x6587;&#x4EF6;&#x88AB;&#x89E3;&#x6790;&#x4E3A;&#x6811;&#x72B6;&#x7ED3;&#x6784;&#xFF0C;&#x770B;&#x8D77;&#x6765;&#x8FD8;&#x662F;&#x4E0D;&#x591F;&#x76F4;&#x89C2;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x5DE5;&#x5177;&#x53EA;&#x662F;&#x6309;&#x7167;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x628A;&#x5185;&#x5BB9;&#x8FDB;&#x884C;&#x4E86;&#x683C;&#x5F0F;&#x5316;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x6CA1;&#x6709;&#x6807;&#x6CE8;&#x6240;&#x6709;&#x5B57;&#x6BB5;&#x7684;&#x786E;&#x5207;&#x542B;&#x4E49;&#x3002;&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;openssl&#x8FDB;&#x884C;&#x67E5;&#x770B;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;Mac&#x4E0A;&#x81EA;&#x5E26;&#x7684;openssl&#x4EE5;&#x53CA;&#x901A;&#x8FC7;HomeBrew&#x5B89;&#x88C5;&#x7684;openssl&#x90FD;&#x662F;&#x6CA1;&#x6709;&#x5F00;&#x542F;cms&#x652F;&#x6301;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5C06;&#x6587;&#x4EF6;&#x62F7;&#x8D1D;&#x5230;linux&#x673A;&#x5668;&#x4E0A;&#x6216;&#x8005;&#x81EA;&#x884C;&#x7F16;&#x8BD1;openssl&#x8FDB;&#x884C;&#x67E5;&#x770B;&#xFF0C;&#x5177;&#x4F53;&#x65B9;&#x6CD5;&#x5728;&#x6B64;&#x4E0D;&#x8868;&#x3002;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>openssl cms -cmsout -print -inform DER -in cms_signature
+</span><span class="line">CMS_ContentInfo:
+</span><span class="line">  contentType: pkcs7-signedData <span class="o">(</span>1.2.840.113549.1.7.2<span class="o">)</span>
+</span><span class="line">  d.signedData:
+</span><span class="line">    version: 1
+</span><span class="line">    digestAlgorithms:
+</span><span class="line">        algorithm: sha256 <span class="o">(</span>2.16.840.1.101.3.4.2.1<span class="o">)</span>
+</span><span class="line">        parameter: NULL
+</span><span class="line">    encapContentInfo:
+</span><span class="line">      eContentType: pkcs7-data <span class="o">(</span>1.2.840.113549.1.7.1<span class="o">)</span>
+</span><span class="line">      eContent: &lt;ABSENT&gt;
+</span><span class="line">    certificates:
+</span><span class="line">      ... <span class="o">[</span>stripped<span class="o">]</span> Apple Worldwide Developer Relations Certification Authority
+</span><span class="line">      ... <span class="o">[</span>stripped<span class="o">]</span> Apple Root CA
+</span><span class="line">      ... <span class="o">[</span>stripped<span class="o">]</span> iPhone Developer: xxxxxxx
+</span><span class="line">    signerInfos:
+</span><span class="line">        version: 1
+</span><span class="line">        d.issuerAndSerialNumber:
+</span><span class="line">          issuer: <span class="nv">C</span><span class="o">=</span>US, <span class="nv">O</span><span class="o">=</span>Apple Inc., <span class="nv">OU</span><span class="o">=</span>Apple Worldwide Developer Relations, <span class="nv">CN</span><span class="o">=</span>Apple Worldwide Developer Relations Certification Authority
+</span><span class="line">          serialNumber: 1008862887770590428
+</span><span class="line">        digestAlgorithm:
+</span><span class="line">          algorithm: sha256 <span class="o">(</span>2.16.840.1.101.3.4.2.1<span class="o">)</span>
+</span><span class="line">          parameter: NULL
+</span><span class="line">        signedAttrs:
+</span><span class="line">            ... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">              SEQUENCE:
+</span><span class="line">    0:d<span class="o">=</span>0  <span class="nv">hl</span><span class="o">=</span>2 <span class="nv">l</span><span class="o">=</span>  29 cons: SEQUENCE
+</span><span class="line">    2:d<span class="o">=</span>1  <span class="nv">hl</span><span class="o">=</span>2 <span class="nv">l</span><span class="o">=</span>   5 prim:  OBJECT            :sha1
+</span><span class="line">    9:d<span class="o">=</span>1  <span class="nv">hl</span><span class="o">=</span>2 <span class="nv">l</span><span class="o">=</span>  20 prim:  OCTET STRING      <span class="o">[</span>HEX DUMP<span class="o">]</span>:669421362B2F2B5303BCEBB47D793A75A6BBD32F
+</span><span class="line">
+</span><span class="line">            ... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">        signatureAlgorithm:
+</span><span class="line">          algorithm: rsaEncryption <span class="o">(</span>1.2.840.113549.1.1.1<span class="o">)</span>
+</span><span class="line">          parameter: NULL
+</span><span class="line">        signature:
+</span><span class="line">          0000 - 77 00 50 9c 5c 6d 50 1e-cb 4b ca b7 91 d3 5b   w.P.<span class="se">\m</span>P..K....<span class="o">[</span>
+</span><span class="line">          000f - 2e 28 fe f3 5d 20 73 ef-0a 59 ac 2e ed bd 2a   .<span class="o">(</span>..<span class="o">]</span> s..Y....*
+</span><span class="line">          ... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">        unsignedAttrs:
+</span><span class="line">          &lt;EMPTY&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x7531;&#x4E8E;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x592A;&#x591A;&#xFF0C;&#x5C06;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x505A;&#x4E86;&#x5220;&#x51CF;&#xFF0C;&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;&#x5230;&#x7B7E;&#x540D;&#x4E2D;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x4E86;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;</p>
+
+<ul>
+<li><strong>contentType</strong>&#xFF0C; &#x8868;&#x660E;&#x6D88;&#x606F;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x6709;6&#x79CD;&#x53D6;&#x503C;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x8868;&#x793A;&#x7B7E;&#x540D;&#x7684;signedData&#x7C7B;&#x578B;
+
+<ul>
+<li>Data</li>
+<li>SignedData</li>
+<li>EnvelopedData</li>
+<li>DigestedData</li>
+<li>EncryptedData</li>
+<li>AuthenticatedData</li>
+</ul>
+</li>
+<li><strong>content</strong>&#xFF0C;SignedData&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;
+
+<ul>
+<li>version&#x7B49;&#xFF1A;&#x7565;</li>
+<li>certificates&#xFF1A; &#x8BC1;&#x4E66;&#x94FE;&#xFF0C;&#x5305;&#x542B;&#x7528;&#x4E8E;&#x7B7E;&#x540D;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x53CA;&#x6240;&#x6709;&#x4E0A;&#x6E38;CA&#x7684;&#x8BC1;&#x4E66;</li>
+<li>signerInfos&#xFF1A;&#x771F;&#x6B63;&#x7684;&#x7B7E;&#x540D;&#x4FE1;&#x606F;&#xFF01;
+
+<ul>
+<li>version&#xFF1A;&#x7248;&#x672C;&#x53F7;</li>
+<li>issuerAndSerialNumber&#xFF1A;&#x7B7E;&#x540D;&#x8005;&#x4FE1;&#x606F;&#xFF0C;&#x6839;&#x636E;&#x7B7E;&#x540D;&#x8005;&#x7684;&#x540D;&#x79F0;&#x627E;&#x5230;&#x8BC1;&#x4E66;&#x94FE;&#x4E2D;&#x5BF9;&#x5E94;&#x7684;&#x8BC1;&#x4E66;&#xFF0C;&#x4F7F;&#x7528;&#x8BC1;&#x4E66;&#x4E2D;&#x7684;&#x516C;&#x94A5;&#x5373;&#x53EF;&#x9A8C;&#x8BC1;&#x7B7E;&#x540D;&#x662F;&#x5426;&#x6709;&#x6548;</li>
+<li>digestAlgorithm&#xFF1A;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;</li>
+<li>signedAttrs&#xFF1A;&#x9700;&#x8981;&#x7B7E;&#x540D;&#x7684;&#x5C5E;&#x6027;, &#x662F;&#x53EF;&#x9009;&#x9879;&#xFF0C;&#x4E3A;&#x7A7A;&#x8868;&#x793A;&#x88AB;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x662F;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3A;&#x7A7A;&#x5219;&#x81F3;&#x5C11;&#x8981;&#x5305;&#x542B;&#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x7C7B;&#x578B;&#x4EE5;&#x53CA;&#x5176;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x6B64;&#x65F6;&#x88AB;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x5C31;&#x662F;signedAttrs&#x7684;&#x5185;&#x5BB9;</li>
+<li>signatureAlgorithm&#xFF1A;&#x7B7E;&#x540D;&#x7B97;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x6307;&#x5BF9;&#x54C8;&#x5E0C;&#x503C;&#x8FDB;&#x884C;&#x52A0;&#x5BC6;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x7B97;&#x6CD5;</li>
+<li>signature&#xFF1A;&#x52A0;&#x5BC6;&#x540E;&#x7684;&#x54C8;&#x5E0C;&#x503C;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>&#x7531;&#x4E8E;&#x5728;Code Directory&#x4E2D;&#x5DF2;&#x7ECF;&#x4FDD;&#x5B58;&#x4E86;&#x6240;&#x6709;&#x8D44;&#x6E90;&#x53CA;&#x4EE3;&#x7801;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x786E;&#x4FDD;CodeDirectory&#x4E0D;&#x88AB;&#x7BE1;&#x6539;&#xFF0C;&#x5373;&#x53EF;&#x786E;&#x4FDD;&#x6574;&#x4E2A;app&#x7684;&#x5B8C;&#x6574;&#x6027;&#xFF0C; &#x56E0;&#x6B64;CMS Signature&#x4E2D;&#x53EA;&#x9700;&#x8981;&#x5BF9;CodeDirectory&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x5373;&#x53EF;&#x3002;&#x800C;signedAttrs&#x4E2D;&#x652F;&#x6301;&#x8FD9;&#x6837;&#x4E00;&#x79CD;&#x7279;&#x6027;&#xFF1A;&#x53EF;&#x4EE5;&#x5148;&#x8BA1;&#x7B97;&#x88AB;&#x7B7E;&#x540D;&#x6570;&#x636E;&#x7684;&#x54C8;&#x5E0C;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5BF9;&#x54C8;&#x5E0C;&#x503C;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x3002;&#x542C;&#x8D77;&#x6765;&#x6709;&#x70B9;&#x7ED5;&#xFF0C;&#x4E0D;&#x8FC7;&#x4ED4;&#x7EC6;&#x4F53;&#x4F1A;&#x4E00;&#x4E0B;&#x5E94;&#x8BE5;&#x4E0D;&#x96BE;&#x7406;&#x89E3;&#x3002;</p>
+
+<p>&#x6211;&#x4EEC;&#x628A;CodeDirectory&#x7684;&#x5185;&#x5BB9;&#x62A0;&#x51FA;&#x6765;&#xFF0C;&#x8BA1;&#x7B97;&#x5176;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x4EE5;&#x7B2C;&#x4E00;&#x4E2A;CodeDirectory&#x4E3A;&#x4F8B;&#xFF0C;&#x8BA1;&#x7B97;&#x5176;sha1&#xFF1A;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>dd <span class="nv">bs</span><span class="o">=</span>1 <span class="nv">skip</span><span class="o">=</span>0xD334 <span class="nv">count</span><span class="o">=</span>0x1ED <span class="k">if</span><span class="o">=</span>TestCodeSign 2&gt;/dev/null <span class="p">|</span> shasum -a 1
+</span><span class="line">669421362b2f2b5303bcebb47d793a75a6bbd32f  -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x8FD9;&#x4E2A;&#x503C;&#x53EB;&#x505A;CDHash(Code Directory&#x2019;s Hash)&#xFF0C;&#x5BF9;&#x6BD4;&#x524D;&#x9762;&#x4ECE;cms_signature&#x4E2D;&#x89E3;&#x6790;&#x51FA;&#x7684; signedAttrs&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x8FD9;&#x4E24;&#x4E2A;&#x503C;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;CodeDirectory&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x88AB;&#x653E;&#x5728;&#x4E86;signerInfos-&gt;signedAttrs&#x4E2D;&#xFF0C;&#x4F5C;&#x4E3A;&#x6700;&#x7EC8;&#x771F;&#x6B63;&#x88AB;<code>&#x7B7E;&#x540D;</code>(&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;&#x5E76;&#x52A0;&#x5BC6;)&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
+
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x4ECE;&#x5934;&#x5230;&#x5C3E;&#x5256;&#x6790;&#x4E86;iOS&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x751F;&#x6210;&#x65B9;&#x5F0F;&#x53CA;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x81F3;&#x5C11;&#x5B58;&#x5728;4&#x6B21;&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x73AF;&#x73AF;&#x76F8;&#x6263;&#x7684;</p>
+
+<ol>
+<li>_CodeSignature/CodeResources&#x4E2D;&#x5BF9;&#x6BCF;&#x4E2A;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;</li>
+<li>Code Directory &#x4E2D;&#x5BF9;MachO&#x6587;&#x4EF6;&#x672C;&#x8EAB;&#x7684;&#x6BCF;&#x4E2A;&#x5206;&#x9875;&#xFF0C;&#x4EE5;&#x53CA;Info.plist&#x3001;CodeResources&#x3001;Entitlements&#x7B49;&#x6587;&#x4EF6;&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;</li>
+<li>CMS Signature&#x7684;signedAttrs&#x4E2D;&#x5BF9;Code Directory&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;</li>
+<li>&#x5BF9;signedAttrs&#x8BA1;&#x7B97;&#x54C8;&#x5E0C;&#x5E76;&#x4F7F;&#x7528;&#x5F00;&#x53D1;&#x8005;&#x7684;&#x79C1;&#x94A5;&#x52A0;&#x5BC6;</li>
+</ol>
+
+
+<p>&#x53EA;&#x6709;&#x6700;&#x540E;&#x4E00;&#x6B65;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x662F;&#x88AB;&#x52A0;&#x5BC6;&#x7684;&#xFF0C; &#x524D;&#x9762;&#x51E0;&#x6B65;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x662F;&#x5426;&#x52A0;&#x5BC6;&#x90FD;&#x4E0D;&#x5F71;&#x54CD;&#x7B7E;&#x540D;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x53EA;&#x8981;&#x4EFB;&#x610F;&#x5185;&#x5BB9;&#x6709;&#x53D8;&#x5316;&#xFF0C;&#x5747;&#x4F1A;&#x56E0;&#x67D0;&#x4E2A;&#x73AF;&#x8282;&#x7684;&#x54C8;&#x5E0C;&#x4E0D;&#x5339;&#x914D;&#x800C;&#x5BFC;&#x81F4;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x7684;&#x5931;&#x8D25;&#x3002;</p>
+
+<h4>jtool</h4>
+
+<p>&#x76F8;&#x4FE1;&#x4E0A;&#x9762;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x5206;&#x6790;&#x5DF2;&#x7ECF;&#x8BA9;&#x4F60;&#x773C;&#x82B1;&#x7F2D;&#x4E71;&#x4E86;&#xFF0C;&#x4E0D;&#x8FC7;&#x5DF2;&#x7ECF;&#x6709;&#x5927;&#x795E;&#x505A;&#x51FA;&#x4E86;<a href="http://www.newosxbook.com/tools/jtool.tar">jtool</a>&#x8FD9;&#x4E2A;&#x5DE5;&#x5177;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x6B3E;&#x5F3A;&#x5927;&#x7684;MachO&#x4E8C;&#x8FDB;&#x5236;&#x5206;&#x6790;&#x5DE5;&#x5177;&#xFF0C;&#x7528;&#x6765;&#x66FF;&#x4EE3;otool&#x3001;nm&#x3001;segedit&#x7B49;&#x547D;&#x4EE4;&#xFF0C;&#x4E5F;&#x5305;&#x62EC;codesign&#x7684;&#x90E8;&#x5206;&#x529F;&#x80FD;&#x3002;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x5C06;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x89E3;&#x6790;&#x4E3A;&#x53EF;&#x8BFB;&#x7684;&#x6587;&#x672C;&#x683C;&#x5F0F;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>jtool --sig -vv TestCodeSign
+</span><span class="line">Blob at offset: 54016 <span class="o">(</span>19888 bytes<span class="o">)</span> is an embedded signature of 6686 bytes, and 5 blobs
+</span><span class="line">  Blob 0: Type: 0 @52: Code Directory <span class="o">(</span>493 bytes<span class="o">)</span>
+</span><span class="line">      Version:     20400
+</span><span class="line">      Flags:       none <span class="o">(</span>0x0<span class="o">)</span>
+</span><span class="line">      CodeLimit:   0xd300
+</span><span class="line">      Identifier:  test.CodeSign <span class="o">(</span>0x58<span class="o">)</span>
+</span><span class="line">      Team ID:     xxxxxxxxxx <span class="o">(</span>0x66<span class="o">)</span>
+</span><span class="line">      Executable Segment: Base 0x00000000 Limit: 0x00000000 Flags: 0x00000000
+</span><span class="line">      CDHash:      669421362b2f2b5303bcebb47d793a75a6bbd32f <span class="o">(</span>computed<span class="o">)</span>
+</span><span class="line">      <span class="c"># of Hashes: 14 code + 5 special</span>
+</span><span class="line">      Hashes @213 size: 20 Type: SHA-1
+</span><span class="line">          Entitlements blob:  19a92ca549e53593b384681245de14897df2a9dd <span class="o">(</span>OK<span class="o">)</span>
+</span><span class="line">          Application Specific:   Not Bound
+</span><span class="line">          Resource Directory: fb7df05e17f3b347d6b64868f468def49feecf25 <span class="o">(</span>OK<span class="o">)</span>
+</span><span class="line">          Requirements blob:  9d58965211c9cd83b208fffd575d741881ff81e4 <span class="o">(</span>OK<span class="o">)</span>
+</span><span class="line">          Bound Info.plist:   89e1951413c3eb05fab8f6a5f06c13b48926eabe <span class="o">(</span>OK<span class="o">)</span>
+</span><span class="line">          Slot   0 <span class="o">(</span>File page @0x0000<span class="o">)</span>: 9d452342f9ed06189e4f099bca7cb68d6432f775 <span class="o">(</span>OK<span class="o">)</span>
+</span><span class="line">          ... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">  ... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">  Blob 4: Type: 10000 @1862: Blob Wrapper <span class="o">(</span>4824 bytes<span class="o">)</span> <span class="o">(</span>0x10000 is CMS <span class="o">(</span>RFC3852<span class="o">)</span> signature<span class="o">)</span>
+</span><span class="line">CA: Apple Certification Authority CN: Apple Root CA
+</span><span class="line">... <span class="o">[</span>stripped<span class="o">]</span>
+</span><span class="line">Time: 190122095805Z
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Distribute App</h4>
+
+<p>&#x5728;Xcode Organizer&#x4E2D;&#x5BFC;&#x51FA;&#x6216;&#x8005;&#x63D0;&#x4EA4;App&#x65F6;&#xFF0C;Xcode&#x4F1A;&#x5C06;Entitlements&#x6587;&#x4EF6;&#x53CA;embedded.mobileprovision&#x6587;&#x4EF6;&#x66FF;&#x6362;&#x4E3A;&#x5BF9;&#x5E94;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x5BF9;&#x5E94;&#x7684;&#x8BC1;&#x4E66;&#x91CD;&#x65B0;&#x7B7E;&#x540D;&#xFF0C;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5982;&#x4E0B;</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> &#x7C7B;&#x578B;        </th>
+<th> Entitlements             </th>
+<th> Provisioning Profile       </th>
+<th> &#x8BC1;&#x4E66;           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> AppStore    </td>
+<td> &#x4E0D;&#x53EF;&#x8C03;&#x8BD5;&#xFF0C;&#x63A8;&#x9001;&#x4E3A;&#x751F;&#x4EA7;&#x73AF;&#x5883; </td>
+<td> &#x65E0;ProvisionedDevices       </td>
+<td> &#x53D1;&#x5E03;&#x8BC1;&#x4E66;       </td>
+</tr>
+<tr>
+<td></td>
+<td> Ad Hoc      </td>
+<td> &#x4E0D;&#x53EF;&#x8C03;&#x8BD5;&#xFF0C;&#x63A8;&#x9001;&#x4E3A;&#x751F;&#x4EA7;&#x73AF;&#x5883; </td>
+<td> &#x5141;&#x8BB8;&#x5B89;&#x88C5;&#x5230;&#x5DF2;&#x6CE8;&#x518C;&#x7684;&#x6D4B;&#x8BD5;&#x8BBE;&#x5907; </td>
+<td> &#x53D1;&#x5E03;&#x8BC1;&#x4E66;       </td>
+</tr>
+<tr>
+<td></td>
+<td> Development </td>
+<td> &#x53EF;&#x8C03;&#x8BD5;&#xFF0C;&#x63A8;&#x9001;&#x4E3A;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;   </td>
+<td> &#x5141;&#x8BB8;&#x5B89;&#x88C5;&#x5230;&#x5DF2;&#x6CE8;&#x518C;&#x7684;&#x6D4B;&#x8BD5;&#x8BBE;&#x5907; </td>
+<td> &#x5F00;&#x53D1;&#x8BC1;&#x4E66;       </td>
+</tr>
+<tr>
+<td></td>
+<td> Enterprise  </td>
+<td> &#x4E0D;&#x53EF;&#x8C03;&#x8BD5;&#xFF0C;&#x63A8;&#x9001;&#x4E3A;&#x751F;&#x4EA7;&#x73AF;&#x5883; </td>
+<td> ProvisionAllDevices        </td>
+<td> &#x4F01;&#x4E1A;&#x7EA7;&#x53D1;&#x5E03;&#x8BC1;&#x4E66; </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>0x06 &#x6821;&#x9A8C;&#x4EE3;&#x7801;&#x7B7E;&#x540D;</h2>
+
+<p>&#x7B7E;&#x540D;&#x7684;&#x6821;&#x9A8C;&#x5E76;&#x975E;&#x4E00;&#x6B21;&#x6027;&#x5B8C;&#x6210;&#xFF0C;&#x5728;&#x5B89;&#x88C5;&#x3001;&#x542F;&#x52A8;&#x3001;&#x548C;&#x8FD0;&#x884C;&#x65F6;&#x6709;&#x7740;&#x4E0D;&#x540C;&#x7684;&#x6821;&#x9A8C;&#x89C4;&#x5219;&#x3002;</p>
+
+<h4>&#x5B89;&#x88C5;</h4>
+
+<p>App&#x5B89;&#x88C5;&#x65F6;&#x7684;&#x6821;&#x9A8C;&#x7531;&#x4F4D;&#x4E8E;iOS&#x8BBE;&#x5907;&#x4E0A;&#x7684;/usr/lib/libmis.dylib (dyld_shared_cache)&#x63D0;&#x4F9B;&#x3002;</p>
+
+<p><img src="http://xelz.info/assets/2019/libmis.png" alt=""></p>
+
+<p>App&#x7684;&#x5B89;&#x88C5;&#x662F;&#x7531;<code>/usr/libexec/installd</code>&#x5B8C;&#x6210;&#x7684;&#xFF0C;<code>installd</code>&#x4F1A;&#x901A;&#x8FC7;<code>libmis.dylib</code>&#x6821;&#x9A8C;ProvisioningProfile&#x3001;Entitlements&#x53CA;&#x7B7E;&#x540D;&#x7684;&#x5408;&#x6CD5;&#x6027;&#xFF0C;&#x5E76;&#x9012;&#x5F52;&#x5730;&#x6821;&#x9A8C;&#x7B7E;&#x540D;&#x65F6;&#x6BCF;&#x4E00;&#x4E2A;&#x6B65;&#x9AA4;&#x751F;&#x6210;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF1A;CDHash, Code Directory, _CodeSignature/CodeResources&#x3002;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>otool -L installd <span class="p">|</span> grep mis
+</span><span class="line">  /usr/lib/libmis.dylib <span class="o">(</span>compatibility version 1.0.0, current version 1.0.0<span class="o">)</span>
+</span><span class="line"><span class="nv">$ </span>nm installd <span class="p">|</span> grep ValidateSignature
+</span><span class="line">                 U _MISValidateSignatureAndCopyInfo
+</span><span class="line">                 U _kMISValidationOptionValidateSignatureOnly
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>&#x542F;&#x52A8;</h4>
+
+<p>&#x8FDB;&#x7A0B;&#x542F;&#x52A8;&#x65F6;&#xFF0C;loader&#x4F1A;&#x5148;&#x5C06;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#x5230;&#x865A;&#x62DF;&#x5185;&#x5B58;&#xFF0C;&#x5728;&#x52A0;&#x8F7D;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;mach_loader&#x4F1A;&#x81EA;&#x52A8;&#x89E3;&#x6790;MachO&#x6587;&#x4EF6;&#x4E2D;&#x7684;LC_CODE_SIGNATURE&#x5E76;&#x8FDB;&#x884C;&#x6821;&#x9A8C;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;mach_loader&#x7684;&#x4EE3;&#x7801; <a href="https://opensource.apple.com/source/xnu/xnu-4570.71.2/bsd/kern/mach_loader.c.auto.html">bsd/kern/mach_loader.c</a></p>
+
+<p><img src="http://xelz.info/assets/2019/verify1.png" alt=""></p>
+
+<p><code>load_code_signature</code>&#x5728;&#x89E3;&#x6790;&#x5B8C;&#x7B7E;&#x540D;&#x7684;&#x6570;&#x636E;&#x540E;&#x4F1A;&#x8C03;&#x7528;<code>mac_vnode_check_singature</code>&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4F1A;&#x88AB;&#x540D;&#x4E3A;<code>AFMI</code>(AppleMobileFileIntegrity)&#x7684;&#x5185;&#x6838;&#x6269;&#x5C55;(kext)&#x901A;&#x8FC7;Hook&#x7684;&#x65B9;&#x5F0F;&#x63A5;&#x7BA1;&#xFF0C;&#x800C;AFMI&#x53EA;&#x662F;&#x4E00;&#x5C42;&#x58F3;&#xFF0C;&#x6700;&#x7EC8;&#x4E5F;&#x662F;&#x8C03;&#x7528;&#x4E86;libmis.dylib&#x6765;&#x5B9E;&#x73B0;&#x7B7E;&#x540D;&#x7684;&#x6821;&#x9A8C;&#xFF0C;&#x8FD9;&#x4E00;&#x6821;&#x9A8C;&#x8FC7;&#x7A0B;&#x57FA;&#x672C;&#x4E0E;&#x5B89;&#x88C5;&#x65F6;&#x4E00;&#x81F4;&#xFF0C;&#x9632;&#x6B62;&#x5B89;&#x88C5;&#x540E;&#x7684;&#x7BE1;&#x6539;&#x3002;</p>
+
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E3A;&#x4E86;&#x63D0;&#x5347;&#x52A0;&#x8F7D;&#x6548;&#x7387;&#xFF0C;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x5E76;&#x4E0D;&#x4F1A;&#x53BB;&#x68C0;&#x67E5;Code Directory&#x4E0E;&#x5B9E;&#x9645;&#x7684;&#x4EE3;&#x7801;&#x662F;&#x5426;&#x5339;&#x914D;&#xFF0C;&#x4EC5;&#x4EC5;&#x53EA;&#x68C0;&#x67E5;&#x4E86;CMS Signature&#x53CA;CDHash&#x7684;&#x5408;&#x6CD5;&#x6027;&#x3002;</p>
+
+<h4>&#x8FD0;&#x884C;&#x65F6;</h4>
+
+<p>&#x5F53;&#x4E00;&#x9875;&#x4EE3;&#x7801;&#x88AB;&#x52A0;&#x8F7D;&#x5230;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x540E;&#xFF0C;&#x4F1A;&#x7ACB;&#x5373;&#x89E6;&#x53D1;<code>page fault</code>&#xFF0C;&#x6B64;&#x65F6;&#x5185;&#x6838;&#x4E2D;&#x7684;<code>vm_fault</code>&#x51FD;&#x6570;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x7D27;&#x63A5;&#x7740;&#x8C03;&#x7528;<code>vm_fault_enter</code>&#xFF0C;&#x5728;<code>vm_fault_enter</code>&#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#x4F1A;&#x5224;&#x65AD;&#x4EE3;&#x7801;&#x9875;&#x662F;&#x5426;&#x9700;&#x8981;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#xFF0C;&#x5E76;&#x6267;&#x884C;&#x6821;&#x9A8C;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x53C2;&#x8003;&#x4EE3;&#x7801;<a href="https://opensource.apple.com/source/xnu/xnu-4570.71.2/osfmk/vm/vm_fault.c.auto.html">osfmk/vm/vm_fault.c</a></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">kern_return_t</span> <span class="nf">vm_fault_enter</span><span class="p">(...)</span> <span class="p">{</span>
+</span><span class="line"><span class="c1">// ...</span>
+</span><span class="line">    <span class="cm">/* Validate code signature if necessary. */</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="n">VM_FAULT_NEED_CS_VALIDATION</span><span class="p">(</span><span class="n">pmap</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">object</span><span class="p">))</span> <span class="p">{</span>
+</span><span class="line">      <span class="n">vm_object_lock_assert_exclusive</span><span class="p">(</span><span class="n">object</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="o">-&gt;</span><span class="n">cs_validated</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">          <span class="n">vm_cs_revalidates</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="cm">/* VM map is locked, so 1 ref will remain on VM object -</span>
+</span><span class="line"><span class="cm">      * so no harm if vm_page_validate_cs drops the object lock */</span>
+</span><span class="line">      <span class="n">vm_page_validate_cs</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="c1">// ...</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#x5BF9;&#x4E8E;&#x5B8F;<code>VM_FAULT_NEED_CS_VALIDATION</code>&#x7684;&#x89E3;&#x91CA;&#x662F;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">* CODE SIGNING:</span>
+</span><span class="line"><span class="cm">* When soft faulting a page, we have to validate the page if:</span>
+</span><span class="line"><span class="cm">* 1. the page is being mapped in user space</span>
+</span><span class="line"><span class="cm">* 2. the page hasn&apos;t already been found to be &quot;tainted&quot;</span>
+</span><span class="line"><span class="cm">* 3. the page belongs to a code-signed object</span>
+</span><span class="line"><span class="cm">* 4. the page has not been validated yet or has been mapped</span>
+</span><span class="line"><span class="cm">for write. */</span>
+</span><span class="line"><span class="cp">#define VM_FAULT_NEED_CS_VALIDATION(pmap, page)</span>
+</span><span class="line"><span class="p">((</span><span class="n">pmap</span><span class="p">)</span> <span class="o">!=</span> <span class="n">kernel_pmap</span> <span class="cm">/*1*/</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">cs_tainted</span> <span class="cm">/*2*/</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">object</span><span class="o">-&gt;</span><span class="n">code_signed</span> <span class="cm">/*3*/</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">cs_validated</span> <span class="o">||</span> <span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">wpmapped</span> <span class="cm">/*4*/</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>vm_page_validate_cs</code>&#x4F1A;&#x8BA1;&#x7B97;&#x5F53;&#x524D;&#x4EE3;&#x7801;&#x9875;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x5E76;&#x4E0E;&#x7B7E;&#x540D;&#x4E2D;CodeDirectory&#x8BB0;&#x5F55;&#x7684;&#x503C;&#x8FDB;&#x884C;&#x6BD4;&#x5BF9;&#xFF0C;&#x5B8C;&#x6210;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x9A8C;&#x8BC1;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x7B26;&#xFF0C;&#x4E14;&#x4E0D;&#x6EE1;&#x8DB3;&#x7CFB;&#x7EDF;&#x9884;&#x8BBE;&#x7684;&#x4F8B;&#x5916;&#x6761;&#x4EF6;&#xFF0C;&#x5219;&#x4F1A;&#x5411;&#x5185;&#x6838;&#x53D1;&#x51FA;CS_KILL&#x6307;&#x4EE4;&#xFF0C;&#x5C06;&#x8FDB;&#x7A0B;&#x7ED3;&#x675F;&#x3002;</p>
+
+<p>&#x81F3;&#x6B64;&#x7B7E;&#x540D;&#x7684;&#x6821;&#x9A8C;&#x6D41;&#x7A0B;&#x5C31;&#x5168;&#x90E8;&#x5B8C;&#x6210;&#x4E86;&#x3002;</p>
+
+<h2>0x07 &#x8D8A;&#x72F1;&#x4E0E;&#x91CD;&#x7B7E;&#x540D;</h2>
+
+<h4>&#x8D8A;&#x72F1;</h4>
+
+<p>&#x8D8A;&#x72F1;&#x4E4B;&#x540E;&#xFF0C;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x673A;&#x5236;&#x4F1A;&#x88AB;&#x7834;&#x574F;&#x6389;&#xFF0C;&#x5426;&#x5219;&#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x8D8A;&#x72F1;&#x7684;&#x4EE3;&#x7801;&#x81EA;&#x8EAB;&#x5C31;&#x65E0;&#x6CD5;&#x8FD0;&#x884C;&#x3002;&#x6BD4;&#x5982;&#x5728;iOS6/7&#x65F6;&#x4EE3;&#xFF0C;&#x5178;&#x578B;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x66FF;&#x6362; <code>libmis.dylib</code>&#x4E2D;&#x7684;<code>_MISValidateSignature</code>&#x51FD;&#x6570;&#xFF0C;&#x4F7F;&#x5176;&#x6C38;&#x8FDC;&#x8FD4;&#x56DE;&#x9A8C;&#x8BC1;&#x6210;&#x529F;&#xFF0C;&#x7B80;&#x5355;&#x7C97;&#x66B4;&#x4F46;&#x5F88;&#x6709;&#x6548;&#xFF0C;&#x56E0;&#x6B64;&#x8D8A;&#x72F1;&#x7684;&#x8BBE;&#x5907;&#x53EF;&#x4EE5;&#x4E0D;&#x53D7;&#x7B7E;&#x540D;&#x9650;&#x5236;&#x8FD0;&#x884C;&#x4EFB;&#x610F;&#x7A0B;&#x5E8F;&#x3002;&#x4F46;&#x662F;&#x5355;&#x7EAF;&#x89E3;&#x51B3;&#x6389;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x53EA;&#x662F;&#x89E3;&#x51B3;&#x4E86;MachO&#x6587;&#x4EF6;&#x7684;Load&#x95EE;&#x9898;&#xFF0C;&#x8FD0;&#x884C;&#x65F6;&#x4ECD;&#x7136;&#x4F1A;&#x6709;&#x6C99;&#x76D2;&#x548C;Code Directory&#x7684;&#x6821;&#x9A8C;&#xFF0C;&#x60F3;&#x8981;&#x5BF9;&#x7CFB;&#x7EDF;&#x5B8C;&#x5168;&#x7684;&#x63A7;&#x5236;&#x6743;&#x5FC5;&#x987B;&#x540C;&#x65F6;&#x89E3;&#x51B3;&#x6389;&#x8FD9;&#x4E24;&#x4E2A;&#x95EE;&#x9898;&#x3002;</p>
+
+<p>&#x7531;&#x4E8E;&#x6C99;&#x76D2;&#x673A;&#x5236;&#x7684;&#x5B9E;&#x73B0;&#x5206;&#x6563;&#x5728;&#x7CFB;&#x7EDF;&#x7684;&#x5404;&#x4E2A;&#x89D2;&#x843D;&#xFF0C;&#x6CA1;&#x6709;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x5C06;&#x6C99;&#x76D2;&#x4E00;&#x5200;&#x5207;&#x5730;&#x5C4F;&#x853D;&#x6389;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x822C;&#x8D8A;&#x72F1;&#x5E76;&#x4E0D;&#x4F1A;&#x7834;&#x574F;&#x6389;&#x6C99;&#x76D2;&#x3002;&#x4F46;&#x56E0;&#x4E3A;&#x8D8A;&#x72F1;&#x8BBE;&#x5907;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x673A;&#x5236;&#x88AB;&#x7ED5;&#x8FC7;&#xFF0C;&#x4E0D;&#x518D;&#x4F1A;&#x6839;&#x636E;embedded.mobileprovision&#x6587;&#x4EF6;&#x68C0;&#x67E5;Entitlements&#x7684;&#x5408;&#x6CD5;&#x6027;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x6C99;&#x76D2;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x58F0;&#x660E;&#x4EFB;&#x610F;&#x7684;&#x6743;&#x9650;&#x3002;Code Directory&#x7684;&#x6821;&#x9A8C;&#x5728;&#x5185;&#x6838;&#x5C42;&#xFF0C;&#x7834;&#x89E3;&#x96BE;&#x5EA6;&#x76F8;&#x5BF9;&#x8F83;&#x5927;&#xFF0C;&#x5E76;&#x4E14;&#x5B8C;&#x5168;&#x6CA1;&#x6709;&#x5FC5;&#x8981;&#x8FDB;&#x884C;&#x7834;&#x89E3;&#xFF0C;&#x56E0;&#x4E3A;Code Directory&#x53EA;&#x662F;&#x5355;&#x7EAF;&#x5730;&#x6821;&#x9A8C;&#x672A;&#x52A0;&#x5BC6;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x800C;&#x5DF2;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6309;&#x7167;&#x4EE3;&#x7801;&#x7B7E;&#x540D;&#x7684;&#x683C;&#x5F0F;&#x505A;&#x597D;Code Directory&#x5373;&#x53EF;&#x3002;</p>
+
+<p>&#x8D8A;&#x72F1;&#x4E4B;&#x7236;Saurik&#x4E3A;&#x6B64;&#x521B;&#x9020;&#x4E86;<a href="http://iphonedevwiki.net/index.php/Ldid">ldid</a>&#x8FD9;&#x4E2A;&#x5DE5;&#x5177;&#xFF0C;&#x7528;&#x4E8E;&#x7ED9;&#x8D8A;&#x72F1;&#x8BBE;&#x5907;&#x4E0A;&#x7684;&#x7A0B;&#x5E8F;&#x5236;&#x9020;&#x201D;&#x5047;&#x201D;&#x7684;&#x7B7E;&#x540D;&#x3002;&#x4F7F;&#x7528;ldid&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x53EA;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x53EF;&#x9009;&#x7684;<code>Entitlements</code>&#x6587;&#x4EF6;&#xFF0C;&#x7B7E;&#x540D;&#x4E4B;&#x540E;&#xFF0C;&#x4EA7;&#x751F;&#x7684;LC_CODE_SIGNATURE&#x4E2D;&#x53EA;&#x4F1A;&#x4E24;&#x4E2A;&#x6709;&#x6548;&#x7684;Blob&#xFF0C;&#x5206;&#x522B;&#x662F; Code Directory&#x548C; Entitlements&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x6700;&#x91CD;&#x8981;&#x7684;CMS Signature&#x90E8;&#x5206;&#xFF0C;&#x56E0;&#x4E3A;<code>_MISCalidateSignature</code>&#x6C38;&#x8FDC;&#x90FD;&#x4F1A;&#x544A;&#x8BC9;&#x7CFB;&#x7EDF;&#x7B7E;&#x540D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>cp TestCodeSign TestCodeSign.ldid
+</span><span class="line"><span class="nv">$ </span>ldid -Sxxx.entitlements TestCodeSign.ldid
+</span><span class="line"><span class="nv">$ </span>jtool --sig TestCodeSign.ldid -arch arm64
+</span><span class="line">Blob at offset: 54016 <span class="o">(</span>928 bytes<span class="o">)</span> is an embedded signature
+</span><span class="line">Code Directory <span class="o">(</span>442 bytes<span class="o">)</span>
+</span><span class="line">    ...
+</span><span class="line"> Empty requirement <span class="nb">set</span> <span class="o">(</span>12 bytes<span class="o">)</span>
+</span><span class="line">Entitlements <span class="o">(</span>424 bytes<span class="o">)</span> <span class="o">(</span>use --ent to view<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>&#x91CD;&#x7B7E;&#x540D;</h4>
+
+<p>&#x6709;&#x7684;&#x65F6;&#x5019;&#x51FA;&#x4E8E;&#x5404;&#x79CD;&#x539F;&#x56E0;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BF9;&#x4E00;&#x4E2A;App&#x8FDB;&#x884C;&#x91CD;&#x7B7E;&#x540D;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x8BBE;&#x5907;&#x4E0A;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x3002;&#x56DE;&#x987E;&#x4E00;&#x4E0B;&#x7B7E;&#x540D;&#x7684;&#x5FC5;&#x5907;&#x6761;&#x4EF6;&#xFF1A;</p>
+
+<ul>
+<li>&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#xFF0C;&#x4EE5;&#x53CA;&#x5BF9;&#x5E94;&#x7684;&#x5BC6;&#x94A5;</li>
+<li>Entitlements&#x6587;&#x4EF6;</li>
+<li>embedded.mobileprovision</li>
+</ul>
+
+
+<p>&#x5F00;&#x53D1;&#x8005;&#x8BC1;&#x4E66;&#x548C;&#x5BC6;&#x94A5;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;Entitlements&#x548C;embedded.mobileprovision&#x6587;&#x4EF6;&#xFF0C;&#x4E3A;&#x4E86;&#x786E;&#x4FDD;&#x91CD;&#x7B7E;&#x540E;&#x7684;App&#x80FD;&#x591F;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#xFF0C;&#x5FC5;&#x987B;&#x4F7F;&#x7528;&#x548C;&#x539F;App&#x76F8;&#x540C;&#x6216;&#x8005;&#x81F3;&#x5C11;&#x5305;&#x542B;&#x539F;App&#x6240;&#x9700;&#x6743;&#x9650;&#x7684;Entitlements&#x6587;&#x4EF6;&#x3002;&#x8FD9;&#x4E2A;&#x5E76;&#x4E0D;&#x96BE;&#x64CD;&#x4F5C;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x5DE5;&#x7A0B;&#xFF0C;&#x5F00;&#x542F;&#x76F8;&#x5E94;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x8BA9;Xcode&#x81EA;&#x52A8;&#x4E3A;&#x6211;&#x4EEC;&#x751F;&#x6210;&#x5373;&#x53EF;&#x3002;&#x4F46;&#x662F;Entitlements&#x6587;&#x4EF6;&#x4E2D;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x8DDF;Team ID&#x548C;App ID&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x662F;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x4F2A;&#x9020;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;&#x5DF2;&#x7ECF;&#x88AB;&#x5176;&#x4ED6;&#x5F00;&#x53D1;&#x8005;&#x6CE8;&#x518C;&#x8FC7;&#x7684;ID&#x3002;&#x4F7F;&#x7528;&#x81EA;&#x5DF1;&#x7684;ID&#x4E00;&#x822C;&#x4E5F;&#x4E0D;&#x4F1A;&#x6709;&#x4EC0;&#x4E48;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x6700;&#x7EC8;&#x7684;&#x7A0B;&#x5E8F;&#x903B;&#x8F91;&#x51FA;&#x73B0;&#x5F02;&#x5E38;&#xFF0C;&#x8FD9;&#x6839;&#x5177;&#x4F53;&#x7684;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;&#x6709;&#x5173;&#x3002;</p>
+
+<p>&#x73B0;&#x5728;&#xFF0C;&#x53EA;&#x8981;&#x786E;&#x4FDD;&#x6709;&#x6B63;&#x786E;&#x7684;Entitlements&#x6587;&#x4EF6;&#xFF0C;Provisioning Profile&#x4E0E;Entitlements&#x6587;&#x4EF6;&#x5339;&#x914D;&#xFF0C;&#x4E14;&#x5305;&#x542B;&#x91CD;&#x7B7E;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x8BC1;&#x4E66;&#x53CA;&#x76EE;&#x6807;&#x8BBE;&#x5907;&#x7684;UUID&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x91CD;&#x7B7E;&#x540D;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x91CD;&#x7B7E;&#x540D;&#x540E;&#x65E0;&#x6CD5;&#x5B89;&#x88C5;&#xFF0C;&#x8BF7;&#x68C0;&#x67E5;Provisioning Profile&#x6587;&#x4EF6;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x4E0A;&#x8FF0;&#x6761;&#x4EF6;&#x3002;</p>
+
+<p>Entitlements&#x6587;&#x4EF6;&#x4E2D;&#x8FD8;&#x6807;&#x8BC6;&#x4E86;<code>application-identifier</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;Bundle ID&#xFF0C;&#x6B63;&#x5E38;&#x7B7E;&#x540D;&#x7684;App&#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x548C;Info.plist&#x4E2D;&#x7684;<code>CFBundleIdentifier</code>&#x7684;&#x503C;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x5728;&#x7B7E;&#x540D;&#x6821;&#x9A8C;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x5E76;&#x4E0D;&#x4F1A;&#x68C0;&#x67E5;&#x4E8C;&#x8005;&#x662F;&#x5426;&#x4E00;&#x81F4;&#x3002;&#x56E0;&#x6B64;&#x5373;&#x4F7F;Entitlements&#x4E2D;&#x4E0E;Info.plist&#x6587;&#x4EF6;&#x4F7F;&#x7528;&#x4E86;&#x4E0D;&#x540C;&#x7684;Bundle ID&#xFF0C;&#x7406;&#x8BBA;&#x4E0A;&#x4E5F;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x91CD;&#x7B7E;&#x540D;&#x4E4B;&#x540E;&#x7684;&#x8FD0;&#x884C;&#x3002;</p>
+
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;App&#x4E2D;&#x9664;&#x4E86;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x6587;&#x4EF6;&#x5916;&#xFF0C;&#x8FD8;&#x4F1A;&#x53EF;&#x80FD;&#x4F1A;&#x6709;Frameworks&#x53CA;Plugins&#xFF0C;&#x91CC;&#x9762;&#x90FD;&#x4F1A;&#x5305;&#x542B;&#x4E8C;&#x8FDB;&#x5236;&#x7684;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x4E5F;&#x4F1A;&#x88AB;&#x5B58;&#x50A8;&#x5728; _CodeSignature/CodeResources&#x4E2D;&#x3002;&#x6240;&#x6709;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x4EE3;&#x7801;&#x90FD;&#x5FC5;&#x987B;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x800C;&#x7B7E;&#x540D;&#x540E;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x5148;&#x5BF9;&#x8FD9;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x518D;&#x5BF9;App&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#x3002;</p>
+
+<p>&#x91CD;&#x7B7E;&#x540D;&#x7684;&#x57FA;&#x672C;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF0C;&#x4F7F;&#x7528;-f&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x5F3A;&#x5236;&#x8986;&#x76D6;&#x6389;&#x5DF2;&#x6709;&#x7684;&#x7B7E;&#x540D;</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span><span class="c"># &#x5BF9;Frameworks&#x53CA;Plugins&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x6B64;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x6307;&#x5B9A;entitlements</span>
+</span><span class="line"><span class="nv">$ </span>codesign -f -s <span class="s2">&quot;&#x8BC1;&#x4E66;&#x540D;&#x79F0;&#x6216;&#x8005;SHA1&#x503C;&quot;</span> Target.app/Frameworks/xxxxx.framework
+</span><span class="line"><span class="nv">$ </span>codesign -f -s <span class="s2">&quot;&#x8BC1;&#x4E66;&#x540D;&#x79F0;&#x6216;&#x8005;SHA1&#x503C;&quot;</span> Target.app/Frameworks/libxxxx.dylib
+</span><span class="line"><span class="nv">$ </span>...
+</span><span class="line"><span class="nv">$ </span><span class="c"># &#x5C06;&#x51C6;&#x5907;&#x597D;&#x7684;Provisioning Profile&#x62F7;&#x8D1D;&#x5230;App&#x6839;&#x76EE;&#x5F55;</span>
+</span><span class="line"><span class="nv">$ </span>cp ~/Library/MobileDevice/Provisioning<span class="se">\ </span>Profiles/xxxxx.mobileprovision Target.app/embedded.mobileprovision
+</span><span class="line"><span class="nv">$ </span><span class="c"># &#x5BF9;App&#x8FDB;&#x884C;&#x7B7E;&#x540D;</span>
+</span><span class="line"><span class="nv">$ </span>codesign -f -s <span class="s2">&quot;&#x8BC1;&#x4E66;&#x540D;&#x79F0;&#x6216;&#x8005;SHA1&#x503C;&quot;</span> --entitlements resign.entitlements Target.app
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>0x08 References</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>   reference    </th>
+<th>    link    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Code Signing Guide </td>
+<td> <a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html">https://developer.apple.com/&#x2026;</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> ASN.1 JavaScript decoder </td>
+<td> <a href="http://lapo.it/asn1js/">http://lapo.it/asn1js/</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> Cryptographic Message Syntax (CMS) </td>
+<td> <a href="https://www.ietf.org/rfc/rfc3852.txt">https://www.ietf.org/rfc/rfc3852.txt</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> iSign in python </td>
+<td> <a href="https://github.com/saucelabs/isign">https://github.com/saucelabs/isign</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> CodeSigning (RSACon 2015) </td>
+<td> <a href="http://newosxbook.com/articles/CodeSigning.pdf">http://newosxbook.com/articles/CodeSigning.pdf</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> jtool </td>
+<td> <a href="http://www.newosxbook.com/tools/jtool.html">http://www.newosxbook.com/tools/jtool.html</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> mistool </td>
+<td> <a href="http://newosxbook.com/tools/mistool.html">http://newosxbook.com/tools/mistool.html</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> evasi0n7 jailbreak writeup </td>
+<td><a href="https://geohot.com/e7writeup.html">https://geohot.com/e7writeup.html</a> </td>
+</tr>
+<tr>
+<td></td>
+<td> iOS hacker&#x2019;s handbook </td>
+<td> <a href="https://books.google.com.hk/books?id=1kDcjKcz9GwC">https://books.google.com.hk/books?id=1kDcjKcz9GwC</a> </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2019-01-11T11:12:14+08:00" pubdate="" data-updated="true">2019-01-11</time></div>
+    
+
+<div class="tags">
+
+	<a class="category" href="http://xelz.info/blog/categories/ios/">ios</a>
+
+</div>
+
+
+    
+        
+            
+    <div class="comments"><a href="http://xelz.info/blog/2019/01/11/ios-code-signature/#disqus_thread">Comments</a></div>
+            
+        
+    
+</div>
+</article>
+
+	<div class="share">
+	<div class="license">
+		<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+			<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png">
+		</a>
+		<br>
+		This work is licensed under a 
+		<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+			Creative Commons Attribution-NonCommercial 4.0 International License
+		</a>
+		.
+	</div>
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &#xA9; 2019
+
+    xelz
+
+</footer>
+	
+
+
+
+
+
+
+	
+
+
+
+
+</body>
+</html>
