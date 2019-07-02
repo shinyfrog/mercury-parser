@@ -1530,7 +1530,7 @@ function setAttrs(node, attrs) {
 var IS_LINK = new RegExp('https?://', 'i');
 var IMAGE_RE = '.(png|gif|jpe?g)';
 var IS_IMAGE = new RegExp("".concat(IMAGE_RE), 'i');
-var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\s*[\\d.]+[wx])"), 'i');
+var IS_SRCSET = new RegExp("".concat(IMAGE_RE, "(\\?\\S+)?(\\s*[\\d.]+[wx])"), 'i');
 var TAGS_TO_REMOVE = ['script', 'style', 'form'].join(',');
 
 // lazy loaded images into normal images.
@@ -4731,6 +4731,30 @@ var NewsMynaviJpExtractor = {
     // The clean selectors will remove anything that matches from
     // the result
     clean: []
+  }
+};
+
+var ClinicaltrialsGovExtractor = {
+  domain: 'clinicaltrials.gov',
+  title: {
+    selectors: ['h1.tr-solo_record']
+  },
+  author: {
+    selectors: ['div#sponsor.tr-info-text']
+  },
+  date_published: {
+    // selectors: ['span.term[data-term="Last Update Posted"]'],
+    selectors: ['div:has(> span.term[data-term="Last Update Posted"])']
+  },
+  content: {
+    selectors: ['div#tab-body'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.usa-alert> img']
   }
 };
 
@@ -9006,6 +9030,124 @@ var BlowStreetvoiceComExtractor = {
   }
 };
 
+var WwwFujixpassionComExtractor = {
+  domain: 'www.fujixpassion.com',
+  title: {
+    selectors: ['header.entry-header h1']
+  },
+  author: {
+    selectors: ['.entry-meta .entry-author']
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image:secure_url"]', 'value']]
+  },
+  content: {
+    selectors: ['.entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.wpautbox-above']
+  }
+};
+
+var XelzInfoExtractor = {
+  domain: 'xelz.info',
+  title: {
+    selectors: ['article.post h2.title']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['div.entry-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.line-numbers']
+  }
+};
+
+var WwwPhoronixComExtractor = {
+  domain: 'www.phoronix.com',
+  title: {
+    selectors: ['article header']
+  },
+  author: {
+    selectors: ['.author a:first-child']
+  },
+  date_published: {
+    selectors: ['.author'],
+    // 1 June 2019 at 08:34 PM EDT
+    format: 'D MMMM YYYY at hh:mm',
+    timezone: 'America/New_York'
+  },
+  dek: null,
+  lead_image_url: null,
+  content: {
+    selectors: ['.content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var PitchforkComExtractor = {
+  domain: 'pitchfork.com',
+  title: {
+    selectors: ['title']
+  },
+  author: {
+    selectors: ['.authors-detail__display-name']
+  },
+  date_published: {
+    selectors: [['.pub-date', 'datetime']]
+  },
+  dek: {
+    selectors: ['.review-detail__abstract']
+  },
+  lead_image_url: {
+    selectors: [['.single-album-tombstone__art img', 'src']]
+  },
+  content: {
+    selectors: ['.review-detail__text']
+  },
+  extend: {
+    score: {
+      selectors: ['.score']
+    }
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -9103,6 +9245,7 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwFastcompanyComExtractor: WwwFastcompanyComExtractor,
   BlisterreviewComExtractor: BlisterreviewComExtractor,
   NewsMynaviJpExtractor: NewsMynaviJpExtractor,
+  ClinicaltrialsGovExtractor: ClinicaltrialsGovExtractor,
   GithubComExtractor: GithubComExtractor,
   WwwRedditComExtractor: WwwRedditComExtractor,
   JustcompiledBlogspotComExtractor: JustcompiledBlogspotComExtractor,
@@ -9246,7 +9389,11 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   QiitaComExtractor: QiitaComExtractor,
   WwwZcoolComCnExtractor: WwwZcoolComCnExtractor,
   WwwCbndataComExtractor: WwwCbndataComExtractor,
-  BlowStreetvoiceComExtractor: BlowStreetvoiceComExtractor
+  BlowStreetvoiceComExtractor: BlowStreetvoiceComExtractor,
+  WwwFujixpassionComExtractor: WwwFujixpassionComExtractor,
+  XelzInfoExtractor: XelzInfoExtractor,
+  WwwPhoronixComExtractor: WwwPhoronixComExtractor,
+  PitchforkComExtractor: PitchforkComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
