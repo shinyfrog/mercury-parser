@@ -241,3 +241,4 @@ export * from './www.fujixpassion.com';
 export * from './xelz.info';
 export * from './www.phoronix.com';
 export * from './pitchfork.com';
+export * from './mnews.joins.com';
