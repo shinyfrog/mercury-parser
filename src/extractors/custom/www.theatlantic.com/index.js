@@ -1,36 +1,50 @@
-export const WwwTheatlanticComExtractor = {
+// Rename CustomExtractor
+// to fit your publication
+export const TheAtlanticExtractor = {
   domain: 'www.theatlantic.com',
-
   title: {
-    selectors: [['meta[name="og:title"]', 'value']],
+    selectors: ['h1', '.c-article-header__hed'],
   },
 
   author: {
-    selectors: ['.c-byline__author .c-byline__link'],
-  },
-
-  date_published: {
-    selectors: [['time.c-dateline', 'datetime']],
-  },
-
-  dek: {
-    selectors: ['p.c-dek'],
-  },
-
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']],
+    selectors: [['meta[name="author"]', 'value'], '.c-byline__author'],
   },
 
   content: {
-    selectors: ['div.l-article__container'],
+    selectors: ['article', '.article-body'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {},
+    transforms: [],
 
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: [],
+    clean: [
+      '.partner-box',
+      '.callout',
+      '.c-article-writer__image',
+      '.c-article-writer__content',
+      '.c-letters-cta__text',
+      '.c-footer__logo',
+      '.c-recirculation-link',
+      '.twitter-tweet',
+    ],
   },
+
+  dek: {
+    selectors: [['meta[name="description"]', 'value']],
+  },
+
+  date_published: {
+    selectors: [['time[itemprop="datePublished"]', 'datetime']],
+  },
+
+  lead_image_url: {
+    selectors: [['img[itemprop="url"]', 'src']],
+  },
+
+  next_page_url: null,
+
+  excerpt: null,
 };

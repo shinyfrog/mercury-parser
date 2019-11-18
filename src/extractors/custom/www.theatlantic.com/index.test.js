@@ -4,108 +4,59 @@ import cheerio from 'cheerio';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
-import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('WwwTheatlanticComExtractor', () => {
+// Rename CustomExtractor
+describe('AtlanticExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
       url =
-        'https://www.theatlantic.com/technology/archive/2019/03/what-happened-uber-x-companies/584236/';
+        'http://www.theatlantic.com/technology/archive/2016/09/why-new-yorkers-got-a-push-alert-about-a-manhunt/500591/';
       const html = fs.readFileSync(
-        './fixtures/www.theatlantic.com/1555419987158.html'
+        './fixtures/www.theatlantic.com/1474321707642.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
 
-    it('is selected properly', () => {
-      // This test should be passing by default.
-      // It sanity checks that the correct parser
-      // is being selected for URLs from this domain
+    it('is selected properly', async () => {
+      // To pass this test, rename your extractor in
+      // ./src/extractors/custom/www.theatlantic.com/index.js
+      // then add your new extractor to
+      // src/extractors/all.js
       const extractor = getExtractor(url);
       assert.equal(extractor.domain, URL.parse(url).hostname);
     });
 
-    it('returns the title', async () => {
-      // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      const { title } = await result;
+    it('works with a starter story', async () => {
+      // To pass this test, begin filling out your
+      // selectors in ./src/extractors/custom/www.theatlantic.com/index.js. This test is just
+      // a stub; you can add more fields to test as much of
+      // your parser as possible.
+      const { content, title, author, dek, lead_image_url } = await result;
 
-      // Update these values with the expected values from
-      // the article.
-      assert.equal(title, `The Servant Economy`);
-    });
+      const $ = cheerio.load(content);
+      const text = $('*')
+        .first()
+        .text()
+        .trim()
+        .slice(0, 20);
 
-    it('returns the author', async () => {
-      // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      const { author } = await result;
-
-      // Update these values with the expected values from
-      // the article.
-      assert.equal(author, 'Alexis C. Madrigal');
-    });
-
-    it('returns the date_published', async () => {
-      // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      const { date_published } = await result;
-
-      // Update these values with the expected values from
-      // the article.
-      assert.equal(date_published, `2019-03-06T17:49:25.000Z`);
-    });
-
-    it('returns the lead_image_url', async () => {
-      // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      const { lead_image_url } = await result;
-
-      // Update these values with the expected values from
-      // the article.
       assert.equal(
-        lead_image_url,
-        `https://cdn.theatlantic.com/assets/media/img/mt/2019/03/RTS1WJ4H/facebook.jpg?1551898787`
+        title,
+        'Why New Yorkers Received a Push Alert About a Manhunt'
       );
-    });
-
-    it('returns the dek', async () => {
-      // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      const { dek } = await result;
-
-      // Update these values with the expected values from
-      // the article.
+      assert.equal(author, 'Kaveh Waddell');
+      assert.equal(text, 'The city has never b');
       assert.equal(
         dek,
-        'Ten years after Uber inaugurated a new era for Silicon Valley, we checked back in on 105 on-demand businesses.'
+        'The city has never before used the emergency system the way it did Monday morning.'
       );
-    });
-
-    it('returns the content', async () => {
-      // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.theatlantic.com/index.js.
-      // You may also want to make use of the clean and transform
-      // options.
-      const { content } = await result;
-
-      const $ = cheerio.load(content || '');
-
-      const first13 = excerptContent(
-        $('*')
-          .first()
-          .text(),
-        13
-      );
-
-      // Update these values with the expected values from
-      // the article.
       assert.equal(
-        first13,
-        'A DoorDash delivery employeeLisa Baertlein / Reuters In March 2009, Uber was born.'
+        lead_image_url,
+        'https://cdn.theatlantic.com/assets/media/img/mt/2016/09/RTSO9RP/lead_720_405.jpg?mod=1533691849'
       );
     });
   });

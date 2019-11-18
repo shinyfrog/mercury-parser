@@ -187,7 +187,7 @@ export const ExampleExtractor = {
   },
 ```
 
-For much more complex tranforms, you can perform dom manipulation within the tranform function, but this is discouraged unless absolutely necessary. See, for example, the lazy-loaded image transform in [the NYTimesExtractor](www.nytimes.com/index.js#L25), which transforms the `src` attribute on the lazy-loaded image.
+For much more complex tranforms, you can perform dom manipulation within the tranform function, but this is discouraged unless absolutely necessary. See, for example, the lazy-loaded image transform in [the NYTimesExtractor](www.nytimes.com/index.js#L15), which transforms the `src` attribute on the lazy-loaded image.
 
 ## How to generate a custom parser
 
@@ -334,7 +334,7 @@ You can refer to the [NewYorkerExtractor](www.newyorker.com/index.js) to see mor
 
 ### Step 4: Content extraction
 
-I've left content extraction for last, since it's often the trickiest, sometimes requiring special passes to [clean](#cleaning-content) and [transform](#using-tranforms) the content. For the New Yorker, the first part is easy: The selector for this page is clearly `div#articleBody`. But that's just our first step, because unlike the other tests, where we want to make sure we're matching a simple string, we need to sanity check that the page looks good when it's rendered, and that there aren't any elements returned by our selector that we don't want.
+I've left content extraction for last, since it's often the trickiest, sometimes requiring special passes to [clean](#cleaning-content-from-an-article) and [transform](#using-transforms) the content. For the New Yorker, the first part is easy: The selector for this page is clearly `div#articleBody`. But that's just our first step, because unlike the other tests, where we want to make sure we're matching a simple string, we need to sanity check that the page looks good when it's rendered, and that there aren't any elements returned by our selector that we don't want.
 
 To aid you in previewing the results, you can run the `./preview` script to see what the title and content output look like. So, after you've chosen your selector, run the preview script on the URL you're testing:
 
@@ -342,10 +342,69 @@ To aid you in previewing the results, you can run the `./preview` script to see 
 ./preview http://www.newyorker.com/tech/elements/hacking-cryptography-and-the-countdown-to-quantum-computing
 ```
 
-This script will open both an `html` and `json` file allowing you to preview your results. Luckily for us, the New Yorker content is simple, and doesn't require any unusual cleaning or transformations — at least not in this example. Remember that if you do see content that needs cleaned or transformed in the selected content, you can follow the instructions in the [clean](#cleaning-content) and [transform](#using-tranforms) sections above.
+This script will open both an `html` and `json` file allowing you to preview your results. Luckily for us, the New Yorker content is simple, and doesn't require any unusual cleaning or transformations — at least not in this example. Remember that if you do see content that needs cleaned or transformed in the selected content, you can follow the instructions in the [clean](#cleaning-content-from-an-article) and [transform](#using-transforms) sections above.
 
 ## Submitting a custom extractor
 
 If you've written a custom extractor, please send us a pull request! Passing tests that demonstrate your parser in action will help us evaluate the parser.
 
 Sometimes you may find that the site you're parsing doesn't provide certain information. For example, some sites don't have deks, and in those instances, you don't need to write a selector for that field. If there's a test for a selector you don't need, you can just remove that test and make note of it in your pull request.
+
+---
+
+## Adding Custom Extractor via API
+
+As of **version 2.1.1**, you can additionally add custom private extractors via API. Make sure that your custom extractor includes a domain name. Note that extractors added via API will take precedence over the packaged custom extractors.
+
+```javascript
+const customExtractor = {
+  domain: 'www.sandiegouniontribune.com',
+  title: {
+    selectors: ['h1', '.ArticlePage-headline'],
+  },
+  author: {
+    selectors: ['.ArticlePage-authorInfo-bio-name'],
+  },
+  content: {
+    selectors: ['article'],
+  },
+};
+
+Mercury.addExtractor(customExtractor);
+```
+
+---
+
+## Passing custom extractor to addExtractor via CLI
+
+It's also possible to add a custom parser at runtime via the CLI.
+
+### 1. Create your custom extractor in a standalone file.
+
+```javascript
+var customExtractor = {
+  domain: 'postlight.com',
+  title: {
+    selectors: ['h1'],
+  },
+  author: {
+    selectors: ['.byline-name'],
+  },
+  content: {
+    selectors: ['article'],
+  },
+  extend: {
+    uniqueKeyFromFixture: {
+      selectors: ['.single__hero-category'],
+    },
+  },
+};
+
+module.exports = customExtractor;
+```
+
+### 2. From the CLI, add the `--add-extractor` param:
+
+```bash
+mercury-parser https://postlight.com/trackchanges/mercury-goes-open-source --add-extractor ./src/extractors/fixtures/postlight.com/index.js
+```
