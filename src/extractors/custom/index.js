@@ -133,3 +133,4 @@ export * from './pitchfork.com';
 export * from './biorxiv.org';
 export * from './epaper.zeit.de';
 export * from './fortelabs.co';
+export * from './www.macstories.net';
