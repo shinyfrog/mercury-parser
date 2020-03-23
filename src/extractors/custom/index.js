@@ -134,3 +134,4 @@ export * from './biorxiv.org';
 export * from './epaper.zeit.de';
 export * from './fortelabs.co';
 export * from './www.macstories.net';
+export * from './www.macworld.com';

@@ -1,0 +1,2938 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+
+	
+	
+		
+	
+		
+	
+	
+	
+	
+
+<html lang="en">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+	<link rel="alternate" hreflang="en" href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html">	
+	<meta charset="utf-8">
+	<title>How to learn Swift, Apple&#x2019;s language for creating iOS and macOS apps | Macworld</title>
+	<meta name="viewport" value="width=device-width, initial-scale=1.0">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+		
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+        
+    
+    	
+    
+    
+   	
+   	
+		
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+	
+	
+		
+	
+
+
+	
+
+	
+
+	
+		
+		
+	
+
+
+
+		
+		
+	
+
+	
+
+    <link rel="canonical" href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html">
+	
+	
+	
+	
+	
+	<meta name="description" value="Learn the language Apple uses to create apps for iOS and macOS.">
+	<meta itemprop="image" value="https://images.idgesg.net/images/article/2017/08/swift_in_use_students-100734016-medium.jpg">
+	
+	
+		
+			<meta name="DC.date.issued" value="2017-09-01">
+			<meta name="date" value="2017-09-01">
+			
+		
+		
+		
+		 
+	
+	
+	<link rel="amphtml" href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.amp.html">
+
+	
+		<link rel="stylesheet" href="https://use.typekit.net/lzq5miu.css">
+	
+	
+	<meta value="611823" name="twitter:account_id">
+	<meta value="865450560227169" name="fb:app_id">
+	
+		
+		
+		
+			
+			
+				
+			
+			
+			
+		
+		
+	<meta value="article" name="og:type">	
+	<meta value="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html" name="og:url">
+    <meta value="Macworld" name="og:site_name">   
+    
+    
+    	<meta value="https://images.idgesg.net/images/article/2017/08/swift_in_use_students-100734016-large.3x2.jpg" name="og:image">
+    	<meta value="1200" name="og:image:width">
+    	<meta value="800" name="og:image:height">
+    
+    
+    
+    
+    
+    
+    	<meta value="How to learn Apple Swift, Apple&#x2019;s language for creating iOS and macOS apps" name="og:title"> 
+    
+    
+    <meta value="Learn the language Apple uses to create apps for iOS and macOS." name="og:description">
+    
+    
+
+	
+	<meta name="displaytype" value="article">
+	
+	<meta name="source" value="macworld">
+	
+	<meta name="category" value="software development,software,ios,macs,macos,swift">
+	
+	<meta name="storytype" value="howto">
+	
+	
+	
+		<meta name="google-site-verification" value="1NJELq6F-S44I5ACepf9_rYYEBLuwwVjJUv5PrT91SA">
+	
+	
+	
+		<meta name="msvalidate.01" value="05F49F041AAA61528A0A3329A6C0C02D">
+	
+	
+	
+	
+	
+		<link id="mobile-size" rel="stylesheet" href="https://www.macworld.com/www.idgcsmb/css/inline-header-mobile.css?v=20200318114428">
+		
+		<link rel="stylesheet" href="https://www.macworld.com/www.idgcsmb.mw/css/inline-header.css?v=20200318114428">
+	 
+	
+	
+	    
+	
+	<link rel="stylesheet" href="https://www.macworld.com/www.idgcsmb/css/print.css" media="print">
+	
+	
+	<link href="https://www.macworld.com/www.idgcsmb/css/colorbox.css" rel="stylesheet">
+	
+	<link href="https://www.macworld.com/www.idgcsmb/css/global-layout.css?v=20200318114428" rel="stylesheet">
+	<link href="https://www.macworld.com/www.idgcsmb.mw/css/global-layout.css?v=20200318114428" rel="stylesheet">
+	<link href="https://www.macworld.com/www.idgcsmb/css/global-colors.css?v=20200318114428" rel="stylesheet">
+	<link href="https://www.macworld.com/www.idgcsmb.mw/css/global-colors.css?v=20200318114428" rel="stylesheet">
+	<link href="https://www.macworld.com/www.idgcsmb/css/global-typography.css?v=20200318114428" rel="stylesheet">
+	<link href="https://www.macworld.com/www.idgcsmb.mw/css/global-typography.css?v=20200318114428" rel="stylesheet">
+	
+	
+	
+	
+		
+		
+			
+			
+				<link rel="stylesheet" href="https://www.macworld.com/www/css/article.css?v=20200318114428">	
+			
+			
+		<link href="https://www.macworld.com/www.idgcsmb.mw/css/article.css?v=20200318114428" rel="stylesheet">
+	
+	
+	<link href="https://www.macworld.com/www.idgcsmb/css/video.player.css?v=20200318114428" rel="stylesheet" media="all">
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	  
+	
+	<link href="https://www.macworld.com/www.idgcsmb/css/helpers.css" rel="stylesheet">
+	
+	
+	
+	<link rel="shortcut icon" href="https://www.macworld.com/www.idgcsmb.mw/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://csmb.staticworld.net/images/furniture/macworld/mw-apple-touch-icon-precomposed-144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="129x129" href="https://csmb.staticworld.net/images/furniture/macworld/mw-apple-touch-icon-precomposed-129.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://csmb.staticworld.net/images/furniture/macworld/mw-apple-touch-icon-precomposed-114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://csmb.staticworld.net/images/furniture/macworld/mw-apple-touch-icon-precomposed-72.png">
+	<link rel="apple-touch-icon" href="https://csmb.staticworld.net/images/furniture/macworld/mw-apple-touch-icon-precomposed.png">
+	
+
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+	
+		
+				<meta name="twitter:card" value="summary_large_image">
+		
+		
+	
+	<meta value="Learn the language Apple uses to create apps for iOS and macOS." name="twitter:description">
+	
+	
+		
+			<meta name="twitter:site" value="@macworld">
+			
+			
+				
+					<meta name="twitter:image" value="https://images.idgesg.net/images/article/2017/08/swift_in_use_students-100734016-orig.jpg">
+				
+				
+						
+			
+				
+				
+					<meta name="twitter:title" value="How to learn Apple Swift, Apple&#x2019;s language for creating iOS and macOS apps">
+				
+				
+			
+			
+				
+				
+					<meta name="twitter:url" value="www.macworld.com">
+				
+			
+		
+		
+		
+		
+		
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+			
+				
+			
+			
+			
+			
+			
+			
+		
+		
+		
+	
+	
+	
+		
+		
+		
+		
+		  
+		
+	
+	
+	
+	
+	
+	
+	
+	  	 
+	    
+	    
+	 
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+			
+			
+			
+			
+				
+					
+					
+				
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+			
+
+		
+			
+				
+					
+					
+					
+						
+							
+					
+						
+					
+					
+					
+					
+					
+					
+						
+					
+				
+				
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+			
+	
+	
+	
+	
+	
+
+
+
+
+	
+		
+	
+		
+	
+	
+
+
+
+	
+	
+	
+	
+	
+	
+		
+			
+				
+				
+				
+					
+				
+			
+			
+			
+			
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	 
+	 
+		
+	
+	 
+	 
+	
+		
+	
+	
+	
+	
+		
+	
+	
+	
+	 
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?GTM-WR6LD2P" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+	
+	
+	
+	
+
+	
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+</head>
+
+	<body id="article3220520" class="article macworld">
+		 
+		
+			<div id="skinAdTarget"></div>
+		
+
+		
+			<div id="superadunit" class="hidden">
+			    <div class="ad">
+			    	<div class="ad-header">
+						<div class="brand-logo"></div>
+						<a href="javascript:unhide(&apos;superadunit&apos;);" id="superstitial-text">Close Ad</a>
+					</div>
+					
+						
+						
+						
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+			
+		  		
+		
+		
+	
+ 
+ 
+	
+			    </div>
+			</div>		
+		
+
+		
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+		
+		
+		
+			
+		
+				
+					
+				
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<div id="page-top">
+				<div class="page-top-inner" itemscope="" itemtype="http://schema.org/Organization">
+				<link itemprop="url" href="http://www.macworld.com/"> 
+			    
+		
+		
+		
+		
+		<div class="network-header">
+				<div class="network-header-inner">
+					<div id="network-tools">
+		
+						<div id="saved-comparisons"></div>				
+						<ul class="hmenu" id="heroLogin">				
+							
+							<li class="subscribeHeader"><a href="https://simplecirc.com/subscribe/macworld">Subscribe</a><div class="subscribe-hover" style="">
+		                        <div class="pointer">&#x25B2;</div>
+		                        <span>Learn more about Macworld&apos;s Digital Edition</span>
+		                        <img alt="Macworld Magazine Cover" src="https://alt.idgesg.net/images/furniture/macworld/footer-subscribe-mag-mw.png">
+		                      </div></li>
+						</ul>
+					</div>
+		
+						<div id="network-social">					
+		                  
+							
+							<a href="http://www.facebook.com/Macworld" class="network-fb ss-icon ss-social-circle banner-social banner-fb" alt="Facebook" itemprop="sameAs" rel="nofollow">
+								&#xF610;
+							</a>
+							<a href="https://twitter.com/macworld" class="network-tw ss-icon ss-social-circle banner-social banner-tw" alt="Twitter" itemprop="sameAs" rel="nofollow">
+								&#xF611;
+							</a>
+							<a href="https://www.youtube.com/user/macworld" class="network-youtube ss-icon ss-social-circle banner-social banner-youtube" alt="YouTube">
+								&#xF630;
+							</a>
+		
+						
+		
+						</div>
+					
+						
+				</div>
+			</div>
+		
+		
+			<header id="banner">
+				<a id="mobile-offscreen-toggle" class="ss-standard ss-rows" href="javascript://"></a>
+				<div id="logo">
+					<a href="https://www.macworld.com/" class="ir banner-logo" id="logoImage">Home</a>		
+				</div>
+				<div id="mobile-search-toggle" class="ss-standard ss-search"></div>
+			</header>
+		
+		
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="main-nav">
+	<div class="container clearfix">
+		<ul class="fmenu" id="panel-nav">
+			<li class="newsNav"><a href="https://www.macworld.com/news/" id="whatsHotNav">News</a></li>
+			<li class="reviewsNav"><a href="https://www.macworld.com/reviews/" id="reviewsNav">Reviews</a></li>
+			<li class="howtoNav"><a href="https://www.macworld.com/howto/" id="howtoNav">How-To</a></li>
+			<li class="videoNav"><a href="https://www.macworld.com/video/" id="videoNav">Video</a></li>
+			<li class="dealsNav"><a href="https://www.macworld.com/deals" id="dealsNav">Deals</a></li>
+			
+
+		</ul>
+
+		<ul class="fmenu" id="site-nav">
+			
+				<li><a href="https://www.macworld.com/category/macs/">Macs</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/apple-phone/">iPhones</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/ipad/">iPads</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/ios/">iOS</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/wearables/">Wearables</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/home-tech/">Home Tech</a>
+					
+				</li>
+			
+				<li><a href="https://www.macworld.com/category/business/">Business</a>
+					
+				</li>
+			
+			
+			<li class="displayMobileOnly"><a href="https://www.macworld.com/subscribe/">Subscribe</a></li>
+		</ul>
+		
+			<div id="extra-nav-toggle"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#extra-nav" class="ss-dropdown"></a></div>
+			
+			<div id="extra-nav">
+				<ul>
+					
+						<li><a href="https://www.macworld.com/resources/">Resources</a></li>
+					
+						<li><a href="https://www.macworld.com/category/macs/">Macs</a></li>
+					
+						<li><a href="https://www.macworld.com/category/macbook/">MacBooks</a></li>
+					
+						<li><a href="https://www.macworld.com/category/mac-desktop/">iMacs</a></li>
+					
+						<li><a href="https://www.macworld.com/category/apple-phone/">iPhones</a></li>
+					
+					<li><a href="https://www.macworld.com/blogs">Blogs</a></li>
+					<li><a href="https://www.macworld.com/sponsors">Sponsorships</a></li>
+				</ul>
+				<ul>
+					
+						<li><a href="https://www.macworld.com/category/ipad/">iPads</a></li>
+					
+						<li><a href="https://www.macworld.com/category/computers-accessories/">Computer Accessories</a></li>
+					
+						<li><a href="https://www.macworld.com/category/desktop-apps/">Desktop Software</a></li>
+					
+						<li><a href="https://www.macworld.com/category/software-music/">Audio</a></li>
+					
+						<li><a href="https://www.macworld.com/category/enterprise/">Enterprise</a></li>
+					
+						<li><a href="https://www.macworld.com/category/cameras/">Cameras</a></li>
+					
+						<li><a href="https://www.macworld.com/category/components/">Components</a></li>
+					
+						<li><a href="https://www.macworld.com/category/development-tools/">Development Tools</a></li>
+					
+				</ul>
+				<ul>
+					
+						<li><a href="https://www.macworld.com/category/displays/">Displays</a></li>
+					
+						<li><a href="https://www.macworld.com/category/e-readers/">E-readers</a></li>
+					
+						<li><a href="https://www.macworld.com/category/home-theater/">Home Theater</a></li>
+					
+						<li><a href="https://www.macworld.com/category/mobile-apps/">Mobile Apps</a></li>
+					
+						<li><a href="https://www.macworld.com/category/phone-accessories/">Phone Accessories</a></li>
+					
+						<li><a href="https://www.macworld.com/category/tablet-accessories/">Tablet Accessories</a></li>
+					
+						<li><a href="https://www.macworld.com/category/mp3-players/">MP3 Players</a></li>
+					
+						<li><a href="https://www.macworld.com/category/mac-os-x/">MacOS</a></li>
+					
+				</ul>
+				<ul>
+					
+						<li><a href="https://www.macworld.com/category/printers/">Printers</a></li>
+					
+						<li><a href="https://www.macworld.com/category/networking/">Networking</a></li>
+					
+						<li><a href="https://www.macworld.com/category/software-productivity/">Productivity Software</a></li>
+					
+						<li><a href="https://www.macworld.com/category/smartwatches/">Smartwatches</a></li>
+					
+						<li><a href="https://www.macworld.com/category/storage/">Storage</a></li>
+					
+						<li><a href="https://www.macworld.com/category/input-stylus/">Styluses</a></li>
+					
+				</ul>
+			</div>
+		
+	</div>
+</div>	
+
+
+
+
+
+
+
+
+
+		
+		
+				</div> 
+			</div> 
+		
+		
+		
+		
+					
+				
+					
+						
+						 
+							
+								
+								
+								
+								
+								
+											    			
+								
+							
+							
+							
+							
+							
+						
+						 
+						 
+						 
+						 
+						  
+						  
+						 
+						 
+					
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+				
+		
+		
+		
+	
+
+
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="page-wrapper" class="page-wrapper">
+	
+	
+
+
+
+
+
+
+
+
+
+
+	
+	<section role="main" itemscope="" itemtype="http://schema.org/Article">
+	
+		
+		
+		
+
+		<article itemscope="" itemtype="http://schema.org/Article">
+
+		
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="cat">
+
+	
+	
+	
+	
+	
+	
+		
+<ins class="adsbygoogle" style="display:block;" data-ad-client="ca-pub-4268075595326305" data-ad-slot="9945794902" data-ad-format="link"></ins>
+
+
+
+	
+	
+	
+	<nav class="breadcrumbs horiz">
+		<ul itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+			<li><a class="edition-link-url" href="https://www.macworld.com/" itemprop="url"><span itemprop="title">Home</span></a></li>
+			
+				
+				
+				
+					<li><a class="edition-link-url" href="https://www.macworld.com/category/application-development/" itemprop="url"><span class="article-primary-cat" itemprop="title">Software Development</span></a></li>
+				
+			
+		</ul>
+	</nav>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="category"><a class="edition-link-url" href="https://www.macworld.com/howto" itemprop="genre">How-To</a></div>
+		
+	
+	
+
+	<h1 itemprop="headline">How to learn Apple Swift, Apple&#x2019;s language for creating iOS and macOS apps</h1>
+	
+	
+	
+	
+		<section class="deck viewability">
+			<h3 itemprop="description">Learn the language Apple uses to create apps for iOS and macOS.</h3>
+		</section>
+	
+	
+	
+	
+	
+	
+	
+	
+			<div class="cat-social">
+				
+					
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+	
+
+				
+
+	
+	
+		
+		
+	
+
+
+
+	
+	
+
+
+	
+
+
+<div id="sharer" class="cat sidecar show">
+<ul id="share-tool" class="expand">
+
+
+
+	<li class="sosh">
+		<a data-socialsite="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.macworld.com%2Farticle%2F3220520%2Fhow-to-learn-apple-swift.html" target="_blank">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/facebook.svg">
+		</a>
+	</li>
+	<li class="sosh">
+		<a data-socialsite="Twitter" class="twit-hand" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.macworld.com%2Farticle%2F3220520%2Fhow-to-learn-apple-swift.html&amp;via=macworld&amp;text=How+to+learn+Apple+Swift%2C+Apple%E2%80%99s+language+for+creating+iOS+and+macOS+apps" target="_blank">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/twitter.svg">
+		</a>	
+	</li>
+	<li class="sosh">
+		<a data-socialsite="Linkedin" href="http://www.linkedin.com/shareArticle?url=https%3A%2F%2Fwww.macworld.com%2Farticle%2F3220520%2Fhow-to-learn-apple-swift.html&amp;title=How+to+learn+Apple+Swift%2C+Apple%E2%80%99s+language+for+creating+iOS+and+macOS+apps" target="_blank">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/linkedin.svg">
+		</a>
+	</li>
+	<li class="sosh">
+		<a data-socialsite="Reddit" href="http://reddit.com/submit?url=https%3A%2F%2Fwww.macworld.com%2Farticle%2F3220520%2Fhow-to-learn-apple-swift.html&amp;title=How+to+learn+Apple+Swift%2C+Apple%E2%80%99s+language+for+creating+iOS+and+macOS+apps" target="_blank">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/reddit.svg">
+		</a>
+	</li>
+	<li class="sosh cat">
+		<a href="mailto:?Subject=How%20to%20learn%20Apple%20Swift,%20Apple&#x2019;s%20language%20for%20creating%20iOS%20and%20macOS%20apps&amp;Body=Check%20out%20this%20article%20from%20Macworld%3A%20https%3A%2F%2Fwww.macworld.com%2Farticle%2F3220520%2Fhow-to-learn-apple-swift.html" target="_blank" rel="nofollow" id="email-icon">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/mail.svg">
+		</a>
+	</li>
+	<li class="sosh hide cat print">
+		<a href="javascript:window.print();">
+			<img class="sidecar-icon" src="https://idge.staticworld.net/images/print.svg">
+		</a>
+	</li>
+
+
+
+</ul>
+</div>
+
+
+
+
+
+			</div>
+	
+	
+	
+
+	
+		
+			
+				
+				<div class="cat byline vcard author with-image">		
+					<div class="byline-wrapper">
+						<p class="name" itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+							
+						
+							
+							
+							
+							
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="https://www.macworld.com/author/Roman-Loyola/" rel="author" title="Roman Loyola"><img class="bylineImage  imgId100003816 " src="https://images.techhive.com/images/article/2012/09/rloyol-100003816-byline.jpg" width="34" alt="Roman Loyola" itemprop="image"></a>
+
+						
+							
+								
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="by">By </span><span class="fn" itemprop="name"><a rel="author" itemprop="url" href="https://www.macworld.com/author/Roman-Loyola/"><span itemprop="name">Roman Loyola</span></a></span>
+						</p>
+						<p class="dateline">
+						
+							Senior Editor, 
+								
+									
+								
+
+
+
+
+
+
+
+
+
+
+
+
+<span itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"><span class="publisher" itemprop="name">Macworld</span><meta itemprop="logo" value="https://alt.idgesg.net/images/furniture/macworld/MW_logo_300x300.png"></span> <span class="divider break">|</span>
+							
+	
+							<span class="pub-date" itemprop="datePublished" content="2017-09-01T04:00-0700"><span class="format-date"></span>
+								
+							</span>
+						</p>
+					</div>
+				</div>
+			
+		
+	
+	
+		
+	
+	
+	
+	
+		
+			<div id="articleLeaderboardWrapper">
+				<div id="articleLeaderboardInner">
+						
+						
+								
+									
+								
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+			<div id="gpt-leaderboard" class=" ad-container"></div>
+    		
+    	
+	
+ 
+ 
+	
+						
+				</div>
+			</div>
+			
+				
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+			<div id="gpt-leaderboardmobile" class=" ad-container"></div>
+    		
+    	
+	
+ 
+ 
+	 
+		
+	
+	
+	
+</header>
+
+
+
+
+	<div class="constrain-970">
+		
+		
+		
+		
+			
+				<div class="lede-container">
+					
+					
+					
+						
+						
+							
+				                
+				                	
+				                	
+				                
+				                
+								
+								
+								
+							
+							
+							
+							
+							<figure itemprop="image" itemscope="" itemtype="http://schema.org/ImageObject" class="hero-img">
+								<meta itemprop="representativeOfPage" value="1">
+								<meta itemprop="height" value="800">
+								<meta itemprop="width" value="1200">
+					    		
+					    		<img data-original="https://images.idgesg.net/images/article/2017/08/swift_in_use_students-100734016-large.jpg" class="lazy" loading="lazy" alt="swift in use students" itemprop="contentUrl" src="https://images.idgesg.net/images/article/2017/08/swift_in_use_students-100734016-large.jpg">
+					    		
+					    		<figcaption>
+					    			
+					    			
+					    				<span class="credit" itemprop="copyrightHolder">
+					    					
+							    				
+							    				Apple
+						    				
+				
+							    			
+							    				
+							    				
+							    				
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+												  	
+												
+							    				
+							    				
+												
+											
+									
+										</span>
+					    			
+									
+					    		</figcaption>
+							</figure>
+							
+				
+						
+						
+					
+				</div>
+			
+			
+		
+	
+
+
+
+<section class="epo cat-narrow" id="drr-top-ad">
+
+	
+	
+	
+		<div class="techDeals">
+			<div class="hed">
+				<p>Today&apos;s Best Tech Deals</p>
+				<p>Picked by Macworld&apos;s Editors</p>
+			</div>
+			<div class="techDealsModule"></div>
+		  	
+			<div class="moreDeals"><a href="https://www.macworld.com/deals/">Find More Hand-Picked Tech Deals</a></div>
+		</div>
+	
+	
+	
+	
+		<div class="ad top-ad">
+	
+		
+		
+			
+				
+					
+						
+					
+					
+				
+				
+				
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+		
+			
+			
+			
+			
+			
+			
+				<div id="gpt-showcase" class="adunit ad-container test">					
+				</div>				
+				
+			
+		
+	
+ 	
+ 
+ 
+		
+	
+</div>
+	
+	
+	
+	
+		<div class="topDeals topper">
+					<div class="hed">
+						<p>Top Deals On Great Products</p>
+						<p>Picked by Techconnect&apos;s Editors</p>
+					</div>
+					<div class="topDealsModule"></div>
+				  	
+					<div class="moreDeals"><a href="http://www.techconnect.com/deals/">See More Hand-Picked Deals</a></div>
+		</div>
+	
+	
+	
+	
+	
+	
+</section>
+
+</div>
+
+
+
+
+
+
+
+<div class="constrain-970">
+	
+</div>
+
+
+
+
+
+
+
+
+		<section class="bodee">
+
+			
+				
+				
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+	
+	
+	
+	
+		<div class="ad placement">
+			
+				
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+		
+			
+			
+			
+				
+				
+				<div id="inread" class=" ad-container">					
+				</div>
+				
+				
+				
+					
+			
+			
+			
+			
+		
+	
+ 	
+ 
+ 
+		</div>
+	
+	
+	
+	
+	
+	
+	
+	
+		
+			
+				<div class="tocWrapper scaleArticleToc some-toc" data-tracking-category="In-article TOC">
+					<legend>Table of Contents <i class="ss-navigatedown"></i></legend>
+					<ul class="articleToc">
+						
+							
+								
+								
+							
+							<li data-pagenum="1" data-tocnum="1"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#toc-1" class="trackLink">How to learn Swift: Getting started</a></li>
+						
+							
+								
+								
+							
+							<li data-pagenum="1" data-tocnum="2"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#toc-2" class="trackLink">How to learn Swift: Apple tutorials and courses</a></li>
+						
+							
+								
+								
+							
+							<li data-pagenum="1" data-tocnum="3"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#toc-3" class="trackLink">How to learn Swift: iTunes U</a></li>
+						
+							
+								
+								
+							
+							<li data-pagenum="1" data-tocnum="4"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#toc-4" class="trackLink">How to learn Swift: Third-party online courses</a></li>
+						
+							
+								
+								
+							
+							<li data-pagenum="1" data-tocnum="5"><a href="https://www.macworld.com/article/3220520/how-to-learn-apple-swift.html#toc-5" class="trackLink">How to learn Swift: Podcasts</a></li>
+						
+					</ul>
+					<div class="toc-show-more">Show More <i class="ss-navigatedown"></i></div>
+				</div>
+	
+					
+				    
+			
+		
+		
+	
+	
+	
+	
+	
+	
+			
+	
+	
+	
+	
+	
+	
+		
+		
+			
+		
+	
+	
+	
+	
+	
+		
+			
+				
+				
+				
+					
+				
+				
+			
+		
+		
+	
+	
+		
+		
+			<div id="drr-container" class="cat " itemprop="articleBody">
+		
+		
+		
+		
+	
+		
+			
+			
+				<p>Want to create your own app? To do so, you need to learn a programming language. Fortunately, Apple has a language for writing apps for the Mac, iPhone, and iPad, and you can have fun learning it, as well. It&#x2019;s called <a href="https://swift.org/" rel="nofollow">Swift</a>.</p><p>Released in 2014, Swift&#x2019;s <a href="https://www.tiobe.com/tiobe-index/" rel="nofollow">popularity amongst programmers</a> continues to grow. Swift is an open-source language, so you can write apps for Linux, as well.</p><p>There are a lot of ways to go about learning Swift, and many of the lessons can be done on your own time, sometimes for free. Many of these tutorials and guides are based on the premise that you already know how to program in another language, or are familiar with programming concepts.</p><aside id="fsb-2608" class="fakesidebar fakesidebar-auto"><a href="https://www.macworld.com/article/3220520/application-development/how-to-learn-apple-swift.html">[ Further reading: Swift programming language tutorials and courses ]</a></aside><p>If you&#x2019;re absolutely new to programming, you may want to prep yourself first on the general programming core concepts. There are several online courses, like <a href="https://www.khanacademy.org/computing/computer-programming" rel="nofollow">Khan Academy</a>, <a href="https://www.udemy.com/learn-programming-an-introduction-for-non-programmers/" rel="nofollow">Udemy</a>, <a href="https://www.coursera.org/learn/programming-languages" rel="nofollow">Coursera</a>, and <a href="https://www.lynda.com/learning-paths/Developer/become-a-programmer" rel="nofollow">Lynda.com</a> that have introduction courses. You can also check your local community college if you think you would benefit from being in a classroom and computer lab. Prices vary and some institutions offer tuition assistance.</p><p>If you&#x2019;re already familiar with coding core concepts, or you just want to dive in and see how it goes, you can get started on learning Swift. Here&#x2019;s how.</p><h2 class="toc" id="toc-1">How to learn Swift: Getting started</h2><p>The first step is to download Xcode, Apple&#x2019;s app for creating software. Xcode includes Swift and it&#x2019;s free. You can download it by clicking the link below, which will take you to the App Store.</p><blockquote>
+<p><strong><a href="https://itunes.apple.com/app/xcode/id497799835" rel="nofollow">Download Xcode</a></strong></p>
+</blockquote><p>The next step is to take a look at Apple&#x2019;s Swift resources. These are free guides, code samples, videos, and documents you can access, and you don&#x2019;t need a developer account.</p><blockquote>
+<p><strong><a href="https://developer.apple.com/swift/resources/" rel="nofollow">Go to Apple&#x2019;s Swift Resouces</a></strong></p>
+</blockquote><figure class="large "><a class="zoom" href="https://images.idgesg.net/images/article/2017/08/swift-tour-sample-code-100734014-orig.jpg" rel="nofollow"><img border="0" alt="swift tour sample code" width="700" height="417" data-imageid="100734014" data-original="https://images.idgesg.net/images/article/2017/08/swift-tour-sample-code-100734014-large.jpg" class="lazy" loading="lazy" src="https://images.idgesg.net/images/article/2017/08/swift-tour-sample-code-100734014-large.jpg"></a> <small class="credit">Apple</small> <figcaption>
+<p>Apple has sample code available for anyone learning Swift.</p>
+</figcaption></figure><h2 class="toc" id="toc-2">How to learn Swift: Apple tutorials and courses</h2><p>If you&#x2019;re a student or you&#x2019;re absolutely new to programming, make your first foray into Swift with <a href="https://www.macworld.com/article/3095824/ios/meet-swift-playgrounds-the-learn-to-code-ipad-app-that-feels-like-a-puzzle-game.html">Swift Playgrounds</a>. Swift Playgrounds is an iOS app for iPad that uses interactivity to learn the language. You learn Swift fundamentals by using real code to work your way through a set of puzzles. As you progress, you lean more complex concepts. It&#x2019;s a fun way to lean Swift, even if you&#x2019;re an experienced coder, and it&#x2019;s free.</p><aside class="nativo-promo nativo-promo-1 smartphone tablet desktop" id=""> </aside><blockquote>
+<p><strong><a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=908519492" rel="nofollow">Download Swift Playgrounds</a></strong></p>
+</blockquote><figure class="large "><a class="zoom" href="https://images.idgesg.net/images/article/2017/08/sp_playgrounds_stepping-100734015-orig.jpg" rel="nofollow"><img border="0" alt="sp playgrounds stepping" width="700" height="521" data-imageid="100734015" data-original="https://images.idgesg.net/images/article/2017/08/sp_playgrounds_stepping-100734015-large.jpg" class="lazy" loading="lazy" src="https://images.idgesg.net/images/article/2017/08/sp_playgrounds_stepping-100734015-large.jpg"></a> <small class="credit">Apple</small> <figcaption>
+<p>Swift Playground in Spanish.</p>
+</figcaption></figure><p>Apple has a lot of great resources on its iBooks Store. Best of all, they&#x2019;re free. You can find them using the iBooks app on your iOS device or Mac. Give them a try.</p><ul>
+<li><a href="https://itunes.apple.com/us/book/intro-to-app-development-with-swift/id1118575552" rel="nofollow">Intro to App Development with Swift</a>: Learn the basic fundamentals, UI design principals, and get familiar with the tools you will use. Start with this one.</li>
+<li><a href="https://itunes.apple.com/us/book/app-development-with-swift/id1219117996" rel="nofollow">App Development with Swift</a>: You should be able to build an app by the end of this course.</li>
+<li><a href="https://itunes.apple.com/us/book/the-swift-programming-language-swift-3-1/id881256329" rel="nofollow">The Swift Programming Language (Swift 3.1)</a>: Reference guide for the current version (as of September 2017) of Swift.</li>
+<li><a href="https://itunes.apple.com/us/book/the-swift-programming-language-swift-4-beta/id1002622538" rel="nofollow">The Swift Programming Language (Swift 4 beta)</a>: This reference guide dives into the next version of Swift, version 4, coming soon.</li>
+<li><a href="https://itunes.apple.com/us/book/using-swift-with-cocoa-and-objective-c-swift-3-1/id888894773" rel="nofollow">Using Swift with Cocoa and Objective-C (Swift 3.1)</a>: Already use Cocoa and Objective-C? Here how you integrate Swift into your workflow.</li>
+<li><a href="https://itunes.apple.com/us/book/using-swift-with-cocoa-and-objective-c-swift-4-beta/id1002624212" rel="nofollow">Using Swift with Cocoa and Objective-C (Swift 4 beta)</a></li>
+</ul><figure class="large "><a class="zoom" href="https://images.idgesg.net/images/article/2017/08/intro-app-dev-swift-100734013-orig.jpg" rel="nofollow"><img border="0" alt="intro app dev swift" width="700" height="537" data-imageid="100734013" data-original="https://images.idgesg.net/images/article/2017/08/intro-app-dev-swift-100734013-large.jpg" class="lazy" loading="lazy" src="https://images.idgesg.net/images/article/2017/08/intro-app-dev-swift-100734013-large.jpg"></a> <small class="credit">Apple</small> <figcaption>
+<p>Intro to App Development with Swift.</p>
+</figcaption></figure><h2 class="toc" id="toc-3">How to learn Swift: iTunes U</h2><p>The iTunes U section of the iTunes Store has lots of Swift-related content. Here are a few courses to try. (Note: Starting in September 2017, iTunes U will be located in the Podcasts section of the iTunes Store. It is no longer its own separate section.)</p><ul>
+<li><a href="https://itunes.apple.com/us/course/swift-playgrounds-learn-to-code-1-2/id1153807202" rel="nofollow">Swift Playgrounds: Learn to Code 1&amp;2</a>: Use this set of lessons with the Swift Playgrounds app.</li>
+<li><a href="https://itunes.apple.com/us/course/developing-ios-10-apps-with-swift/id1198467120" rel="nofollow">Developing iOS 10 Apps with Swift</a>: The course is offered by the Stanford University School of Engineering.</li>
+<li><a href="https://itunes.apple.com/us/course/ios-development-in-swift/id950659946" rel="nofollow">iOS Development in Swift</a>: Offered by Plymouth University, this course is geared towards students familiar with programming, but lack iOS or Mac experience.</li>
+</ul><figure class="large "><a class="zoom" href="https://images.idgesg.net/images/article/2017/08/itunes-u-swift-playground-course-100734010-orig.jpg" rel="nofollow"><img border="0" alt="itunes u swift playground course" width="700" height="467" data-imageid="100734010" data-original="https://images.idgesg.net/images/article/2017/08/itunes-u-swift-playground-course-100734010-large.jpg" class="lazy" loading="lazy" src="https://images.idgesg.net/images/article/2017/08/itunes-u-swift-playground-course-100734010-large.jpg"></a> <small class="credit">Apple</small> <figcaption>
+<p>The Swift Playgrounds: Learn to Code 1&amp;2 course is a great companion to the Swift Playgrounds app.</p>
+</figcaption></figure><h2 class="toc" id="toc-4">How to learn Swift: Third-party online courses</h2><p>If you feel like you could benefit from more training, or want to to take a more formal course, there are several online classes you can take with third-party services. You&#x2019;ll have to pay fees for each course, and the prices vary. Here are a few online courses.</p><p><a href="https://www.coursera.org/" rel="nofollow"><strong>Coursera</strong></a>&#xA0;has a <a href="https://click.linksynergy.com/link?id=*l6kYCuH720&amp;offerid=467035.1560499560&amp;type=2&amp;murl=https%3A%2F%2Fwww.coursera.org%2Fspecializations%2Fapp-development" rel="nofollow">four-part series on Swift iOS app development</a>, which is done in conjunction with the University of Toronto.</p><aside class="nativo-promo nativo-promo-2 tablet desktop smartphone" id=""> </aside><p><a href="https://tutsplus.com/" rel="nofollow"><strong>Envato Tuts+</strong></a>&#xA0;has a few <a href="https://tutsplus.com/courses/search/swift" rel="nofollow">Swift courses</a>, but be sure that the one you&#x2019;re taking is for the current version of Swift; they still have courses available for Swift versions 1 and 2.</p><p><a href="https://www.lynda.com/in/it?cid=l1:en:af:le:prosc:s2057:0:ind:cj:1" rel="nofollow"><strong>Lynda.com</strong></a> has&#xA0;<a href="https://www.lynda.com/search?q=Swift" rel="nofollow">several Swift courses</a>. Each course has a video preview so you can see if the instructor strikes a chord with you.</p><p><strong>Thinkful</strong>&#xA0;<a href="https://www.thinkful.com/courses/learn-swift-programming-online/" rel="nofollow">courses</a>&#xA0;are pricey, but you learn with a mentor who meets with you through video chat.</p><p><a href="https://www.udacity.com/" rel="nofollow"><strong>Udacity</strong></a>&#xA0;has a <a href="https://www.udacity.com/course/swift-for-beginners--ud1022" rel="nofollow">free beginners course</a> and a <a href="https://www.udacity.com/course/swift-for-developers--ud1025" rel="nofollow">free course for developers</a>. They also offer (for a fee) a &#x201C;nanodegree&#x201D; program that&#x2019;s more structured.</p><p><a href="https://click.linksynergy.com/fs-bin/click?id=*l6kYCuH720&amp;offerid=323058.81&amp;type=3&amp;subid=0" rel="nofollow"><strong>Udemy</strong></a>&#xA0;has <a href="https://www.udemy.com/courses/search/?q=swift" rel="nofollow">several Swift courses</a>&#xA0;that span offerings for <a href="https://click.linksynergy.com/link?id=*l6kYCuH720&amp;offerid=323058.607462&amp;type=2&amp;murl=https%3A%2F%2Fwww.udemy.com%2Fswift-for-absolute-beginners%2F" rel="nofollow">beginners</a> as well as more <a href="https://click.linksynergy.com/link?id=*l6kYCuH720&amp;offerid=323058.863494&amp;type=2&amp;murl=https%3A%2F%2Fwww.udemy.com%2Fmastering-swift-2-programming%2F" rel="nofollow">seasoned programmers</a>. They have many courses that seem to cover the same topics, but each course is offered by a different instructor. Look at the star ratings and read the reviews before signing up for a course.</p><h2 class="toc" id="toc-5">How to learn Swift: Podcasts</h2><p>Podcasts are a great way to supplement your lessons. Hear and learn from developers about their experiences creating apps with Swift.</p><ul>
+<li><a href="https://itunes.apple.com/us/podcast/swift-by-sundell/id1267161825" rel="nofollow">Swift by Sundell</a>: John Sundell&#x2019;s podcast is relatively new, but his <a href="https://www.swiftbysundell.com/" rel="nofollow">weekly blog about Swift development</a> has been around for a while.</li>
+<li><a href="https://itunes.apple.com/us/podcast/swift-teacher/id1213030529" rel="nofollow">Swift Teacher</a>: Brian Foutty talks to Swift teachers about Swift in the classroom.</li>
+<li><a href="https://itunes.apple.com/us/podcast/swift-unwrapped/id1209817203" rel="nofollow">Swift Unwrapped</a>: JP Simard and Jesse Squires talk about Swift news and developments.</li>
+<li><a href="https://itunes.apple.com/us/podcast/swiftcoders-weekly-interviews-with-swift-developers/id1082937962" rel="nofollow">SwiftCoders</a>: Garric Nahapetian talks to developers about their stories, tips, and tricks using Swift.</li>
+</ul>
+			
+		
+		
+	
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+
+
+
+
+
+
+
+
+
+
+<div class="end-note">
+	
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+			
+
+		
+			
+				
+					
+					
+					
+						
+							
+					
+						
+					
+					
+					
+					
+					
+					
+						
+					
+				
+				
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+			<div id="" class="blx blxParticleendnote blxM2007  blox4_html  blxC24067">Note: When you purchase something after clicking links in our articles, we may earn a small commission. Read our <a href="https://www.macworld.com/about/affiliates.html">affiliate link policy</a> for more details.   </div>
+		
+	
+
+	
+
+
+</div>
+		
+		
+	</div>
+	
+	
+	
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	    <div class="apart-alt tags">
+	    <span class="related">Related: </span>
+	    <ul>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/application-development"><span class="primary-cat-name2">Software Development</span></a></li>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/software"><span class="primary-cat-name2">Software</span></a></li>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/ios"><span class="primary-cat-name2">iOS</span></a></li>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/macs"><span class="primary-cat-name2">Macs</span></a></li>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/mac-os-x"><span class="primary-cat-name2">MacOS</span></a></li>
+			
+				<li><a class="edition-link-url primary-cat-url2" href="https://www.macworld.com/category/swift"><span class="primary-cat-name2">Swift</span></a></li>
+			 
+			
+				
+				
+					 
+						 
+				    				
+					
+				
+					
+			
+	    </ul>
+	   
+		</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
+	   		
+			
+
+
+
+
+
+
+
+
+
+
+
+
+		
+	
+	
+	
+	<div class="byline vcard author end-byline">	
+		<div class="author-info" id="romanloyola">		
+			
+			
+				<p>Roman has covered technology since the early 1990s. His career started at MacUser, and he&apos;s worked for MacAddict, Mac|Life, and TechTV. He&apos;s also written for MacRumors and Realtor.com.</p>
+					
+		</div>	
+		
+		<div class="brand-social">
+				<div class="follow-text">Follow</div>
+				<ul class="social-links">
+					<li>
+						<a href="https://www.macworld.com/author/Roman-Loyola/">
+							<i class="ss-icon ss-user"></i>
+						</a>
+					</li>
+					
+					<li>
+						<a href="https://twitter.com/pinatubo2000" class="twitter-follow" target="_blank">
+							<i class="ss-icon ss-social ss-twitter"></i>
+						</a>
+					</li>
+					
+					
+					<li>
+						<a href="https://www.facebook.com/romanloyola" class="facebook-follow" target="_blank">
+							<i class="ss-icon ss-social ss-facebook"></i>
+						</a>
+					</li>
+					
+					
+				</ul>
+			</div>
+			
+	</div>
+	
+	
+		
+			
+			
+	
+	
+	
+	
+		 
+	
+	
+	
+	
+	
+		
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 
+	
+
+
+
+
+
+
+
+	
+
+
+
+	
+
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+
+				
+			
+		
+		</section>
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+			
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div id="content-recommender">
+		<div class="OUTBRAIN" data-widget-id="AR_1" data-ob-template="MacWorld_1"></div>&#xA0;&#xA0;
+	</div>
+	
+
+
+
+			
+				
+		
+	
+		<div id="amazon-bottom-widget">
+			<div class="amzn-custom-header">Shop Tech Products at Amazon</div>
+			<div id="amazon-links" class="rr sector" original="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&amp;storeId=httpwwwidgcsm-20&amp;adInstanceId=f28f8449-ab80-4ceb-941b-6f3ebf8ef345">
+				<code type="text/javascript">
+				</code>
+			</div>
+		</div>
+		
+	
+
+
+
+	<div class="lazyload_ad">
+		<code type="text/javascript">
+						
+		</code>
+	</div>
+
+
+
+		</article>
+
+	</section>
+
+	
+	
+	
+
+</div>
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="panel-loader"></div>
+
+ 
+
+
+
+	
+		
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://www.macworld.com/www.idgcsmb/css/tso-links.css?v=20200318114428">
+
+	<div id="tso-wrapper"><div id="tso" style="display:none"></div></div>
+	
+	
+
+	
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://www.macworld.com/www.idgcsmb/css/footer.css?v=20200318114428">
+<link rel="stylesheet" href="https://www.macworld.com/www.idgcsmb.mw/css/footer.css?v=20200318114428">
+<div id="network"></div>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+<footer id="footer" class="clearfix">
+    <div class="container clearfix">
+    	<div class="footer-col">
+    		<a href="http://macworld.com/" id="footer-logo-mw" class="ir">Macworld</a>
+    		<p>Macworld is your best source for all things Apple. We give you the scoop on what&apos;s new, what&apos;s best and how to make the most out of the products you love.</p>
+    		<ul>
+    			<li><a href="https://www.macworld.com/about/about.html">About Us</a></li>
+				<li><a href="https://www.macworld.com/about/contact.html">Contact Us</a></li>
+				<li><a href="http://hints.macworld.com/" rel="nofollow">Mac OS X Hints</a></li>
+				<li><a href="https://www.idg.com/about-adchoices-macworld/" rel="nofollow">Ad Choices</a></li>
+				<li><a href="https://www.macworld.com/faq" rel="nofollow">Digital Magazines</a></li>
+				<li><a href="https://www.macworld.com/newsletters/signup.html">Newsletters</a></li>
+				<li><a href="https://www.macworld.com/about/cookie-policy.html">Cookie Policy</a></li>
+				<li><a href="https://www.macworld.com/about/member-preferences.html">Member Preferences</a></li>
+				<li><a href="https://www.macworld.com/about/privacy.html" rel="nofollow">Privacy Policy</a></li>
+				<li><a href="https://www.macworld.com/index.rss">RSS</a></li>
+				<li><a href="https://www.idg.com/terms-of-service-agreement/" rel="nofollow">Terms of Service Agreement</a></li>
+				<li><a href="https://www.macworld.com/about/ccpa.html">California: Do Not Sell My Personal Info</a></li>		
+			</ul>
+			<ul class="right">
+				<li><a href="https://shop.macworld.com/">Shop</a></li>
+				<li><a href="https://www.pcworld.com/couponcodes">Coupon Codes</a>
+					<ul>
+						<li><a href="https://www.pcworld.com/couponcodes/aliexpress">Aliexpress</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/ebay">Ebay</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/home-depot">Home Depot</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/hp">HP</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/jcpenney">jcpenney</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/oneplus">OnePlus</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/walmart">Walmart</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/target">Target</a></li>
+						<li><a href="https://www.pcworld.com/couponcodes/6pm-com">6PM</a></li>
+					</ul>
+				</li>
+				<li><a href="https://www.macworld.com/about/affiliates.html">E-commerce Affiliate Relationships</a></li>	
+			</ul>
+    	</div>
+    	<div class="footer-col">
+    		<h2>Macworld Categories</h2>
+    		<ul>
+    			<li><a href="https://www.macworld.com/category/business/">Business</a></li>
+				
+				<li><a href="https://www.macworld.com/category/creative/">Creative</a></li>
+				<li><a href="https://www.macworld.com/category/entertainment/">Entertainment</a></li>
+				<li><a href="https://www.macworld.com/category/ios-apps/">iOS Apps</a></li>
+				<li><a href="https://www.macworld.com/category/mac-apps/">Mac Apps</a></li>
+			</ul>
+			<ul class="right">
+				<li><a href="https://www.macworld.com/category/macs/">MacCentral</a></li>
+				<li><a href="https://www.macworld.com/category/iphone-ipad/">iPhone/iPad</a></li>
+				<li><a href="https://www.macworld.com/category/os-x/">OS X</a></li>
+				<li><a href="https://www.macworld.com/column/mwpodcast">Podcasts</a></li>
+				<li><a href="https://www.macworld.com/video/">Video</a></li>
+				<li><a href="https://www.macworld.com/deals">Deals</a></li>
+			</ul>
+			<h3>IDG Network Sites</h3>
+			<ul>
+				<li><a href="https://www.idg.com/advertise-with-us/macworld/" rel="nofollow">Advertise</a></li>
+				<li><a href="https://www.idg.com/technetwork/technetwork-permissions-guildelines/" rel="nofollow">Permissions</a></li>
+				<li><a href="http://www.pcworld.com/" rel="nofollow">PCWorld</a></li>
+				<li><a href="http://www.techadvisor.co.uk/">Tech Advisor</a></li>
+				<li><a href="http://www.techhive.com/" rel="nofollow">TechHive</a></li>
+			</ul>
+			<ul class="right">
+				<li><a href="https://www.idg.com/technetwork/" rel="nofollow">IDG TechNetwork</a></li>
+				<li><a href="https://www.idg.com/" rel="nofollow">IDG</a></li>
+				<li><a href="http://blog.idg.com/" rel="nofollow">IDG Blog</a></li>
+				<li><a href="https://www.idg.com/work-here/" rel="nofollow">Careers at IDG</a></li>
+			</ul>			
+    	</div>
+    	<div class="footer-col">
+    		<div id="footer-subscribe" class="clearfix">
+	    		<a href="https://simplecirc.com/subscribe/macworld" rel="nofollow">
+	    			<img src="https://alt.idgesg.net/images/furniture/macworld/footer-subscribe-mag-mw.png" alt="Macworld Magazine Cover">
+	    			<h2>Try Macworld <span>Risk-Free</span></h2>
+	    			<span class="btn-link">Subscribe Now</span>
+	    		</a>
+    		</div>
+    		<div id="footer-social">
+    			<span>Follow us</span> <a href="http://www.facebook.com/Macworld" class="network-fb ss-icon ss-social-circle banner-social banner-fb" alt="Facebook" itemprop="sameAs" rel="nofollow">
+						&#xF610;
+					</a>
+					<a href="https://twitter.com/macworld" class="network-tw ss-icon ss-social-circle banner-social banner-tw" alt="Twitter" itemprop="sameAs" rel="nofollow">
+						&#xF611;
+					</a> 
+					
+						<a href="https://www.youtube.com/user/macworld" class="network-youtube ss-icon ss-social-circle banner-social banner-youtube" alt="YouTube">
+							&#xF630;
+						</a>
+					 			
+    		</div>
+    		
+    		 <p>Visit other IDG sites:</p>
+    		
+    		<div id="idgInfo" class="styled-select">		
+		            <select onchange="location = this.options[this.selectedIndex].value;" id="jumpMenu" name="jumpMenu" d30tagged="1" style="visibility: visible;">
+		                <option value="">Select One</option>
+						
+							
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<option value="https://www.greenbot.com">Greenbot</option>
+	
+		<option value="https://www.macworld.com">Macworld</option>
+	
+		<option value="https://www.pcworld.com">PCWorld</option>
+	
+		<option value="https://www.techconnect.com">TechConnect</option>
+	
+		<option value="https://www.techhive.com">TechHive</option>
+	
+
+		            </select>
+		    </div>
+		    
+		        <p><small><a href="http://idgcsmb.com/terms-of-service-agreement/">Copyright</a> &#xA9; 2020 IDG Communications, Inc.</small></p>
+    	</div>
+    </div> 
+</footer>
+
+
+	
+	
+	
+
+
+
+		
+				
+		
+			
+				
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+			<div id="gpt-infunnel" class=" ad-container"></div>
+    		
+    	
+	
+ 
+ 
+	
+		
+		
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+	
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+
+
+
+
+
+
+		
+			
+
+ 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	    
+	    
+		   	
+		   	
+		   	
+	    
+    	
+    	
+	    
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+ 		
+		
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		<div id="loginModal"></div>
+		<div id="logoffModal"></div>
+		<div id="abuseModal"></div>
+
+		
+			
+		
+		
+		
+		
+			
+				
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+			<div id="gpt-skin" class=" ad-container"></div>
+    			
+		
+		
+		
+		
+	
+ 
+ 
+			
+		
+		
+		
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+			<div id="gpt_custom_promo_2" class=" ad-container"></div>
+    		
+    	
+	
+ 
+ 
+	
+			
+	</body>
+</html>
