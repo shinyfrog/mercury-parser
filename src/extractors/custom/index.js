@@ -136,3 +136,5 @@ export * from './fortelabs.co';
 export * from './www.macstories.net';
 export * from './www.macworld.com';
 export * from './towardsdatascience.com';
+export * from './www.maketecheasier.com';
+export * from './pinegrosbiik.art.blog';

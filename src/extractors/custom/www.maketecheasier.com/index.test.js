@@ -13,9 +13,9 @@ describe('WwwMaketecheasierComExtractor', () => {
     let result;
     let url;
     beforeAll(() => {
-      url = 'https://www.maketecheasier.com/useful-web-clipping-apps/';
+      url = 'https://www.maketecheasier.com/update-apps-using-terminal-mac/';
       const html = fs.readFileSync(
-        './fixtures/www.maketecheasier.com/1558970794372.html'
+        './fixtures/www.maketecheasier.com/1588674135220.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -35,10 +35,7 @@ describe('WwwMaketecheasierComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        title,
-        `5 Useful Web Clipping Apps For You to Save Content On the Web`
-      );
+      assert.equal(title, `How to Update Apps using Terminal on a Mac`);
     });
 
     it('returns the author', async () => {
@@ -48,7 +45,7 @@ describe('WwwMaketecheasierComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, `Abhishek Macwan`);
+      assert.equal(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -58,7 +55,7 @@ describe('WwwMaketecheasierComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2017-04-23T21:25:12.000Z`);
+      assert.equal(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -78,10 +75,7 @@ describe('WwwMaketecheasierComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        lead_image_url,
-        `https://www.maketecheasier.com/assets/uploads/2017/04/web-clipper-apps-featured.jpg`
-      );
+      assert.equal(lead_image_url, null);
     });
 
     it('returns the content', async () => {
@@ -104,7 +98,7 @@ describe('WwwMaketecheasierComExtractor', () => {
       // the article.
       assert.equal(
         first13,
-        'When researching online, it is really important to keep your content organized so'
+        'If you administer a number of Macs, running common tasks through the command'
       );
     });
   });
