@@ -139,3 +139,4 @@ export * from './towardsdatascience.com';
 export * from './www.maketecheasier.com';
 export * from './pinegrosbiik.art.blog';
 export * from './goo.gl';
+export * from './fellowproducts.com';
