@@ -140,3 +140,4 @@ export * from './www.maketecheasier.com';
 export * from './pinegrosbiik.art.blog';
 export * from './goo.gl';
 export * from './fellowproducts.com';
+export * from './blogs.absolute.com';
