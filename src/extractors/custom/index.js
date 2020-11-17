@@ -141,3 +141,5 @@ export * from './pinegrosbiik.art.blog';
 export * from './goo.gl';
 export * from './fellowproducts.com';
 export * from './blogs.absolute.com';
+export * from './canvas.unl.edu';
+export * from './www.blog.google';

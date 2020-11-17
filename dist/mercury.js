@@ -6071,6 +6071,72 @@ var BlogsAbsoluteComExtractor = {
   }
 };
 
+var CanvasUnlEduExtractor = {
+  domain: 'canvas.unl.edu',
+  title: {
+    selectors: [// enter title selectors
+    ]
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: [// enter content selectors
+    ],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
+var WwwBlogGoogleExtractor = {
+  domain: 'www.blog.google',
+  title: {
+    selectors: [['meta[name="og:title"]', 'value']]
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [['meta[name="article:published_time"]', 'value']]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [['meta[name="og:image"]', 'value']]
+  },
+  content: {
+    selectors: ['div.uni-content'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {},
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: []
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6216,7 +6282,9 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   PinegrosbiikArtBlogExtractor: PinegrosbiikArtBlogExtractor,
   GooGlExtractor: GooGlExtractor,
   FellowproductsComExtractor: FellowproductsComExtractor,
-  BlogsAbsoluteComExtractor: BlogsAbsoluteComExtractor
+  BlogsAbsoluteComExtractor: BlogsAbsoluteComExtractor,
+  CanvasUnlEduExtractor: CanvasUnlEduExtractor,
+  WwwBlogGoogleExtractor: WwwBlogGoogleExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
