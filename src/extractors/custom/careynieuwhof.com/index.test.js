@@ -49,7 +49,7 @@ describe('CareynieuwhofComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, '');
+      assert.equal(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -59,7 +59,7 @@ describe('CareynieuwhofComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, '');
+      assert.equal(date_published, null);
     });
 
     it('returns the dek', async () => {
@@ -69,7 +69,7 @@ describe('CareynieuwhofComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(dek, '');
+      assert.equal(dek, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -81,7 +81,7 @@ describe('CareynieuwhofComExtractor', () => {
       // the article.
       assert.equal(
         lead_image_url,
-        `https://i2.wp.com/careynieuwhof.com/wp-content/uploads/2021/02/shutterstock_290184077.jpg?resize=1024%2C684&is-pending-load=1#038;ssl=1`
+        `https://i2.wp.com/careynieuwhof.com/wp-content/uploads/2021/02/shutterstock_290184077.jpg?fit=7008%2C4678&ssl=1`
       );
     });
 
@@ -103,7 +103,10 @@ describe('CareynieuwhofComExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(first13, 'Add the first 13 words of the article here');
+      assert.equal(
+        first13,
+        'This post was written by Dillon Smith, a Gen-Z team member at CareyNieuwhof.com'
+      );
     });
   });
 });

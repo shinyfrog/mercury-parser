@@ -8,15 +8,14 @@ import { excerptContent } from 'utils/text';
 
 const fs = require('fs');
 
-describe('WwwHealthlineComExtractor', () => {
+describe('HsbrandsComExtractor', () => {
   describe('initial test case', () => {
     let result;
     let url;
     beforeAll(() => {
-      url =
-        'https://www.healthline.com/nutrition/7-common-nutrient-deficiencies';
+      url = 'https://hsbrands.com/the-five-pillars-of-loss-prevention';
       const html = fs.readFileSync(
-        './fixtures/www.healthline.com/1558684140095.html'
+        './fixtures/hsbrands.com/1617704814495.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -31,17 +30,17 @@ describe('WwwHealthlineComExtractor', () => {
 
     it('returns the title', async () => {
       // To pass this test, fill out the title selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       const { title } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(title, `7 Nutrient Deficiencies That Are Incredibly Common`);
+      assert.equal(title, `The Five Pillars of Loss Prevention`);
     });
 
     it('returns the author', async () => {
       // To pass this test, fill out the author selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       const { author } = await result;
 
       // Update these values with the expected values from
@@ -51,17 +50,17 @@ describe('WwwHealthlineComExtractor', () => {
 
     it('returns the date_published', async () => {
       // To pass this test, fill out the date_published selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       const { date_published } = await result;
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published, `2019-05-21T07:00:00.000Z`);
+      assert.equal(date_published, `2020-09-02T14:44:09.000Z`);
     });
 
     it('returns the dek', async () => {
       // To pass this test, fill out the dek selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       const { dek } = await result;
 
       // Update these values with the expected values from
@@ -71,20 +70,20 @@ describe('WwwHealthlineComExtractor', () => {
 
     it('returns the lead_image_url', async () => {
       // To pass this test, fill out the lead_image_url selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       const { lead_image_url } = await result;
 
       // Update these values with the expected values from
       // the article.
       assert.equal(
         lead_image_url,
-        `https://www.healthline.com/hlcmsresource/images/AN_images/7-common-nutrient-deficiencies-1200x628-facebook.jpg`
+        `https://hsbrands.com/wp-content/uploads/2020/07/Loss-Prevention-System-Thumb.jpeg`
       );
     });
 
     it('returns the content', async () => {
       // To pass this test, fill out the content selector
-      // in ./src/extractors/custom/www.healthline.com/index.js.
+      // in ./src/extractors/custom/hsbrands.com/index.js.
       // You may also want to make use of the clean and transform
       // options.
       const { content } = await result;
@@ -102,7 +101,7 @@ describe('WwwHealthlineComExtractor', () => {
       // the article.
       assert.equal(
         first13,
-        'Many nutrients are essential for good health.While it’s possible to get most of'
+        'Hiring loss prevention employees and training all of your remaining staff on what'
       );
     });
   });

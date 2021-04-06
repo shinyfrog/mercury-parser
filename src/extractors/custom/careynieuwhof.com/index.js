@@ -2,9 +2,7 @@ export const CareynieuwhofComExtractor = {
   domain: 'careynieuwhof.com',
 
   title: {
-    selectors: [
-      // enter title selectors
-    ],
+    selectors: ['h1.fl-post-title'],
   },
 
   author: {
@@ -26,15 +24,11 @@ export const CareynieuwhofComExtractor = {
   },
 
   lead_image_url: {
-    selectors: [
-      // enter selectors
-    ],
+    selectors: [['meta[name="twitter:image:src"]', 'value']],
   },
 
   content: {
-    selectors: [
-      // enter content selectors
-    ],
+    selectors: ['.fl-post-content'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
@@ -43,6 +37,6 @@ export const CareynieuwhofComExtractor = {
     // Is there anything that is in the result that shouldn't be?
     // The clean selectors will remove anything that matches from
     // the result
-    clean: [],
+    clean: ['.ss-inline-share-wrapper'],
   },
 };
