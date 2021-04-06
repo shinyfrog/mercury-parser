@@ -143,3 +143,4 @@ export * from './fellowproducts.com';
 export * from './blogs.absolute.com';
 export * from './canvas.unl.edu';
 export * from './www.blog.google';
+export * from './careynieuwhof.com';
