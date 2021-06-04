@@ -2718,43 +2718,6 @@ var WwwAolComExtractor = {
   }
 };
 
-var WwwYoutubeComExtractor = {
-  domain: 'www.youtube.com',
-  title: {
-    selectors: ['.watch-title', 'h1.watch-title-container']
-  },
-  author: {
-    selectors: ['.yt-user-info']
-  },
-  date_published: {
-    selectors: [['meta[itemProp="datePublished"]', 'value']],
-    timezone: 'GMT'
-  },
-  dek: {
-    selectors: [// enter selectors
-    ]
-  },
-  lead_image_url: {
-    selectors: [['meta[name="og:image"]', 'value']]
-  },
-  content: {
-    defaultCleaner: false,
-    selectors: [['#player-api', '#eow-description']],
-    // Is there anything in the content you selected that needs transformed
-    // before it's consumable content? E.g., unusual lazy loaded images
-    transforms: {
-      '#player-api': function playerApi($node, $) {
-        var videoId = $('meta[itemProp="videoId"]').attr('value');
-        $node.html("\n          <iframe src=\"https://www.youtube.com/embed/".concat(videoId, "\" frameborder=\"0\" allowfullscreen></iframe>"));
-      }
-    },
-    // Is there anything that is in the result that shouldn't be?
-    // The clean selectors will remove anything that matches from
-    // the result
-    clean: []
-  }
-};
-
 var WwwTheguardianComExtractor = {
   domain: 'www.theguardian.com',
   title: {
@@ -6241,6 +6204,46 @@ var WwwHealthlineComExtractor = {
   }
 };
 
+var NewsYcombinatorComExtractor = {
+  domain: 'news.ycombinator.com',
+  title: {
+    selectors: ['title']
+  },
+  author: {
+    selectors: [// enter author selectors
+    ]
+  },
+  date_published: {
+    selectors: [// enter selectors
+    ]
+  },
+  dek: {
+    selectors: [// enter selectors
+    ]
+  },
+  lead_image_url: {
+    selectors: [// enter selectors
+    ]
+  },
+  content: {
+    selectors: ['body'],
+    // Is there anything in the content you selected that needs transformed
+    // before it's consumable content? E.g., unusual lazy loaded images
+    transforms: {
+      'div': 'span',
+      '.fatitem': 'p',
+      '.comment-tree': 'p',
+      'table': 'span',
+      'tr': 'span',
+      'td': 'span'
+    },
+    // Is there anything that is in the result that shouldn't be?
+    // The clean selectors will remove anything that matches from
+    // the result
+    clean: ['.yclinks', '.ind', '.votelinks', '.pagetop', '.reply']
+  }
+};
+
 
 
 var CustomExtractors = /*#__PURE__*/Object.freeze({
@@ -6270,7 +6273,6 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwThevergeComExtractor: WwwThevergeComExtractor,
   WwwCnnComExtractor: WwwCnnComExtractor,
   WwwAolComExtractor: WwwAolComExtractor,
-  WwwYoutubeComExtractor: WwwYoutubeComExtractor,
   WwwTheguardianComExtractor: WwwTheguardianComExtractor,
   WwwSbnationComExtractor: WwwSbnationComExtractor,
   WwwBloombergComExtractor: WwwBloombergComExtractor,
@@ -6391,7 +6393,8 @@ var CustomExtractors = /*#__PURE__*/Object.freeze({
   WwwBlogGoogleExtractor: WwwBlogGoogleExtractor,
   CareynieuwhofComExtractor: CareynieuwhofComExtractor,
   HsbrandsComExtractor: HsbrandsComExtractor,
-  WwwHealthlineComExtractor: WwwHealthlineComExtractor
+  WwwHealthlineComExtractor: WwwHealthlineComExtractor,
+  NewsYcombinatorComExtractor: NewsYcombinatorComExtractor
 });
 
 var Extractors = _Object$keys(CustomExtractors).reduce(function (acc, key) {
