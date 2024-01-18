@@ -1961,7 +1961,7 @@ var NewYorkerExtractor = {
     selectors: ['div[class^="ArticleContributors"] a[rel="author"]', 'article header div[class*="Byline__multipleContributors"]']
   },
   content: {
-    selectors: ['main[class^="Layout__content"]'],
+    selectors: ['div[data-attribute-verso-pattern^="article-body"]'],
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
     transforms: [],

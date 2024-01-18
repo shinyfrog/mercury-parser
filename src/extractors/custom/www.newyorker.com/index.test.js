@@ -14,9 +14,9 @@ describe('NewYorkerExtractor', () => {
     let url;
     beforeAll(() => {
       url =
-        'http://www.newyorker.com/tech/elements/hacking-cryptography-and-the-countdown-to-quantum-computing';
+        'https://www.newyorker.com/culture/the-new-yorker-interview/j-kenji-lopez-alt-says-youre-cooking-just-fine#main-content';
       const html = fs.readFileSync(
-        './fixtures/www.newyorker.com/1557138180688.html'
+        './fixtures/www.newyorker.com/1646044434271.html'
       );
       result = Mercury.parse(url, { html, fallback: false });
     });
@@ -38,10 +38,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(
-        title,
-        'Hacking, Cryptography, and the Countdown to Quantum Computing'
-      );
+      assert.equal(title, 'J. Kenji López-Alt Says You’re Cooking Just Fine');
     });
 
     it('returns the author', async () => {
@@ -51,7 +48,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(author, 'Alex Hutchinson');
+      assert.equal(author, null);
     });
 
     it('returns the date_published', async () => {
@@ -61,7 +58,7 @@ describe('NewYorkerExtractor', () => {
 
       // Update these values with the expected values from
       // the article.
-      assert.equal(date_published.split('T')[0], '2016-09-26');
+      assert.equal(date_published, null);
     });
 
     it('returns the lead_image_url', async () => {
@@ -73,7 +70,7 @@ describe('NewYorkerExtractor', () => {
       // the article.
       assert.equal(
         lead_image_url,
-        'https://media.newyorker.com/photos/59097a5e8b51cf59fc4239f5/16:9/w_1200,h_630,c_limit/Hutchinson-Quantum-Computing.jpg'
+        'https://media.newyorker.com/photos/6211351a72f54a8ef43da38e/16:9/w_1280,c_limit/Rosner-JKenjiLopezAlt_GrantHindsley05.jpg'
       );
     });
 
@@ -97,7 +94,7 @@ describe('NewYorkerExtractor', () => {
       // the article.
       assert.equal(
         first13,
-        'In a laboratory in Shanghai, researchers work on developing a quantum computer—a new'
+        'Since time immemorial, a person who wanted to cook herself a thick, beautiful,'
       );
     });
   });
