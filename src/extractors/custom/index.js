@@ -151,4 +151,4 @@ export * from './www.seriouseats.com';
 export * from './www.blackbirdspyplane.com';
 export * from './bootcamp.uxdesign.cc';
 export * from './ahrefs.com';
-export * from './www.thedesignerstoolbox.com';
+export * from './knowablemagazine.org';
