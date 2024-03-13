@@ -152,3 +152,4 @@ export * from './bootcamp.uxdesign.cc';
 export * from './ahrefs.com';
 export * from './knowablemagazine.org';
 export * from './medium.com';
+export * from './handmadefont.com';
