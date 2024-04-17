@@ -153,3 +153,4 @@ export * from './ahrefs.com';
 export * from './knowablemagazine.org';
 export * from './medium.com';
 export * from './handmadefont.com';
+export * from './www.honest-broker.com';
